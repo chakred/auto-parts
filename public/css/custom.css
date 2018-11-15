@@ -1,0 +1,17 @@
+.custom-border{
+    border: 1px solid #d9d9d9;
+    padding: 5px;
+    border-radius: 6px;
+}
+.silver{
+    background: #e8ebee;
+}
+.pad-15{
+    padding: 15px;
+}
+.heavy h1{
+    font-weight: 600;
+    font-size: 23px;
+    color: #7c7c7c;
+    font-family: verdana, sans-serif;
+}

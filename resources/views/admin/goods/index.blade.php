@@ -23,32 +23,29 @@
                             <th scope="col">Марка авто</th>
                             <th scope="col">Модель авто</th>
                             <th scope="col">Год авто</th>
-                            <th scope="col">Подкатегория</th>
+                            <th scope="col">Подкат.</th>
+                            <th scope="col">Действие</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{--@foreach($models as $model)--}}
-                        {{--<tr>--}}
-                        {{--<th width="5%" scope="row">{{$model->id_model}}</th>--}}
-                        {{--<td width="10%">{{$model->autoMark->name_mark}}</td>--}}
-                        {{--<td width="15%">{{$model->name_model}}</td>--}}
-                        {{--<td width="10%">{{$model->year}}</td>--}}
-                        {{--<td width="15%">{{$model->engine}}</td>--}}
-                        {{--<td>{{$model->type_of_engine}}</td>--}}
-                        {{--<td>{{$model->transmission}}</td>--}}
-                        {{--<td>{{$model->type_of_transmission}}</td>--}}
-                        {{--<td width="5%">--}}
-                        {{--<a href="#" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>--}}
-                        {{--</td>--}}
-                        {{--<td width="5%">--}}
-                        {{--<form method="POST" action ="{{ route('model-auto-delete', ['model' => $model->id_model]) }}">--}}
-                        {{--{{ method_field('DELETE') }}--}}
-                        {{--<button type="submit" class="btn btn-outline-secondary" title="Удалить"><i class="far fa-trash-alt"></i></button>--}}
-                        {{--{{ csrf_field() }}--}}
-                        {{--</form>--}}
-                        {{--</td>--}}
-                        {{--</tr>--}}
-                        {{--@endforeach--}}
+                        @foreach($goods as $good)
+                        <tr>
+                        <th width="5%" scope="row">{{$good->id}}</th>
+                        <td width="10%">{{$good->name_good}}</td>
+                        <td width="15%">{{$good->mark_good}}</td>
+                        <td width="10%">{{$good->country}}</td>
+                        <td width="15%">{{$good->cost}}</td>
+                        <td>{{$good->currency}}</td>
+                        <td>{{$good->quantity}}</td>
+                        <td>{{$model->autoMark->name_mark}}</td>
+                        <td>no</td>
+                        <td>no</td>
+                        <td>no</td>
+                        <td width="5%">
+                        <a href="#" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
+                        </td>
+                        </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

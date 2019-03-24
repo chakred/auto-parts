@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Auto_model;
+use App\Auto_mark;
 
-use App\Category;
-
-class CategoriesController extends Controller
+class FrontPageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $models = Auto_model::all();
+        $marks = Auto_mark::all();
 
-        return view('admin.categories.index')->with(['categories' =>  $categories]);
+        return view ('pages.front-page', compact('models','marks'));
     }
 
     /**
@@ -39,28 +40,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->validate($request,[
-            'category' => 'required',
-            'img_path' => 'image|nullable|max:1999',
-
-        ]);
-
-        $new_category = new Category();
-        $new_category->category = $request->input('category');
-
-        $picture_name = null;
-
-        if ($request->hasFile('picture')){
-
-            $picture_name = uniqid().'.'.$request->file('picture')->getClientOriginalName();
-            $new_category->img_path = $picture_name;
-            $request->picture->storeAs('public/upload/category', $picture_name);
-        }
-
-
-        $new_category->save();
-        return redirect('/admin/categories');
+        //
     }
 
     /**
@@ -103,11 +83,8 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($category)
+    public function destroy($id)
     {
-        $category = Category::find($category);
-//        dump( $model);
-        $category->delete();
-        return back();
+        //
     }
 }

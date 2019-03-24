@@ -14,14 +14,17 @@ class CreateAutoModelsTable extends Migration
     public function up()
     {
         Schema::create('auto_models', function (Blueprint $table) {
-            $table->increments('id_model');
+            $table->increments('id');
+            $table->integer('auto_mark_id')->unsigned();
             $table->string('name_model');
-            $table->integer('id_mark');
             $table->integer('year');
             $table->string('engine', 100);
             $table->string('type_of_engine');
             $table->string('transmission');
             $table->string('type_of_transmission');
+
+            $table->foreign('auto_mark_id')->references('id')->on('auto_marks')
+                ->onUpdate('cascade');
         });
     }
 

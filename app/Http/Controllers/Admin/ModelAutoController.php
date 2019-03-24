@@ -52,9 +52,9 @@ class ModelAutoController extends Controller
     {
         $model = new Auto_model();
         $mark_name = $request->input('mark_auto_select');
-        $mark_id = Auto_mark::select('id_mark')->where('name_mark', $mark_name)->pluck('id_mark')->toArray();
+        $mark_id = Auto_mark::select('id')->where('name_mark', $mark_name)->pluck('id')->first();
         $model->name_model = $request->name_model;
-        $model->id_mark = $mark_id[0];
+        $model->auto_mark_id = $mark_id;
         $model->year = $request->input('year');
         $model->engine = $request->input('value_engine');
         $model->type_of_engine = $request->input('type_engine');

@@ -17,7 +17,8 @@ class GoodsController extends Controller
     public function index()
     {
         $models = Auto_model::all();
-        return view('admin.goods.index')->with(['models' => $models]);
+        $goods = Good::all();
+        return view('admin.goods.index', compact('models', 'goods'));
     }
 
     /**
@@ -49,9 +50,27 @@ class GoodsController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request,[
+            'name_good' => 'required',
+            'desc_good' => 'required',
+            'img_path' => 'image|nullable|max:1999',
+
+        ]);
+
+
+
         $good = new Good();
-        $picture_name = $request->file('picture');
-        $good->img_path = $picture_name->getClientOriginalName();
+        $picture_name = null;
+
+        if ($request->hasFile('picture')){
+            $picture_name = '/goods'.uniqid().'.'.$request->file('picture')->getClientOriginalName();
+            $good->img_path = $picture_name;
+            $request->picture->storeAs('public/upload/goods', $picture_name);
+        }
+
+
+
         $good->id_inner = 1;
         $good->id_model = 1;
         $good->id_sub_category = 1;

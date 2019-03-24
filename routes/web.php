@@ -39,9 +39,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
 
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Web\FrontPageController@index')->name('front-page');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

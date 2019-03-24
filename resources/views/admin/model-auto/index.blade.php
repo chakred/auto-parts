@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 mb-3">
-                <a href="{{route('add-model-auto')}}" class="btn btn-outline-info" title="Добавить модель"><i class="far fa-plus-square"></i> Добавить</a>
+                <a href="{{route('add-model-auto')}}" class="btn btn-primary btn-lg active" title="Добавить модель"><i class="far fa-plus-square"></i> Добавить</a>
             </div>
         </div>
         <div class="row">
@@ -45,9 +45,9 @@
                                     <a href="{{ route('edit-model-auto', ['model' => $model->id_model]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
                                 </td>
                                 <td width="5%">
-                                    <form method="POST" action ="{{ route('model-auto-delete', ['model' => $model->id_model]) }}">
+                                    <form method="POST" action ="{{ route('model-auto-delete', ['model' => $model->id]) }}">
                                         {{ method_field('DELETE') }}
-                                        <button type="submit" class="btn btn-outline-secondary delete-model" data-model-id ="{{$model->id_model}}" title="Удалить"><i class="far fa-trash-alt"></i></button>
+                                        <button type="submit" class="btn btn-outline-secondary delete-model" data-model-id ="{{$model->id}}" title="Удалить"><i class="far fa-trash-alt"></i></button>
                                         {{ csrf_field() }}
                                     </form>
                                 </td>

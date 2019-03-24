@@ -9,6 +9,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Картинка</th>
                             <th scope="col">Категории запчастей</th>
                             <th scope="col">Удаление</th>
                         </tr>
@@ -17,6 +18,7 @@
                         @forelse($categories as $category)
                             <tr>
                                 <th scope="row">{{$category->id}}</th>
+                                <td><img src="http://localhost:8000/public/storage/upload/5c8d4c7898c62.Выделение_002.png"></td>
                                 <td>{{$category->category}}</td>
                                 <td width="5%">
                                     <form method="POST" action ="{{ route('category-delete', ['category' => $category->id]) }}">
@@ -38,7 +40,11 @@
             <div class="col-sm-4">
                 <div class="custom-border silver pad-15">
                     <p><strong>Добавить категорию запчастей:</strong></p>
-                    <form method="POST" action ="{{ route('store-category') }}">
+                    <form method="POST" action ="{{ route('store-category') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="picture">Картинка категории</label>
+                            <input type="file" class="form-control-file" id="picture" name="picture">
+                        </div>
                         <div class="form-group">
                             <select class="form-control" id="category" name="category">
                                 <option>Фильтра</option>

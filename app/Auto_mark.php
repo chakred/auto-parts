@@ -10,6 +10,6 @@ class Auto_mark extends Model
 
     public function autoModels()
     {
-        return $this->hasOne('App\Auto_model', 'id_mark' , 'id_mark');
+        return $this->hasOne('App\Auto_model', 'id' , 'id');
     }
 }

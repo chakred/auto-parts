@@ -27,7 +27,7 @@ class CreateGoodsTable extends Migration
             $table->string('item');
             $table->integer('id_model');
             $table->integer('id_sub_category');
-            $table->string('img_path');
+            $table->string('img_path')->nullable();
             $table->timestamps();
         });
     }

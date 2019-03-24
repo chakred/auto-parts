@@ -38,8 +38,20 @@ class MarkAutoController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name_mark' => 'required'
+
+        ]);
 
         $mark = new Auto_mark();
+        $picture_name = null;
+
+        if ($request->hasFile('picture')){
+            $picture_name = '/marks/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $mark->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+
 
         $mark->name_mark = $request->input('name_mark');
 

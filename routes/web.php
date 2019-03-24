@@ -35,7 +35,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/goods', 'GoodsController@index')->name('goods');
     Route::get('/goods/add', 'GoodsController@add')->name('add-goods');
     Route::post('/goods/add', 'GoodsController@store')->name('store-goods');
-//    Route::post('/goods/edit', 'GoodsController@edit')->name('edit-goods');
+    Route::get('/goods/edit/{id}', 'GoodsController@edit')->name('edit-goods');
+    Route::put('/goods/edit/{id}', 'GoodsController@update')->name('update-goods');
+    Route::delete('/goods/{id}', 'GoodsController@destroy')->name('delete-goods');
 
 });
 

@@ -6,6 +6,7 @@ use App\Good;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Auto_model;
+use App\Sub_category;
 
 class GoodsController extends Controller
 {
@@ -29,7 +30,8 @@ class GoodsController extends Controller
     public function add()
     {
         $models = Auto_model::all();
-        return view('admin.goods.create')->with(['models' => $models]);
+        $subCategories = Sub_category::all();
+        return view('admin.goods.create', compact('models', 'subCategories'));
     }
 
     /**
@@ -58,15 +60,13 @@ class GoodsController extends Controller
 
         ]);
 
-
-
         $good = new Good();
         $picture_name = null;
 
         if ($request->hasFile('picture')){
-            $picture_name = '/goods'.uniqid().'.'.$request->file('picture')->getClientOriginalName();
+            $picture_name = '/goods/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
             $good->img_path = $picture_name;
-            $request->picture->storeAs('public/upload/goods', $picture_name);
+            $request->picture->storeAs('public/upload', $picture_name);
         }
 
 
@@ -109,7 +109,8 @@ class GoodsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $good = Good::find($id);
+        return view ('admin.goods.edit')->with('good', $good);
     }
 
     /**
@@ -132,6 +133,8 @@ class GoodsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $good = Good::find($id);
+        $good->delete();
+        return back();
     }
 }

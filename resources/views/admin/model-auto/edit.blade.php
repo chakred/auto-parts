@@ -11,7 +11,12 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
-                    <form method="POST" action="{{ route('update-model-auto', ['model' => $model->id_model]) }}">
+                    <form method="POST" action="{{ route('update-model-auto', ['model' => $model->id]) }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$model->img_path}}">
+                            <label for="picture">Изображение модели</label>
+                            <input type="file" class="form-control-file" id="picture" name="picture">
+                        </div>
                         <div class="form-group">
                             <label for="markAutoSelect">Марка авто</label>
                             <input class="form-control" id="markAutoSelect" name="mark_auto_select" readonly value="{{$model->autoMark->name_mark}}">

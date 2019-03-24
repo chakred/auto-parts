@@ -22,6 +22,7 @@ class CreateAutoModelsTable extends Migration
             $table->string('type_of_engine');
             $table->string('transmission');
             $table->string('type_of_transmission');
+            $table->string('img_path')->nullable();
 
             $table->foreign('auto_mark_id')->references('id')->on('auto_marks')
                 ->onUpdate('cascade');

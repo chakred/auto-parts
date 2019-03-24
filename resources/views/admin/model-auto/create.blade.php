@@ -11,7 +11,11 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
-                    <form method="POST" action="{{ route('store-model-auto') }}">
+                    <form method="POST" action="{{ route('store-model-auto') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="picture">Изображение модели</label>
+                            <input type="file" class="form-control-file" id="picture" name="picture">
+                        </div>
                         <div class="form-group">
                             <label for="markAutoSelect">Марка авто</label>
                             <select class="form-control" id="markAutoSelect" name="mark_auto_select">

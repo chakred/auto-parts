@@ -9,6 +9,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Картинка</th>
                             <th scope="col">Категория запчастей</th>
                             <th scope="col">Подкатегория запчастей</th>
                             <th scope="col"></th>
@@ -17,8 +18,13 @@
                         <tbody>
                         @forelse($sub_categories as $sub_category)
                             <tr>
-                                <th scope="row">{{$sub_category->id}}</th>
-                                <th scope="row">{{$sub_category->category->category}}</th>
+                                <td>{{$sub_category->id}}</td>
+                                @if($sub_category->img_path)
+                                    <td><img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$sub_category->img_path}}"></td>
+                                @else
+                                    <td><img src="http://placehold.jp/80x80.png?text=Нет картинки"></td>
+                                @endif
+                                <td scope="row">{{$sub_category->category->category}}</td>
                                 <td>{{$sub_category->sub_category}}</td>
                                 <td width="5%">
                                     {{--<form method="POST" action ="{{ route('category-delete', ['category' => $category->id]) }}">--}}
@@ -39,7 +45,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="custom-border pad-15 silver">
-                    <form method="POST" action ="{{ route('store-sub-category') }}">
+                    <form method="POST" action ="{{ route('store-sub-category') }}" enctype="multipart/form-data">
                         <div class="form-group">
                             <p><strong>Добавить подкатегорию запчастей, привязать подкатегорию к категирии</strong></p>
                             <label for="category">Категории:</label>
@@ -73,6 +79,10 @@
                                 <option>Сальники, шайбы и мастлоотражатели кпп</option>
                                 <option>Вилка КПП, штифты , втулки</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="picture">Логотип</label>
+                            <input type="file" class="form-control-file" id="picture" name="picture">
                         </div>
                         <button type="submit" class="btn btn-primary">Добавить в базу</button>
                         {{ csrf_field() }}

@@ -54,6 +54,15 @@ class SubCategoriesController extends Controller
     public function store(Request $request)
     {
         $new_sub_category = new Sub_category();
+        $picture_name = null;
+
+        if ($request->hasFile('picture')){
+
+            $picture_name = '/sub-categories/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $new_sub_category->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+
         $sub_category = $request->input('sub-category');
         $category_name = $request->input('category');
         $category_id = Category::select('id')->where('category', $category_name)->pluck('id')->toArray();

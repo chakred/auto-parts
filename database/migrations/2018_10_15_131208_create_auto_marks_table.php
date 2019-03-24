@@ -16,6 +16,7 @@ class CreateAutoMarksTable extends Migration
         Schema::create('auto_marks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name_mark');
+            $table->string('img_path')->nullable();
         });
     }
 

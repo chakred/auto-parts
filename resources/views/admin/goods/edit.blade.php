@@ -6,8 +6,9 @@
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
                     <h5>Добавить товар, привязать товар к нужной марке, подкатегирии товара:</h5>
-                    <form method="POST" action="{{ route('store-goods') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('update-goods', ['good' => $good->id]) }}" enctype="multipart/form-data">
                         <div class="form-group">
+                            <img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$good->img_path}}">
                             <label for="picture">Картинка товара</label>
                             <input type="file" class="form-control-file" id="picture" name="picture">
                         </div>
@@ -84,20 +85,20 @@
                         <div class="form-group">
                             <label for="auto">Модель авто</label>
                             <select class="form-control" id="auto" name="auto">
-                                @forelse($models as $model)
-                                <option>{{$model->autoMark->name_mark .' '.$model->name_model .' / '.$model->year.'г.'.' / '.$model->engine.'L.'}}</option>
-                                @endforeach
+                                {{--@forelse($models as $model)--}}
+                                {{--<option>{{$model->autoMark->name_mark .' '.$model->name_model .' / '.$model->year.'г.'.' / '.$model->engine.'L.'}}</option>--}}
+                                {{--@endforeach--}}
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="sub-category">Подкатегория</label>
                             <select class="form-control" id="sub-category" name="sub-category">
-                                @forelse($subCategories as $subCategory)
-                                    <option>{{$subCategory->sub_category}}</option>
-                                    @endforeach
+                                {{--@forelse($subCategories as $subCategory)--}}
+                                    {{--<option>{{$subCategory->sub_category}}</option>--}}
+                                    {{--@endforeach--}}
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Добавить в базу</button>
+                        <button type="submit" class="btn btn-primary">Обновить</button>
                         {{ csrf_field() }}
                     </form>
                 </div>

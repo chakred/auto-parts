@@ -50,7 +50,25 @@ class ModelAutoController extends Controller
      */
     public function store(Request $request)
     {
+
+//        $this->validate($request,[
+//            'name_model' => 'required',
+//            'year' => 'required',
+//            'engine' => 'required',
+//            'type_of_engine' => 'required',
+//            'transmission' => 'required'
+//
+//        ]);
+
         $model = new Auto_model();
+        $picture_name = null;
+
+        if ($request->hasFile('picture')){
+            $picture_name = '/models/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $model->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+
         $mark_name = $request->input('mark_auto_select');
         $mark_id = Auto_mark::select('id')->where('name_mark', $mark_name)->pluck('id')->first();
         $model->name_model = $request->name_model;

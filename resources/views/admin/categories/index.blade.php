@@ -18,7 +18,11 @@
                         @forelse($categories as $category)
                             <tr>
                                 <th scope="row">{{$category->id}}</th>
-                                <td><img src="http://localhost:8000/public/storage/upload/5c8d4c7898c62.Выделение_002.png"></td>
+                                @if($category->img_path)
+                                    <td><img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$category->img_path}}"></td>
+                                @else
+                                    <td><img src="http://placehold.jp/80x80.png?text=Нет логотипа"></td>
+                                @endif
                                 <td>{{$category->category}}</td>
                                 <td width="5%">
                                     <form method="POST" action ="{{ route('category-delete', ['category' => $category->id]) }}">

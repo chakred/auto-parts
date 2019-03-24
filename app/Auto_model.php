@@ -11,6 +11,6 @@ class Auto_model extends Model
 
     public function autoMark()
     {
-        return $this->belongsTo(Auto_mark::class);
+        return $this->belongsTo('App\Auto_mark', 'auto_mark_id' , 'id');
     }
 }

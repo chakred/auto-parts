@@ -18,7 +18,7 @@
                     <table class="table">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col">Картинка</th>
                             <th scope="col">Марка</th>
                             <th scope="col">Модель</th>
                             <th scope="col">Год</th>
@@ -33,7 +33,11 @@
                         <tbody>
                         @forelse($models as $model)
                             <tr>
-                                <th width="5%" scope="row">{{$model->id_model}}</th>
+                                @if($model->img_path)
+                                    <td><img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$model->img_path}}"></td>
+                                @else
+                                    <td><img src="http://placehold.jp/80x80.png?text=Нет логотипа"></td>
+                                @endif
                                 <td width="10%">{{$model->autoMark->name_mark}}</td>
                                 <td width="15%">{{$model->name_model}}</td>
                                 <td width="10%">{{$model->year}}</td>
@@ -42,7 +46,7 @@
                                 <td>{{$model->transmission}}</td>
                                 <td>{{$model->type_of_transmission}}</td>
                                 <td width="5%">
-                                    <a href="{{ route('edit-model-auto', ['model' => $model->id_model]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
+                                    <a href="{{ route('edit-model-auto', ['model' => $model->id]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
                                 </td>
                                 <td width="5%">
                                     <form method="POST" action ="{{ route('model-auto-delete', ['model' => $model->id]) }}">

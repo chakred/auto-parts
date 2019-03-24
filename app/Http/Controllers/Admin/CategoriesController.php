@@ -53,9 +53,9 @@ class CategoriesController extends Controller
 
         if ($request->hasFile('picture')){
 
-            $picture_name = uniqid().'.'.$request->file('picture')->getClientOriginalName();
+            $picture_name = '/categories/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
             $new_category->img_path = $picture_name;
-            $request->picture->storeAs('public/upload/category', $picture_name);
+            $request->picture->storeAs('public/upload', $picture_name);
         }
 
 

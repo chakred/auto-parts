@@ -46,7 +46,7 @@
                             <label for="yearAuto">Марка авто</label>
                             <select class="form-control" id="yearAuto" name="name_mark">
                                 <option>Renault</option>
-                                <option>Peugeot</option>
+                                <option>Smart</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Добавить в базу</button>

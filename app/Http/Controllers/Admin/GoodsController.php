@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Auto_model;
 use App\Sub_category;
+use App\ApiBank\BankUkrainian;
 
 class GoodsController extends Controller
 {
@@ -27,11 +28,12 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add()
+    public function add(BankUkrainian $apiBank)
     {
+        $apiCurrency = $apiBank->chooseOneCurrency('USD');
         $models = Auto_model::all();
         $subCategories = Sub_category::all();
-        return view('admin.goods.create', compact('models', 'subCategories'));
+        return view('admin.goods.create', compact('models', 'subCategories', 'apiCurrency'));
     }
 
     /**

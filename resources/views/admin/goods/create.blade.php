@@ -93,13 +93,21 @@
                             <label for="sub-category">Подкатегория</label>
                             <select class="form-control" id="sub-category" name="sub-category">
                                 @forelse($subCategories as $subCategory)
-                                    <option>{{$subCategory->sub_category}}</option>
-                                    @endforeach
+                                <option>{{$subCategory->sub_category}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Добавить в базу</button>
                         {{ csrf_field() }}
                     </form>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="custom-border pad-15">
+                    <h5>Актуальный курс НБУ</h5>
+                    @foreach($apiCurrency as $value)
+                        <p>{{$value}}</p>
+                    @endforeach
                 </div>
             </div>
         </div>

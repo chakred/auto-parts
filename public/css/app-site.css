@@ -1,4 +1,119 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
+@import url(https://fonts.googleapis.com/css?family=Nunito);body * {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.head-block > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.head-block > div > div {
+  display: inline-block;
+  height: 50px;
+  text-align: center;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.head-block > div > div img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 50px;
+}
+
+.head-block > div > p {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+.head-block > div > p > span {
+  font-size: 13px;
+  font-weight: 200;
+}
+
+.cat-block {
+  overflow: hidden;
+}
+
+.cat-block > a {
+  min-height: 160px;
+  position: relative;
+}
+
+.cat-block > a img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  max-width: 235px;
+  margin: auto;
+  display: block;
+  padding: 15px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.cat-block .card-body .card-title h4 a {
+  font-size: 18px;
+  color: black;
+}
+
+.cat-block .card-body .card-text.trade-mark {
+  font-weight: 600;
+}
+
+.cat-block .card-body h5 {
+  text-align: center;
+}
+
+.cat-block .card-body h5 a {
+  text-align: center;
+  color: #272727;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.cat-block .card-body h6 {
+  text-align: left;
+  color: #28a745;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.cat-block .card-footer {
+  text-align: center;
+}
+
+.cat-block .card-footer small a {
+  color: black;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.goods-image {
+  padding: 15px;
+}
+
+.goods-image img {
+  margin: auto;
+}
+
+/*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
  * Copyright 2011-2019 Twitter, Inc.

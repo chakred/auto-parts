@@ -71,21 +71,19 @@ class GoodsController extends Controller
             $request->picture->storeAs('public/upload', $picture_name);
         }
 
-
-
-        $good->id_inner = 1;
-        $good->id_model = 1;
-        $good->id_sub_category = 1;
+        $good->id_inner = $request->input('inner_id') ? $request->input('inner_id') : null;
         $good->name_good = $request->input('name_good');
         $good->desc_good = $request->input('desc_good');
         $good->mark_good = $request->input('mark_good');
-        $good->mark_good = $request->input('mark_good');
         $good->country = $request->input('country');
+        $good->cost = $request->input('cost');
+        $good->discount = $request->input('discount');
+        $good->currency = $request->input('currency');
         $good->quantity = $request->input('quantity');
         $good->item = $request->input('item');
-        $good->discount = $request->input('discount');
-        $good->cost = $request->input('cost');
-        $good->currency = $request->input('currency');
+
+        $good->id_model = $request->input('auto');
+        $good->id_sub_category = $request->input('sub-category');
         $good->save();
 
         return back();
@@ -124,7 +122,40 @@ class GoodsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = Good::find($id);
+        $this->validate($request,[
+            'name_good' => 'required',
+            'desc_good' => 'required',
+            'img_path' => 'image|nullable|max:1999',
+
+        ]);
+
+        $good = new Good();
+        $picture_name = null;
+
+        if ($request->hasFile('picture')){
+            $picture_name = '/goods/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $good->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+
+        $good->id_inner = $request->input('inner_id') ? $request->input('inner_id') : null;
+        $good->name_good = $request->input('name_good');
+        $good->desc_good = $request->input('desc_good');
+        $good->mark_good = $request->input('mark_good');
+        $good->country = $request->input('country');
+        $good->cost = $request->input('cost');
+        $good->discount = $request->input('discount');
+        $good->currency = $request->input('currency');
+        $good->quantity = $request->input('quantity');
+        $good->item = $request->input('item');
+
+        $good->id_model = $request->input('auto');
+        $good->id_sub_category = $request->input('sub-category');
+
+        $model->save();
+
+        return redirect('/admin/model-auto');
     }
 
     /**

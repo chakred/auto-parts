@@ -8,9 +8,8 @@ use App\Auto_model;
 use App\Auto_mark;
 use App\Good;
 use App\Category;
-use App\Sub_category;
 
-class SubCategoriesController extends Controller
+class GoodsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +18,14 @@ class SubCategoriesController extends Controller
      */
     public function index(Request $request)
     {
-        $categoryId = $request->route('category');
+        $subCategoryId = $request->route('subCategory');
         $modelId = $request->route('model');
-        $model = Auto_model::where('id','=',  $modelId)->first();
-        $marks = Auto_mark::all();
-        $subCategories = Sub_category::where('id_category','=', $categoryId)->get();
 
-        return view ('pages.sub-categories-page', compact('model','marks', 'subCategories'));
+        $model = Auto_model::where('id','=', $modelId)->first();
+        $marks = Auto_mark::all();
+        $relatedGoods = Good::where('id_model','=', $modelId)->where('id_sub_category','=', $subCategoryId)->get();
+
+        return view ('pages.goods-page', compact('model','marks', 'relatedGoods'));
     }
 
     /**

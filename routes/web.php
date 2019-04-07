@@ -43,7 +43,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
 
 Route::get('/', 'Web\FrontPageController@index')->name('front-page');
 Route::get('categories/{id}', 'Web\CategoriesController@index')->name('categories-site');
-Route::get('sub-categories/{id}', 'Web\SubCategoriesController@index')->name('sub-categories-site');
+Route::get('sub-categories/{category}/{model}', 'Web\SubCategoriesController@index')->name('sub-categories-site');
+Route::get('goods/{subCategory}/{model}', 'Web\GoodsController@index')->name('goods-site');
+Route::get('goods/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
+
 
 Auth::routes();
 

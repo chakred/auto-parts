@@ -85,7 +85,7 @@
                             <label for="auto">Модель авто</label>
                             <select class="form-control" id="auto" name="auto">
                                 @forelse($models as $model)
-                                <option>{{$model->autoMark->name_mark .' '.$model->name_model .' / '.$model->year.'г.'.' / '.$model->engine.'L.'}}</option>
+                                <option value="{{$model->id}}">{{$model->autoMark->name_mark .' '.$model->name_model .' / '.$model->year.'г.'.' / '.$model->engine.'L.'}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -93,7 +93,7 @@
                             <label for="sub-category">Подкатегория</label>
                             <select class="form-control" id="sub-category" name="sub-category">
                                 @forelse($subCategories as $subCategory)
-                                <option>{{$subCategory->sub_category}}</option>
+                                <option value="{{$subCategory->id}}">{{$subCategory->sub_category}}</option>
                                 @endforeach
                             </select>
                         </div>

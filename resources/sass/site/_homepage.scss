@@ -1,0 +1,102 @@
+body *{
+    font-family: 'Montserrat', sans-serif;
+}
+.head-block {
+    >div {
+        display: flex;
+        justify-content: center;
+        padding: 5px;
+        align-items: center;
+        >div {
+            display: inline-block;
+            height: 50px;
+            text-align: center;
+            overflow: hidden;
+            vertical-align: middle;
+            img {
+                object-fit: cover;
+                height: 50px;
+            }
+        }
+        >p {
+            font-size: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 0;
+            padding: 5px;
+            >span {
+                font-size: 13px;
+                font-weight: 200;
+            }
+        }
+    }
+}
+
+.cat-block {
+    overflow: hidden;
+    >a {
+        min-height: 160px;
+        position: relative;
+        img {
+            object-fit: cover;
+            width: 100%;
+            max-width: 235px;
+            margin: auto;
+            display: block;
+            padding: 15px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    }
+    .card-body {
+        .card-title {
+            h4 {
+                a {
+                    font-size: 18px;
+                    color: black;
+                }
+            }
+        }
+        .card-text.trade-mark {
+            font-weight: 600;
+        }
+        h5 {
+            text-align: center;
+            a {
+                text-align: center;
+                color: #272727;
+                text-transform: uppercase;
+                font-size: 15px;
+                font-weight: bold;
+            }
+        }
+        h6 {
+            text-align: left;
+            color: #28a745;
+            font-weight: 800;
+            font-size: 18px;
+        }
+    }
+    .card-footer {
+        text-align: center;
+        small {
+            a {
+                color: black;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+.goods-image {
+    padding: 15px;
+    img {
+        margin: auto;
+    }
+}
+

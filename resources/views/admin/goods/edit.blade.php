@@ -6,6 +6,7 @@
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
                     <h5>Добавить товар, привязать товар к нужной марке, подкатегирии товара:</h5>
+                    {{--{{dd($good)}}--}}
                     <form method="POST" action="{{ route('update-goods', ['good' => $good->id]) }}" enctype="multipart/form-data">
                         <div class="form-group">
                             <img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$good->img_path}}">
@@ -14,16 +15,16 @@
                         </div>
                         <div class="form-group">
                             <label for="nameOfGood">Название товара</label>
-                            <input type="text" class="form-control" name="name_good">
+                            <input type="text" class="form-control" name="name_good" value="{{$good->name_good}}">
                         </div>
                         <div class="form-group">
                             <label for="description_goods">Описание товара</label>
-                            <textarea class="form-control" id="description_goods" rows="5" name ="desc_good"></textarea>
+                            <textarea class="form-control" id="description_goods" rows="5" name ="desc_good">{{$good->desc_good}}</textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="markOfGood">Торговая марка</label>
-                                <input type="text" class="form-control" name="mark_good">
+                                <input type="text" class="form-control" name="mark_good" value="{{$good->mark_good}}">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="countryOfGood">Страна</label>
@@ -37,17 +38,18 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="innerId">Артикул</label>
-                                <input type="text" class="form-control" id ="innerId" name="inner_id">
+                                <input type="text" class="form-control" id ="innerId" name="inner_id" value="{{$good->id_inner}}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="costOfGoods">Цена закупки</label>
-                                <input type="text" class="form-control" name="cost">
+                                <input type="text" class="form-control" name="cost" value="{{$good->cost}}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="discount">Скидка %</label>
                                 <select class="form-control" id="discount" name="discount">
+                                    <option selected="selected">{{$good->discount}}</option>
                                     <option>0</option>
                                     <option>5</option>
                                     <option>10</option>
@@ -64,6 +66,7 @@
                             <div class="form-group col-md-2">
                                 <label for="currency">Валюта</label>
                                 <select class="form-control" id="currency" name="currency">
+                                    <option selected="selected">{{$good->currency}}</option>
                                     <option>EUR</option>
                                     <option>UAH</option>
                                     <option>USD</option>
@@ -71,11 +74,12 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="quantity">Количество</label>
-                                <input type="text" class="form-control" name="quantity">
+                                <input type="text" class="form-control" name="quantity" value="{{$good->quantity}}">
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="itemOfGood">Еденица изм.</label>
                                 <select class="form-control" id="itemOfGood" name="item">
+                                    <option selected="selected">{{$good->item}}</option>
                                     <option>шт.</option>
                                     <option>л.</option>
                                     <option>кг.</option>

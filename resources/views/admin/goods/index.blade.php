@@ -29,7 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($goods as $good)
+                        @forelse($goods as $good)
                         <tr>
                         <td>{{$good->id}}</td>
                             @if($good->img_path)
@@ -57,7 +57,11 @@
                             </form>
                         </td>
                         </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td>Нет товаров</td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>

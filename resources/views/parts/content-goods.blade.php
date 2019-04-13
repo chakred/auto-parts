@@ -24,7 +24,7 @@
                         <h4>
                             <a href="{{ route('goods-single-site', ['subCategory' => $goods->id_sub_category, 'model' => $model->id, 'id' => $goods->id]) }}">{{$goods->name_good}}</a>
                         </h4>
-                        <h6>{{$goods->cost}} грн.</h6>
+                        <h6>{{$goods->convertedPrice}} грн.</h6>
                     </div>
                     <p class="card-text">
                         {{$goods->desc_good}}

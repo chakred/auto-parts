@@ -1,43 +1,39 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Auto_model;
-use App\Auto_mark;
 use App\Good;
-use App\Category;
 use App\ApiBank\BankUkrainian;
+use App\Order;
 
-class GoodsSingleController extends Controller
+class OrdersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, BankUkrainian $apiBank)
+    public function index(BankUkrainian $apiBank)
     {
-        $subCategoryId = $request->route('subCategory');
-        $modelId = $request->route('model');
-        $goodsId = $request->route('id');
+        $orders = Order::orderBy('id', 'DESC')->paginate(15);
 
-        $model = Auto_model::where('id','=', $modelId)->first();
-        $marks = Auto_mark::all();
-        $relatedGoods = Good::where('id_model','=', $modelId)->where('id_sub_category','=', $subCategoryId)->where('id','=', $goodsId)->first();
+        foreach ($orders as $value) {
 
-        if ($relatedGoods->currency == 'USD') {
-            $apiCurrency = $apiBank->chooseOneCurrency('USD');
-            $convertedPrice = rtrim(round($relatedGoods->cost*$apiCurrency['rate'],0),0);
-        } elseif ($relatedGoods->currency == 'EUR') {
-            $apiCurrency = $apiBank->chooseOneCurrency('EUR');
-            $convertedPrice = rtrim(round($relatedGoods->cost*$apiCurrency['rate'],0),0);
-        } else {
-            $convertedPrice = $relatedGoods->cost;
+            if ($value->goods->currency == 'USD') {
+                $apiCurrency = $apiBank->chooseOneCurrency('USD');
+                $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
+            } elseif ($orders->goods->currency == 'EUR') {
+                $apiCurrency = $apiBank->chooseOneCurrency('EUR');
+                $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
+            } else {
+                $value->convertedPrice = $value->cost;
+            }
+            $value->totalSum = $value->convertedPrice*$value->quantity;
         }
 
-        return view ('pages.goods-single-page', compact('model','marks', 'relatedGoods' , 'convertedPrice'));
+        return view('admin.orders.index', compact( 'orders'));
     }
 
     /**

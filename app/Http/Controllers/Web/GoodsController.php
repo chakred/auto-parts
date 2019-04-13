@@ -8,6 +8,7 @@ use App\Auto_model;
 use App\Auto_mark;
 use App\Good;
 use App\Category;
+use App\ApiBank\BankUkrainian;
 
 class GoodsController extends Controller
 {
@@ -16,7 +17,7 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, BankUkrainian $apiBank)
     {
         $subCategoryId = $request->route('subCategory');
         $modelId = $request->route('model');
@@ -24,6 +25,18 @@ class GoodsController extends Controller
         $model = Auto_model::where('id','=', $modelId)->first();
         $marks = Auto_mark::all();
         $relatedGoods = Good::where('id_model','=', $modelId)->where('id_sub_category','=', $subCategoryId)->get();
+
+        foreach ($relatedGoods as $value) {
+            if ($value->currency == 'USD') {
+                $apiCurrency = $apiBank->chooseOneCurrency('USD');
+                $value->convertedPrice = rtrim(round($value->cost*$apiCurrency['rate'],0),0);
+            } elseif ($relatedGoods->currency == 'EUR') {
+                $apiCurrency = $apiBank->chooseOneCurrency('EUR');
+                $value->convertedPrice = rtrim(round($value->cost*$apiCurrency['rate'],0),0);
+            } else {
+                $value->convertedPrice = $value->cost;
+            }
+        }
 
         return view ('pages.goods-page', compact('model','marks', 'relatedGoods'));
     }

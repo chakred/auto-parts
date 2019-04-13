@@ -39,6 +39,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::put('/goods/edit/{id}', 'GoodsController@update')->name('update-goods');
     Route::delete('/goods/{id}', 'GoodsController@destroy')->name('delete-goods');
 
+    Route::get('/orders', 'OrdersController@index')->name('orders');
+
+
 });
 
 Route::get('/', 'Web\FrontPageController@index')->name('front-page');
@@ -46,6 +49,7 @@ Route::get('categories/{id}', 'Web\CategoriesController@index')->name('categorie
 Route::get('sub-categories/{category}/{model}', 'Web\SubCategoriesController@index')->name('sub-categories-site');
 Route::get('goods/{subCategory}/{model}', 'Web\GoodsController@index')->name('goods-site');
 Route::get('goods/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
+Route::post('goods/order', 'Web\OrderController@store')->name('store-order');
 
 
 Auth::routes();

@@ -40,14 +40,38 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="costOfGoods">Цена закупки</label>
                                 <input type="text" class="form-control" name="cost">
                             </div>
                             <div class="form-group col-md-2">
+                                <label for="currency">Валюта</label>
+                                <select class="form-control" id="currency" name="currency">
+                                    <option>EUR</option>
+                                    <option>UAH</option>
+                                    <option>USD</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="profit">Маржа %</label>
+                                <select class="form-control" id="profit" name="profit">
+                                    <option>0</option>
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>15</option>
+                                    <option>20</option>
+                                    <option>25</option>
+                                    <option selected="selected">30</option>
+                                    <option>35</option>
+                                    <option>40</option>
+                                    <option>45</option>
+                                    <option>50</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
                                 <label for="discount">Скидка %</label>
                                 <select class="form-control" id="discount" name="discount">
-                                    <option>0</option>
+                                    <option selected="selected">0</option>
                                     <option>5</option>
                                     <option>10</option>
                                     <option>15</option>
@@ -61,14 +85,6 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
-                                <label for="currency">Валюта</label>
-                                <select class="form-control" id="currency" name="currency">
-                                    <option>EUR</option>
-                                    <option>UAH</option>
-                                    <option>USD</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3">
                                 <label for="quantity">Количество</label>
                                 <input type="text" class="form-control" name="quantity">
                             </div>
@@ -105,7 +121,11 @@
             <div class="col-sm-4">
                 <div class="custom-border pad-15">
                     <h5>Актуальный курс НБУ</h5>
-                    @foreach($apiCurrency as $value)
+                    @foreach($apiCurrencyUsd as $value)
+                        <p>{{$value}}</p>
+                    @endforeach
+                    <hr>
+                    @foreach($apiCurrencyEur as $value)
                         <p>{{$value}}</p>
                     @endforeach
                 </div>

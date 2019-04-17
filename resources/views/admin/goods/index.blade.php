@@ -18,8 +18,8 @@
                             <th scope="col">Название товара</th>
                             <th scope="col">Марка товара</th>
                             <th scope="col">Страна</th>
-                            <th scope="col">Цена закупки</th>
-                            <th scope="col">Валюта</th>
+                            <th scope="col">Цена закупки за шт.</th>
+                            <th scope="col">Цена продажи за шт.</th>
                             <th scope="col">Кол</th>
                             <th scope="col">Марка авто</th>
                             <th scope="col">Модель авто</th>
@@ -40,8 +40,8 @@
                         <td width="10%">{{$good->name_good}}</td>
                         <td width="15%">{{$good->mark_good}}</td>
                         <td width="10%">{{$good->country}}</td>
-                        <td width="15%">{{$good->cost}}</td>
-                        <td>{{$good->currency}}</td>
+                        <td width="15%">{{$good->cost.' '.$good->currency}}</td>
+                        <td>{{$good->convertedPrice.' грн'}}</td>
                         <td>{{$good->quantity}}</td>
                         <td>{{$good->autoModels->autoMark->name_mark}}</td>
                         <td>{{$good->autoModels->name_model}}</td>
@@ -49,7 +49,6 @@
                         <td>{{$good->subCategories->sub_category}}</td>
                         <td width="5%">
                             <a href="{{ route('edit-goods', ['good' => $good->id]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
-
                             <form method="POST" action ="{{ route('delete-goods', ['good' => $good->id]) }}">
                                 {{ method_field('DELETE') }}
                                 <button type="submit" class="btn btn-outline-secondary delete-good" data-good-id ="{{$good->id}}" title="Удалить"><i class="far fa-trash-alt"></i></button>

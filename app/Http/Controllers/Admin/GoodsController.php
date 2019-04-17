@@ -16,10 +16,37 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BankUkrainian $apiBank)
     {
         $models = Auto_model::all();
         $goods = Good::all();
+
+        foreach ($goods as $good) {
+            if (isset($good->profit) && $good->profit != null) {
+                $percentOfProfit = $good->cost/100*$good->profit;
+                $good->convertedPrice = $good->cost+$percentOfProfit;
+            } else {
+                $good->convertedPrice = $good->cost;
+            }
+            if (isset($good->discount) && $good->discount != null) {
+                $percentOfDiscount = $good->convertedPrice/100*$good->profit;
+                $good->convertedPrice = $good->convertedPrice-$percentOfDiscount;
+            }
+
+            switch($good->currency) {
+                case 'EUR':
+                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
+                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                    break;
+                case 'USD':
+                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
+                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                    break;
+            }
+
+
+        }
+
         return view('admin.goods.index', compact('models', 'goods'));
     }
 
@@ -30,10 +57,11 @@ class GoodsController extends Controller
      */
     public function add(BankUkrainian $apiBank)
     {
-        $apiCurrency = $apiBank->chooseOneCurrency('USD');
+        $apiCurrencyUsd = $apiBank->chooseOneCurrency('USD');
+        $apiCurrencyEur = $apiBank->chooseOneCurrency('EUR');
         $models = Auto_model::all();
         $subCategories = Sub_category::all();
-        return view('admin.goods.create', compact('models', 'subCategories', 'apiCurrency'));
+        return view('admin.goods.create', compact('models', 'subCategories', 'apiCurrencyUsd', 'apiCurrencyEur'));
     }
 
     /**
@@ -77,6 +105,7 @@ class GoodsController extends Controller
         $good->mark_good = $request->input('mark_good');
         $good->country = $request->input('country');
         $good->cost = $request->input('cost');
+        $good->profit = $request->input('profit');
         $good->discount = $request->input('discount');
         $good->currency = $request->input('currency');
         $good->quantity = $request->input('quantity');
@@ -110,7 +139,9 @@ class GoodsController extends Controller
     public function edit($id)
     {
         $good = Good::find($id);
-        return view ('admin.goods.edit')->with('good', $good);
+        $models = Auto_model::all();
+        $subCategories = Sub_category::all();
+        return view ('admin.goods.edit', compact('good', 'models', 'subCategories'));
     }
 
     /**
@@ -145,6 +176,7 @@ class GoodsController extends Controller
         $good->mark_good = $request->input('mark_good');
         $good->country = $request->input('country');
         $good->cost = $request->input('cost');
+        $good->profit = $request->input('profit');
         $good->discount = $request->input('discount');
         $good->currency = $request->input('currency');
         $good->quantity = $request->input('quantity');

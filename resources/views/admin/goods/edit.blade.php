@@ -42,9 +42,26 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="costOfGoods">Цена закупки</label>
                                 <input type="text" class="form-control" name="cost" value="{{$good->cost}}">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="profit">Маржа %</label>
+                                <select class="form-control" id="profit" name="profit">
+                                    <option selected="selected">{{$good->profit}}</option>
+                                    <option>0</option>
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>15</option>
+                                    <option>20</option>
+                                    <option>25</option>
+                                    <option>30</option>
+                                    <option>35</option>
+                                    <option>40</option>
+                                    <option>45</option>
+                                    <option>50</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="discount">Скидка %</label>
@@ -72,7 +89,7 @@
                                     <option>USD</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="quantity">Количество</label>
                                 <input type="text" class="form-control" name="quantity" value="{{$good->quantity}}">
                             </div>
@@ -89,17 +106,19 @@
                         <div class="form-group">
                             <label for="auto">Модель авто</label>
                             <select class="form-control" id="auto" name="auto">
-                                {{--@forelse($models as $model)--}}
-                                {{--<option>{{$model->autoMark->name_mark .' '.$model->name_model .' / '.$model->year.'г.'.' / '.$model->engine.'L.'}}</option>--}}
-                                {{--@endforeach--}}
+                                <option value="{{$good->autoModels->id}}">{{$good->autoModels->autoMark->name_mark.' '.$good->autoModels->name_model.' / '.$good->autoModels->year.'г.'.' / '.$good->autoModels->engine.'L.'}}</option>
+                                @forelse($models as $model)
+                                <option value="{{$model->id}}">{{$model->autoMark->name_mark .' '.$model->name_model .' / '.$model->year.'г.'.' / '.$model->engine.'L.'}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="sub-category">Подкатегория</label>
                             <select class="form-control" id="sub-category" name="sub-category">
-                                {{--@forelse($subCategories as $subCategory)--}}
-                                    {{--<option>{{$subCategory->sub_category}}</option>--}}
-                                    {{--@endforeach--}}
+                                <option value="{{$good->subCategories->id}}">{{$good->subCategories->sub_category}}</option>
+                                @forelse($subCategories as $subCategory)
+                                    <option value="{{$subCategory->id}}">{{$subCategory->sub_category}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Обновить</button>

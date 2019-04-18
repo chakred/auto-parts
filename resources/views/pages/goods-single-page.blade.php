@@ -15,7 +15,7 @@
                 @if($relatedGoods->img_path)
                     <img width="200" src="{{env('APP_URL').'/storage/upload'.$relatedGoods->img_path}}">
                 @else
-                    <img src="http://dummyimage.com/450x350/ffffff/545454&text=No+image" />
+                    <img src="http://dummyimage.com/250x240/ffffff/545454&text=No+image" />
                 @endif
             </div>
             {{--@include('parts.sidebar_marks-and-models')--}}

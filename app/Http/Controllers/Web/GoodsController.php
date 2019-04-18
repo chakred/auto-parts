@@ -26,15 +26,27 @@ class GoodsController extends Controller
         $marks = Auto_mark::all();
         $relatedGoods = Good::where('id_model','=', $modelId)->where('id_sub_category','=', $subCategoryId)->get();
 
-        foreach ($relatedGoods as $value) {
-            if ($value->currency == 'USD') {
-                $apiCurrency = $apiBank->chooseOneCurrency('USD');
-                $value->convertedPrice = rtrim(round($value->cost*$apiCurrency['rate'],0),0);
-            } elseif ($relatedGoods->currency == 'EUR') {
-                $apiCurrency = $apiBank->chooseOneCurrency('EUR');
-                $value->convertedPrice = rtrim(round($value->cost*$apiCurrency['rate'],0),0);
+        foreach ($relatedGoods as $good) {
+            if (isset($good->profit) && $good->profit != null) {
+                $percentOfProfit = $good->cost/100*$good->profit;
+                $good->convertedPrice = $good->cost+$percentOfProfit;
             } else {
-                $value->convertedPrice = $value->cost;
+                $good->convertedPrice = $good->cost;
+            }
+            if (isset($good->discount) && $good->discount != null) {
+                $percentOfDiscount = $good->convertedPrice/100*$good->profit;
+                $good->convertedPrice = $good->convertedPrice-$percentOfDiscount;
+            }
+
+            switch($good->currency) {
+                case 'EUR':
+                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
+                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                    break;
+                case 'USD':
+                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
+                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                    break;
             }
         }
 

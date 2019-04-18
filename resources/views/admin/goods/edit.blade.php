@@ -6,7 +6,6 @@
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
                     <h5>Добавить товар, привязать товар к нужной марке, подкатегирии товара:</h5>
-                    {{--{{dd($good)}}--}}
                     <form method="POST" action="{{ route('update-goods', ['good' => $good->id]) }}" enctype="multipart/form-data">
                         <div class="form-group">
                             <img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$good->img_path}}">

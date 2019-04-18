@@ -12,6 +12,10 @@
                     {{--<a href="#" class="list-group-item">Category 3</a>--}}
                 {{--</div>--}}
                 @include('parts.sidebar_marks-and-models')
+                <br/>
+                @include('parts.sidebar_contacts')
+                <br/>
+                @include('parts.sidebar_working-hours')
 
             </div>
             <!-- /.col-lg-3 -->

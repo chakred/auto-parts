@@ -43,8 +43,6 @@ class GoodsController extends Controller
                     $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
                     break;
             }
-
-
         }
 
         return view('admin.goods.index', compact('models', 'goods'));

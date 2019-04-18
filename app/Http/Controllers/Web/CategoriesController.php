@@ -26,7 +26,9 @@ class CategoriesController extends Controller
         $relCatCollection = array();
 
         foreach ($relatedGoods as $subCategory) {
-            $relCatCollection[] = $subCategory->subCategories->category;
+            if (!in_array($subCategory->subCategories->category, $relCatCollection)) {
+                $relCatCollection[] = $subCategory->subCategories->category;
+            }
         }
 
         return view ('pages.categories-page', compact('model','marks', 'relCatCollection'));

@@ -27,17 +27,30 @@ class GoodsSingleController extends Controller
         $marks = Auto_mark::all();
         $relatedGoods = Good::where('id_model','=', $modelId)->where('id_sub_category','=', $subCategoryId)->where('id','=', $goodsId)->first();
 
-        if ($relatedGoods->currency == 'USD') {
-            $apiCurrency = $apiBank->chooseOneCurrency('USD');
-            $convertedPrice = rtrim(round($relatedGoods->cost*$apiCurrency['rate'],0),0);
-        } elseif ($relatedGoods->currency == 'EUR') {
-            $apiCurrency = $apiBank->chooseOneCurrency('EUR');
-            $convertedPrice = rtrim(round($relatedGoods->cost*$apiCurrency['rate'],0),0);
+        if (isset($relatedGoods->profit) && $relatedGoods->profit != null) {
+            $percentOfProfit = $relatedGoods->cost/100*$relatedGoods->profit;
+            $relatedGoods->convertedPrice = $relatedGoods->cost+$percentOfProfit;
         } else {
-            $convertedPrice = $relatedGoods->cost;
+            $relatedGoods->convertedPrice = $relatedGoods->cost;
+        }
+        if (isset($relatedGoods->discount) && $relatedGoods->discount != null) {
+            $percentOfDiscount = $relatedGoods->convertedPrice/100*$relatedGoods->profit;
+            $relatedGoods->convertedPrice = $relatedGoods->convertedPrice-$percentOfDiscount;
         }
 
-        return view ('pages.goods-single-page', compact('model','marks', 'relatedGoods' , 'convertedPrice'));
+        switch($relatedGoods->currency) {
+            case 'EUR':
+                $apiCurrency = $apiBank->chooseOneCurrency($relatedGoods->currency);
+                $relatedGoods->convertedPrice = round($relatedGoods->convertedPrice*$apiCurrency['rate']);
+                break;
+            case 'USD':
+                $apiCurrency = $apiBank->chooseOneCurrency($relatedGoods->currency);
+                $relatedGoods->convertedPrice = round($relatedGoods->convertedPrice*$apiCurrency['rate']);
+                break;
+        }
+
+
+        return view ('pages.goods-single-page', compact('model','marks', 'relatedGoods'));
     }
 
     /**

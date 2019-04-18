@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">{{$relatedGoods->name_good}}</h3>
-            <h4>{{$convertedPrice}} грн.</h4>
+            <h4>{{$relatedGoods->convertedPrice}} грн.</h4>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary btn-success mb-3" data-toggle="modal" data-target="#buyProductModal">
                     Купить
@@ -52,7 +52,7 @@
 
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Заказ товара</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -82,7 +82,7 @@
                         </td>
                         <td>{{$relatedGoods->name_good}}</td>
                         <td>{{$relatedGoods->mark_good}}</td>
-                        <td>{{$convertedPrice}} грн.</td>
+                        <td>{{$relatedGoods->convertedPrice}} грн.</td>
                         <td>
                             <div id="field1">
                                 <button type="button" id="sub" class="sub">-</button>
@@ -102,16 +102,14 @@
                 <div class="form-group col-md-4">
                     <input type="phone" class="form-control" name="buyer_phone" placeholder="Номер телефона">
                 </div>
-
-                    <button type="submit" class="btn btn-primary">Добавить в базу</button>
-                    {{ csrf_field() }}
-                </form>
                 <p>Разместите Ваш заказ и мы в течении часа свяжимся с вами для уточнения условий доставки и оплаты товара.</p>
-                <i>В скорем времени будет доступка онлайн покупка через Приват24</i>
+                <p>В скорем времени будет доступка онлайн покупка через Приват24</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Заказать</button>
+                <button type="submit" class="btn btn-success">Заказать</button>
+                {{ csrf_field() }}
+                </form>
             </div>
         </div>
     </div>

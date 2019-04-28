@@ -19,6 +19,7 @@ class GoodsSingleController extends Controller
      */
     public function index(Request $request, BankUkrainian $apiBank)
     {
+
         $subCategoryId = $request->route('subCategory');
         $modelId = $request->route('model');
         $goodsId = $request->route('id');

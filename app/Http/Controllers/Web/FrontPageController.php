@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Auto_model;
 use App\Auto_mark;
+use App\ViewCounter;
 
 class FrontPageController extends Controller
 {
@@ -14,8 +15,9 @@ class FrontPageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ViewCounter $viewCounter)
     {
+        $viewCounter->createCookie();
         $models = Auto_model::all();
         $marks = Auto_mark::all();
 

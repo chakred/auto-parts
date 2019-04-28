@@ -8,6 +8,7 @@ use App\Auto_model;
 use App\Auto_mark;
 use App\Good;
 use App\Category;
+use App\ViewCounter;
 
 class CategoriesController extends Controller
 {
@@ -16,8 +17,9 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, ViewCounter $viewCounter)
     {
+        $viewCounter->createCookie();
         $modelId = $request->route('id');
         $model = Auto_model::where('id','=', $modelId)->first();
         $marks = Auto_mark::all();

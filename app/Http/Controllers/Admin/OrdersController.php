@@ -24,7 +24,7 @@ class OrdersController extends Controller
             if ($value->goods->currency == 'USD') {
                 $apiCurrency = $apiBank->chooseOneCurrency('USD');
                 $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
-            } elseif ($orders->goods->currency == 'EUR') {
+            } elseif ($value->goods->currency == 'EUR') {
                 $apiCurrency = $apiBank->chooseOneCurrency('EUR');
                 $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
             } else {
@@ -99,6 +99,8 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $good = Order::find($id);
+        $good->delete();
+        return back();
     }
 }

@@ -38,7 +38,7 @@
                         <td>{{$order->totalSum}}грн.</td>
                         <td width="5%">
                             <a href="{{ route('edit-goods', ['good' => $order->id]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
-                            <form method="POST" action ="{{ route('delete-goods', ['good' => $order->id]) }}">
+                            <form method="POST" action ="{{ route('delete-orders', ['id' => $order->id]) }}">
                                 {{ method_field('DELETE') }}
                                 <button type="submit" class="btn btn-outline-secondary delete-good" data-good-id ="{{$order->id}}" title="Удалить"><i class="far fa-trash-alt"></i></button>
                                 {{ csrf_field() }}

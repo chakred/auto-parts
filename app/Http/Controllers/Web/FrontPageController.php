@@ -17,11 +17,11 @@ class FrontPageController extends Controller
      */
     public function index(ViewCounter $viewCounter)
     {
-        $viewCounter->createCookie();
+        $viewNumbers = $viewCounter->createCookie();
         $models = Auto_model::all();
         $marks = Auto_mark::all();
 
-        return view ('pages.front-page', compact('models','marks'));
+        return view ('pages.front-page', compact('models','marks', 'viewNumbers'));
     }
 
     /**

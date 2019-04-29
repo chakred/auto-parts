@@ -19,7 +19,7 @@ class CategoriesController extends Controller
      */
     public function index(Request $request, ViewCounter $viewCounter)
     {
-        $viewCounter->createCookie();
+        $viewNumbers = $viewCounter->createCookie();
         $modelId = $request->route('id');
         $model = Auto_model::where('id','=', $modelId)->first();
         $marks = Auto_mark::all();
@@ -33,7 +33,7 @@ class CategoriesController extends Controller
             }
         }
 
-        return view ('pages.categories-page', compact('model','marks', 'relCatCollection'));
+        return view ('pages.categories-page', compact('model','marks', 'relCatCollection', 'viewNumbers'));
     }
 
     /**

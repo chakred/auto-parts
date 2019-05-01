@@ -52,13 +52,12 @@ class CategoriesController extends Controller
         $picture_name = null;
 
         if ($request->hasFile('picture')){
-
             $picture_name = '/categories/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
             $new_category->img_path = $picture_name;
             $request->picture->storeAs('public/upload', $picture_name);
         }
 
-
+        $new_category->slug = str_slug($request->input('category'), '-');
         $new_category->save();
         return redirect('/admin/categories');
     }

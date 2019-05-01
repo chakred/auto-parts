@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('admin.errors.error')
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border pad-15">

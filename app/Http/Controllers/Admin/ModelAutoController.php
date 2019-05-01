@@ -51,19 +51,19 @@ class ModelAutoController extends Controller
     public function store(Request $request)
     {
 
-//        $this->validate($request,[
-//            'name_model' => 'required',
-//            'year' => 'required',
-//            'engine' => 'required',
-//            'type_of_engine' => 'required',
-//            'transmission' => 'required'
-//
-//        ]);
+        $this->validate($request,[
+            'name_model' => 'required',
+            'year' => 'required',
+            'value_engine' => 'required',
+            'type_engine' => 'required',
+            'transmission' => 'required',
+            'type_transmission' => 'nullable'
+        ]);
 
         $model = new Auto_model();
         $picture_name = null;
 
-        if ($request->hasFile('picture')){
+        if ($request->hasFile('picture')) {
             $picture_name = '/models/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
             $model->img_path = $picture_name;
             $request->picture->storeAs('public/upload', $picture_name);
@@ -78,6 +78,7 @@ class ModelAutoController extends Controller
         $model->type_of_engine = $request->input('type_engine');
         $model->transmission = $request->input('transmission');
         $model->type_of_transmission = $request->input('type_transmission');
+        $model->slug = str_slug($model->name_model, '-');
 
         $model->save();
 
@@ -117,13 +118,31 @@ class ModelAutoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'name_model' => 'required',
+            'year' => 'required',
+            'value_engine' => 'required',
+            'type_engine' => 'required',
+            'transmission' => 'required',
+            'type_transmission' => 'nullable'
+        ]);
+
         $model = Auto_model::find($id);
+        $picture_name = null;
+
+        if ($request->hasFile('picture')) {
+            $picture_name = '/models/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $model->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+
         $model->name_model = $request->input('name_model');
         $model->year = $request->input('year');
         $model->engine = $request->input('value_engine');
         $model->type_of_engine = $request->input('type_engine');
         $model->transmission = $request->input('transmission');
         $model->type_of_transmission = $request->input('type_transmission');
+        $model->slug = str_slug($model->name_model, '-');
 
         $model->save();
 
@@ -138,7 +157,6 @@ class ModelAutoController extends Controller
      */
     public function destroy($model)
     {
-//        dump( $model);
         $model = Auto_model::find($model);
         $model->delete();
         return back();

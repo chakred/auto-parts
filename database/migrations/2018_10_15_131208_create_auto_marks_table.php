@@ -17,6 +17,7 @@ class CreateAutoMarksTable extends Migration
             $table->increments('id');
             $table->string('name_mark');
             $table->string('img_path')->nullable();
+            $table->string('slug', 255)->default('');
         });
     }
 

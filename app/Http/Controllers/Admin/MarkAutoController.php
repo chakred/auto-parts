@@ -52,12 +52,12 @@ class MarkAutoController extends Controller
             $request->picture->storeAs('public/upload', $picture_name);
         }
 
-
         $mark->name_mark = $request->input('name_mark');
+        $mark->slug = str_slug($mark->name_mark, '-');
 
         $mark->save();
 
-        return redirect('/admin');
+        return back();
     }
 
     /**

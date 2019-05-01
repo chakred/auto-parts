@@ -8,6 +8,7 @@
                 <i>Редактировать данные уже созданной модели авто</i>
             </div>
         </div>
+        @include('admin.errors.error')
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border pad-15">

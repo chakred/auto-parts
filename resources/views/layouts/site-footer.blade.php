@@ -1,7 +1,12 @@
 <!-- Footer -->
 <footer class="py-5 bg-dark" id="footer">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Auto Parts {{date('Y')}}</p>
+        <p class="m-0 text-center text-white">
+            &copy;
+            <strong>Privoz24</strong>
+            <br/>
+            {{date('Y')}}
+        </p>
         @isset($viewNumbers)
             <p class="m-0 text-center text-white">
                 <i class="fas fa-eye"></i>

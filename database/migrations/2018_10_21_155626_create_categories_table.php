@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id');
             $table->string('category', 100);
             $table->string('img_path')->nullable();
+            $table->string('slug', 255)->default('');
         });
     }
 

@@ -31,9 +31,13 @@
             </div>
         </div>
     @empty
-        Нет моделей данной марки
+        <div class="col-sm-12">
+            <p>Нет моделей данной марки</p>
+        </div>
     @endforelse
 </div>
 @empty
- моделей данной марки
+    <div class="col-sm-12">
+        <p>моделей данной марки</p>
+    </div>
 @endforelse

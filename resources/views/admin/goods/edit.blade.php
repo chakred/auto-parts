@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('admin.errors.error')
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
@@ -120,6 +121,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        {{ method_field('PUT') }}
                         <button type="submit" class="btn btn-primary">Обновить</button>
                         {{ csrf_field() }}
                     </form>

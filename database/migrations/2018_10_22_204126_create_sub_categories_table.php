@@ -18,6 +18,7 @@ class CreateSubCategoriesTable extends Migration
             $table->string('sub_category', 100);
             $table->string('img_path')->nullable();
             $table->integer('id_category');
+            $table->string('slug', 255)->default('');
         });
     }
 

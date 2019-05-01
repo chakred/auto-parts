@@ -85,7 +85,14 @@ class GoodsController extends Controller
             'name_good' => 'required',
             'desc_good' => 'required',
             'img_path' => 'image|nullable|max:1999',
-
+            'mark_good' => 'required',
+            'country' =>'required',
+            'cost' => 'required',
+            'profit' => 'required',
+            'currency' => 'required',
+            'quantity' => 'required',
+            'auto' => 'required',
+            'sub-category' => 'required'
         ]);
 
         $good = new Good();
@@ -111,6 +118,8 @@ class GoodsController extends Controller
 
         $good->id_model = $request->input('auto');
         $good->id_sub_category = $request->input('sub-category');
+        $good->slug = str_slug($good->name_good, '-');
+
         $good->save();
 
         return back();
@@ -151,15 +160,22 @@ class GoodsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = Good::find($id);
+
+        $good = Good::find($id);
         $this->validate($request,[
             'name_good' => 'required',
             'desc_good' => 'required',
             'img_path' => 'image|nullable|max:1999',
-
+            'mark_good' => 'required',
+            'country' =>'required',
+            'cost' => 'required',
+            'profit' => 'required',
+            'currency' => 'required',
+            'quantity' => 'required',
+            'auto' => 'required',
+            'sub-category' => 'required'
         ]);
 
-        $good = new Good();
         $picture_name = null;
 
         if ($request->hasFile('picture')){
@@ -182,10 +198,11 @@ class GoodsController extends Controller
 
         $good->id_model = $request->input('auto');
         $good->id_sub_category = $request->input('sub-category');
+        $good->slug = str_slug($good->name_good, '-');
 
-        $model->save();
+        $good->save();
 
-        return redirect('/admin/model-auto');
+        return redirect('/admin/goods');
     }
 
     /**

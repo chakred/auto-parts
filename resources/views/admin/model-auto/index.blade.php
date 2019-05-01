@@ -36,7 +36,7 @@
                                 @if($model->img_path)
                                     <td><img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$model->img_path}}"></td>
                                 @else
-                                    <td><img src="http://placehold.jp/80x80.png?text=Нет логотипа"></td>
+                                    <td><img src="http://placehold.jp/80x80.png?text=Нет картинки"></td>
                                 @endif
                                 <td width="10%">{{$model->autoMark->name_mark}}</td>
                                 <td width="15%">{{$model->name_model}}</td>

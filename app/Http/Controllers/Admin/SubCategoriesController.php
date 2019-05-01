@@ -69,6 +69,7 @@ class SubCategoriesController extends Controller
 
         $new_sub_category->sub_category = $sub_category;
         $new_sub_category->id_category = $category_id[0];
+        $new_sub_category->slug = str_slug($sub_category, '-');
 
         $new_sub_category->save();
         return back();

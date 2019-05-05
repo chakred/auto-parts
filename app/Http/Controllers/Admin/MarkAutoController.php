@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Auto_mark;
+use Image as ImageCrop;
 
 class MarkAutoController extends Controller
 {
@@ -39,7 +40,7 @@ class MarkAutoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name_mark' => 'required'
+            'name_mark' => 'required|unique:auto_marks'
 
         ]);
 
@@ -56,6 +57,10 @@ class MarkAutoController extends Controller
         $mark->slug = str_slug($mark->name_mark, '-');
 
         $mark->save();
+
+        $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+        $img->fit(200);
+        $img->save();
 
         return back();
     }

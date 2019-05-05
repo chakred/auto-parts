@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Auto_mark;
 use App\Auto_model;
+use Image as ImageCrop;
 
 class ModelAutoController extends Controller
 {
@@ -82,7 +83,13 @@ class ModelAutoController extends Controller
 
         $model->save();
 
-        return redirect('/admin');
+        $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+        $img->resize(null, 143, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save();
+
+        return redirect('/admin/model-auto');
 
     }
 

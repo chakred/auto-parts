@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('admin.errors.error')
         <div class="row">
             <div class="col-12 mb-5 mt-3 heavy">
                 <h1>Раздел: Марка авто</h1>

@@ -5,7 +5,7 @@
 
         <div class="row" style="margin-top: 100px">
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 mb-3">
                 @include('parts.sidebar_marks-and-models')
                 <br/>
                 @include('parts.sidebar_contacts')

@@ -25,6 +25,8 @@
             </div>
         </div>
     @empty
+        <div class="col-sm-12 mb-5">
         Нет категорий
+        </div>
     @endforelse
 </div>

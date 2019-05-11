@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('goods_id');
             $table->integer('quantity');
+            $table->float('bought_price')->nullable();
             $table->string('buyer_name', 100);
             $table->string('buyer_phone', 100);
             $table->string('status', 100)->default('new');

@@ -13,4 +13,5 @@ class Category extends Model
     {
         return $this->hasOne('App\Category', 'id_category' , 'id');
     }
+
 }

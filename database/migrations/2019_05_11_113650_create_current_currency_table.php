@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddProfitToGoods extends Migration
+class CreateCurrentCurrencyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddProfitToGoods extends Migration
      */
     public function up()
     {
-        Schema::table('goods', function (Blueprint $table) {
-            $table->integer('profit')->after('cost');
+        Schema::create('current_currency', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('currency_name', 100);
+            $table->float('rate');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddProfitToGoods extends Migration
      */
     public function down()
     {
-        Schema::table('goods', function (Blueprint $table) {
-            $table->dropColumn('profit');
-        });
+        Schema::dropIfExists('current_currency');
     }
 }

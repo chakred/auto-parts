@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Image as ImageCrop;
 
 use App\Category;
 
@@ -17,8 +18,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::all();
-
-        return view('admin.categories.index')->with(['categories' =>  $categories]);
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -39,11 +39,8 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request,[
-            'category' => 'required',
-            'img_path' => 'image|nullable|max:1999',
-
+            'category' => 'required|unique:categories',
         ]);
 
         $new_category = new Category();
@@ -56,9 +53,17 @@ class CategoriesController extends Controller
             $new_category->img_path = $picture_name;
             $request->picture->storeAs('public/upload', $picture_name);
         }
-
         $new_category->slug = str_slug($request->input('category'), '-');
         $new_category->save();
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload' . $picture_name));
+            $img->resize(null, 143, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
+
         return redirect('/admin/categories');
     }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Auto_model;
 use App\Sub_category;
 use App\ApiBank\BankUkrainian;
+use Image as ImageCrop;
 
 class GoodsController extends Controller
 {
@@ -80,7 +81,6 @@ class GoodsController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request,[
             'name_good' => 'required',
             'desc_good' => 'required',
@@ -121,6 +121,14 @@ class GoodsController extends Controller
         $good->slug = str_slug($good->name_good, '-');
 
         $good->save();
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+            $img->resize(null, 143, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
 
         return back();
 
@@ -199,6 +207,14 @@ class GoodsController extends Controller
         $good->id_model = $request->input('auto');
         $good->id_sub_category = $request->input('sub-category');
         $good->slug = str_slug($good->name_good, '-');
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+            $img->resize(null, 300, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
 
         $good->save();
 

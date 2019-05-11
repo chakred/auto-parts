@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
+                <h1>Раздел:Категории запчастей</h1>
+            </div>
+        </div>
+        @include('admin.errors.error')
+        <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border">
                     <table class="table">
@@ -11,7 +17,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Картинка</th>
                             <th scope="col">Категории запчастей</th>
-                            <th scope="col">Удаление</th>
+                            {{--<th scope="col">Удаление</th>--}}
                         </tr>
                         </thead>
                         <tbody>
@@ -24,13 +30,13 @@
                                     <td><img src="http://placehold.jp/80x80.png?text=Нет логотипа"></td>
                                 @endif
                                 <td>{{$category->category}}</td>
-                                <td width="5%">
-                                    <form method="POST" action ="{{ route('category-delete', ['category' => $category->id]) }}">
-                                        {{ method_field('DELETE') }}
-                                        <button type="submit" class="btn btn-outline-secondary delete-category" data-category-id ="{{$category->id}}" title="Удалить"><i class="far fa-trash-alt"></i></button>
-                                        {{ csrf_field() }}
-                                    </form>
-                                </td>
+                                {{--<td width="5%">--}}
+                                    {{--<form method="POST" action ="{{ route('category-delete', ['category' => $category->id]) }}">--}}
+                                        {{--{{ method_field('DELETE') }}--}}
+                                        {{--<button type="submit" class="btn btn-outline-secondary delete-category" data-category-id ="{{$category->id}}" title="Удалить"><i class="far fa-trash-alt"></i></button>--}}
+                                        {{--{{ csrf_field() }}--}}
+                                    {{--</form>--}}
+                                {{--</td>--}}
                             </tr>
                             @empty
                                 <tr>

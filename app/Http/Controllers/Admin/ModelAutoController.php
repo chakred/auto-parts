@@ -80,17 +80,17 @@ class ModelAutoController extends Controller
         $model->transmission = $request->input('transmission');
         $model->type_of_transmission = $request->input('type_transmission');
         $model->slug = str_slug($model->name_model, '-');
-
         $model->save();
 
-        $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
-        $img->resize(null, 143, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save();
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload' . $picture_name));
+            $img->resize(null, 143, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
 
         return redirect('/admin/model-auto');
-
     }
 
     /**

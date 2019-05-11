@@ -20,8 +20,9 @@ class CreateGoodsTable extends Migration
             $table->text('desc_good');
             $table->string('mark_good', 100);
             $table->string('country', 100);
-            $table->integer('cost');
-            $table->integer('discount');
+            $table->float('cost');
+            $table->float('profit');
+            $table->float('discount');
             $table->string('currency');
             $table->float('quantity');
             $table->string('item');

@@ -3,6 +3,11 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
+                <h1>Раздел:Все товары</h1>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12 mb-3">
                 <a href="{{route('add-goods')}}" class="btn btn-primary" title="Добавить товар"><i class="far fa-plus-square"></i> Добавить</a>
             </div>
@@ -58,7 +63,7 @@
                         </tr>
                         @empty
                             <tr>
-                                <td>Нет товаров</td>
+                                <td colspan="100">Нет товаров</td>
                             </tr>
                         @endforelse
                         </tbody>

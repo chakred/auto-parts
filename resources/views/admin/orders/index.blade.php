@@ -3,6 +3,11 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
+                <h1>Раздел:Все заказы</h1>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12">
                 <div class="custom-border">
                     <table class="table">
@@ -47,7 +52,7 @@
                         </tr>
                         @empty
                             <tr>
-                                <td>Нет товаров</td>
+                                <td colspan="100">Нет товаров</td>
                             </tr>
                         @endforelse
                         </tbody>

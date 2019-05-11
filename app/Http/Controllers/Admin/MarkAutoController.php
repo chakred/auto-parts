@@ -52,15 +52,15 @@ class MarkAutoController extends Controller
             $mark->img_path = $picture_name;
             $request->picture->storeAs('public/upload', $picture_name);
         }
-
         $mark->name_mark = $request->input('name_mark');
         $mark->slug = str_slug($mark->name_mark, '-');
-
         $mark->save();
 
-        $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
-        $img->fit(200);
-        $img->save();
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload' . $picture_name));
+            $img->fit(200);
+            $img->save();
+        }
 
         return back();
     }

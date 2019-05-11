@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="custom-border pad-15">
+                <div class="custom-border pad-15 text-white bg-dark">
                     <h5>Актуальный курс НБУ</h5>
                     @foreach($apiCurrencyUsd as $value)
                         <p>{{$value}}</p>

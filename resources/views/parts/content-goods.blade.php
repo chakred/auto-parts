@@ -34,10 +34,10 @@
                     </p>
                 </div>
                 <div class="card-footer">
-                    <button type="button" class="btn btn-primary btn-success mb-3 define-goods"
+                    <button type="button" class="btn btn-primary btn-success define-goods"
                             data-goods-id="{{$goods->id}}"
                             data-goods-name="{{$goods->name_good}}"
-                            data-goods-image="{{$goods->img_path}}"
+                            data-goods-image="{{env('APP_URL').'/storage/upload'.$goods->img_path}}"
                             data-goods-price="{{$goods->convertedPrice}}"
                             data-goods-mark="{{$goods->mark_good}}"
                             data-toggle="modal"
@@ -97,7 +97,7 @@
                         <tr>
                             <th scope="row">1</th>
                             <td>
-                                <img id="transferred-goods-image" src="http://dummyimage.com/100x100/ffffff/545454&text=No+image" />
+                                <img id="transferred-goods-image" width="100" src="http://dummyimage.com/100x100/ffffff/545454&text=No+image" />
                             </td>
                             <td id="transferred-goods-name"></td>
                             <td id="transferred-goods-mark"></td>

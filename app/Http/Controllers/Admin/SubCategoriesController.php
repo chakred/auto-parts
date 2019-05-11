@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Category;
 use App\Sub_category;
+use Image as ImageCrop;
 
 
 class SubCategoriesController extends Controller
@@ -21,7 +21,7 @@ class SubCategoriesController extends Controller
         $sub_categories = Sub_category::all();
         $categories = Category::all();
 
-        return view('admin.sub-categories.index')->with(['sub_categories' =>  $sub_categories, 'categories' => $categories]);
+        return view('admin.sub-categories.index', compact('sub_categories', 'categories'));
     }
 
     /**
@@ -53,25 +53,36 @@ class SubCategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            "category" => "required",
+            "sub_category" => "required|unique:sub_categories",
+        ]);
+
         $new_sub_category = new Sub_category();
         $picture_name = null;
 
         if ($request->hasFile('picture')){
-
             $picture_name = '/sub-categories/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
             $new_sub_category->img_path = $picture_name;
             $request->picture->storeAs('public/upload', $picture_name);
         }
 
-        $sub_category = $request->input('sub-category');
+        $sub_category = $request->input('sub_category');
         $category_name = $request->input('category');
         $category_id = Category::select('id')->where('category', $category_name)->pluck('id')->toArray();
-
         $new_sub_category->sub_category = $sub_category;
         $new_sub_category->id_category = $category_id[0];
         $new_sub_category->slug = str_slug($sub_category, '-');
-
         $new_sub_category->save();
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+            $img->resize(null, 143, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
+
         return back();
     }
 

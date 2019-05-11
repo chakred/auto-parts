@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
+                <h1>Раздел:Под-категории запчастей</h1>
+            </div>
+        </div>
+        @include('admin.errors.error')
+        <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border">
                     <table class="table">
@@ -51,15 +57,15 @@
                             <label for="category">Категории:</label>
                             <select class="form-control" id="category" name="category">
                                 @foreach($categories as $category)
-                                    <option>{{$category->category}}</option>
+                                    <option value="{{$category->category}}">{{$category->category}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="sub-category">Подкатегории:</label>
-                            <select class="form-control" id="sub-category" name="sub-category">
-                                <option>Фильтр масляный </option>
-                                <option>фильтр топливный</option>
+                            <select class="form-control" id="sub-category" name="sub_category">
+                                <option>Фильтр масляный</option>
+                                <option>Фильтр топливный</option>
                                 <option>Воздушный фильтр</option>
                                 <option>Фильтр салона</option>
                                 <option>Система амортизации</option>

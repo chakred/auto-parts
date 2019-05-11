@@ -9,6 +9,7 @@ use App\Auto_mark;
 use App\Good;
 use App\Category;
 use App\Sub_category;
+use App\ViewCounter;
 
 class SubCategoriesController extends Controller
 {
@@ -17,15 +18,16 @@ class SubCategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, ViewCounter $viewCounter)
     {
+        $viewNumbers = $viewCounter->createCookie();
         $categoryId = $request->route('category');
         $modelId = $request->route('model');
         $model = Auto_model::where('id','=',  $modelId)->first();
         $marks = Auto_mark::all();
         $subCategories = Sub_category::where('id_category','=', $categoryId)->get();
 
-        return view ('pages.sub-categories-page', compact('model','marks', 'subCategories'));
+        return view ('pages.sub-categories-page', compact('model','marks', 'subCategories', 'viewNumbers'));
     }
 
     /**

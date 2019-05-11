@@ -9,6 +9,7 @@ use App\Auto_mark;
 use App\Good;
 use App\Category;
 use App\ApiBank\BankUkrainian;
+use App\ViewCounter;
 
 class GoodsController extends Controller
 {
@@ -17,8 +18,9 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, BankUkrainian $apiBank)
+    public function index(Request $request, BankUkrainian $apiBank, ViewCounter $viewCounter)
     {
+        $viewNumbers = $viewCounter->createCookie();
         $subCategoryId = $request->route('subCategory');
         $modelId = $request->route('model');
 
@@ -50,7 +52,7 @@ class GoodsController extends Controller
             }
         }
 
-        return view ('pages.goods-page', compact('model','marks', 'relatedGoods'));
+        return view ('pages.goods-page', compact('model','marks', 'relatedGoods', 'viewNumbers'));
     }
 
     /**

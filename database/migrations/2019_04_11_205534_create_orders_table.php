@@ -22,6 +22,11 @@ class CreateOrdersTable extends Migration
             $table->string('buyer_phone', 100);
             $table->string('status', 100)->default('new');
             $table->timestamps();
+
+            $table->foreign('goods_id')
+                ->references('id')
+                ->on('goods')
+                ->onDelete('cascade');
         });
     }
 

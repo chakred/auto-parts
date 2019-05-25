@@ -20,17 +20,18 @@ class OrdersController extends Controller
         $orders = Order::orderBy('id', 'DESC')->paginate(15);
 
         foreach ($orders as $value) {
-
-            if ($value->goods->currency == 'USD') {
-                $apiCurrency = $apiBank->chooseOneCurrency('USD');
-                $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
-            } elseif ($value->goods->currency == 'EUR') {
-                $apiCurrency = $apiBank->chooseOneCurrency('EUR');
-                $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
-            } else {
-                $value->convertedPrice = $value->cost;
+            if (isset($value->goods)) {
+                if ($value->goods->currency == 'USD') {
+                    $apiCurrency = $apiBank->chooseOneCurrency('USD');
+                    $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
+                } elseif ($value->goods->currency == 'EUR') {
+                    $apiCurrency = $apiBank->chooseOneCurrency('EUR');
+                    $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
+                } else {
+                    $value->convertedPrice = $value->cost;
+                }
+                $value->totalSum = $value->convertedPrice*$value->quantity;
             }
-            $value->totalSum = $value->convertedPrice*$value->quantity;
         }
 
         return view('admin.orders.index', compact( 'orders'));

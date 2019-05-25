@@ -10,4 +10,17 @@ class Order extends Model
     {
         return $this->belongsTo('App\Good', 'goods_id' , 'id');
     }
+
+    public static function checkForNewOrders()
+    {
+        $newOrder = new Order();
+        $allNewOrders = $newOrder->where('status', 'new')->get();
+
+        if (count($allNewOrders) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

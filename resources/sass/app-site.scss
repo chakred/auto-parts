@@ -15,3 +15,11 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+@media (max-width: 991px) {
+    .modal-body {
+        form {
+            overflow-x: scroll;
+        }
+    }
+}

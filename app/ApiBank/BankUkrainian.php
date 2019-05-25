@@ -14,12 +14,15 @@ class BankUkrainian
 
     public function chooseOneCurrency($countryCode)
     {
-        $currencyList = json_decode(file_get_contents($this->apiUrl), true);
-
-        foreach ($currencyList as $key => $currency) {
-            if (in_array($countryCode,$currency)) {
-                return $currency;
+        if(!empty(json_decode(file_get_contents($this->apiUrl), true))) {
+            $currencyList = json_decode(file_get_contents($this->apiUrl), true);
+            foreach ($currencyList as $key => $currency) {
+                if (in_array($countryCode,$currency)) {
+                    return $currency;
+                }
             }
+        } else {
+            return false;
         }
     }
 }

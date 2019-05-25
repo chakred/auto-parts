@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Auto_model;
 use App\Auto_mark;
 use App\ViewCounter;
+use App\CurrentCurrency;
 
 class FrontPageController extends Controller
 {

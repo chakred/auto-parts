@@ -1,0 +1,15 @@
+.order-marker {
+    &:before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        left: 0;
+        top: 0;
+        background: red;
+        border-radius: 50%;
+        background: linear-gradient(#ff000070 10%, red 65%,red 87%, #ff000070 10%);
+        right: 0;
+        margin: auto;
+    }
+}

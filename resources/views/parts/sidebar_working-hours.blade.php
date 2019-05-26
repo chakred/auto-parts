@@ -1,10 +1,12 @@
-<div>График работы:
+<div>
     <div class="card">
         <div class="card-header">
-            <i class="far fa-calendar-alt"></i>
-            <span>Пн - Вс</span>
+            <span>График работы:</span>
         </div>
         <div class="card-body">
+            <i class="far fa-calendar-alt"></i>
+            <span>Пн - Вс</span>
+            <hr/>
             <i class="far fa-clock"></i>
             <span>c 9:00 - 18:00<span>
         </div>

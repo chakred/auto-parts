@@ -1,4 +1,4 @@
-<div class="accordion" id="accordionExample">Выберите модель:
+<div class="accordion mt-4" id="accordionExample">
     @forelse($marks as $mark)
     <div class="card">
         <div class="card-header" id="heading{{$mark->id}}">

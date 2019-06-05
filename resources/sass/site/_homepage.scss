@@ -39,7 +39,7 @@ body *{
         position: relative;
         img {
             object-fit: cover;
-            width: 100%;
+            min-width: 140px;
             max-width: 235px;
             margin: auto;
             display: block;
@@ -53,13 +53,24 @@ body *{
         }
     }
     .card-body {
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        a {
+            color: black;
+            font-size: 13px;
+        }
         .card-title {
             h4 {
                 a {
-                    font-size: 18px;
+                    font-size: 14px;
                     color: black;
                 }
             }
+        }
+        .card-text {
+            font-size: 13px;
         }
         .card-text.trade-mark {
             font-weight: 600;

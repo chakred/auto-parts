@@ -54,7 +54,7 @@
 .cat-block > a img {
   -o-object-fit: cover;
      object-fit: cover;
-  width: 100%;
+  min-width: 140px;
   max-width: 235px;
   margin: auto;
   display: block;
@@ -67,9 +67,23 @@
   margin: auto;
 }
 
-.cat-block .card-body .card-title h4 a {
-  font-size: 18px;
+.cat-block .card-body ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.cat-block .card-body a {
   color: black;
+  font-size: 13px;
+}
+
+.cat-block .card-body .card-title h4 a {
+  font-size: 14px;
+  color: black;
+}
+
+.cat-block .card-body .card-text {
+  font-size: 13px;
 }
 
 .cat-block .card-body .card-text.trade-mark {
@@ -2418,6 +2432,11 @@ pre code {
 }
 
 .form-control::-webkit-input-placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.form-control::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
 }
@@ -5624,8 +5643,10 @@ input[type="button"].btn-block {
 @media (min-width: 576px) {
   .card-columns {
     -webkit-column-count: 3;
+       -moz-column-count: 3;
             column-count: 3;
     -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
             column-gap: 1.25rem;
     orphans: 1;
     widows: 1;

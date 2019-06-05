@@ -14,7 +14,7 @@
             <div class="card h-100 cat-block">
                 <a href="{{ route('goods-single-site', ['subCategory' => $goods->id_sub_category, 'model' => $model->id, 'id' => $goods->id]) }}">
                     @if($goods->img_path)
-                        <img width="200" src="{{env('APP_URL').'/storage/upload'.$goods->img_path}}">
+                        <img src="{{env('APP_URL').'/storage/upload'.$goods->img_path}}">
                     @else
                         <img src="http://dummyimage.com/450x350/ffffff/545454&text=No+image" />
                     @endif

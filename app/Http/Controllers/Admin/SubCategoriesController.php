@@ -117,7 +117,25 @@ class SubCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sub_category = Sub_category::find($id);;
+        $picture_name = null;
+
+        if ($request->hasFile('picture')){
+            $picture_name = '/sub-categories/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $sub_category->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+        $sub_category->save();
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+            $img->resize(null, 143, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
+
+        return back();
     }
 
     /**

@@ -27,8 +27,12 @@
                             <input type="text" class="form-control" name="name_model" value="{{$model->name_model}}">
                         </div>
                         <div class="form-group">
-                            <label for="yearAuto">Год выпуска</label>
+                            <label for="yearAuto">Год выпуска от</label>
                             <input class="form-control" id="yearAuto" name="year" value="{{$model->year}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastYearAuto">Год выпуска до</label>
+                            <input class="form-control" id="lastYearAuto" name="last_year" value="{{$model->last_year}}">
                         </div>
                         <div class="form-group">
                             <label for="valueEngine">Объем двигателя (л)</label>

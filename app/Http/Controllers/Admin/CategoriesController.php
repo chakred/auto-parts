@@ -98,7 +98,25 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $picture_name = null;
+
+        if ($request->hasFile('picture')){
+            $picture_name = '/categories/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $category->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+        $category->save();
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload' . $picture_name));
+            $img->resize(null, 143, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
+
+        return redirect('/admin/categories');
     }
 
     /**

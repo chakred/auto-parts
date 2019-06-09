@@ -75,6 +75,7 @@ class ModelAutoController extends Controller
         $model->name_model = $request->name_model;
         $model->auto_mark_id = $mark_id;
         $model->year = $request->input('year');
+        $model->last_year = $request->input('last_year')?$request->input('last_year'):null;
         $model->engine = $request->input('value_engine');
         $model->type_of_engine = $request->input('type_engine');
         $model->transmission = $request->input('transmission');
@@ -145,6 +146,7 @@ class ModelAutoController extends Controller
 
         $model->name_model = $request->input('name_model');
         $model->year = $request->input('year');
+        $model->last_year = $request->input('last_year')?$request->input('last_year'):null;
         $model->engine = $request->input('value_engine');
         $model->type_of_engine = $request->input('type_engine');
         $model->transmission = $request->input('transmission');

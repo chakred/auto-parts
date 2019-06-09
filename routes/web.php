@@ -27,9 +27,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/categories', 'CategoriesController@index')->name('categories');
     Route::post('/categories', 'CategoriesController@store')->name('store-category');
     Route::delete('/categories/{category}', 'CategoriesController@destroy')->name('category-delete');
+    Route::put('/categories/edit/{id}', 'CategoriesController@update')->name('category-edit');
 
     Route::get('/sub-categories', 'SubCategoriesController@index')->name('sub-categories');
     Route::post('/sub-categories', 'SubCategoriesController@store')->name('store-sub-category');
+    Route::put('/sub-categories/edit/{id}', 'SubCategoriesController@update')->name('sub-category-edit');
     Route::delete('/sub-categories/{sub-category}', 'SubCategoriesController@destroy')->name('sub-category-delete');
 
     Route::get('/goods', 'GoodsController@index')->name('goods');

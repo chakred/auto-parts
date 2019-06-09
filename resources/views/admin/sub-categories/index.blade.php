@@ -19,6 +19,7 @@
                             <th scope="col">Категория запчастей</th>
                             <th scope="col">Подкатегория запчастей</th>
                             <th scope="col"></th>
+                            <th scope="col">Картинка</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,17 @@
                                     {{--<button type="submit" class="btn btn-outline-secondary" title="Удалить"><i class="far fa-trash-alt"></i></button>--}}
                                     {{--{{ csrf_field() }}--}}
                                     {{--</form>--}}
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary update-image"
+                                            data-toggle="modal"
+                                            data-target="#subCategoryModal"
+                                            data-sub-cat-name="{{$sub_category->sub_category}}"
+                                            data-sub-cat-id="{{$sub_category->id}}"
+                                            data-sub-cat-img="{{env('APP_URL').'/storage/upload'.$sub_category->img_path}}">
+                                        <i class="fas fa-image"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @empty
@@ -91,6 +103,34 @@
                             <input type="file" class="form-control-file" id="picture" name="picture">
                         </div>
                         <button type="submit" class="btn btn-primary">Добавить в базу</button>
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="subCategoryModal" tabindex="-1" role="dialog" aria-labelledby="subCategoryModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="subCategoryModalLongTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img class="sub-cat-image" src="">
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" id="subCategoryForm" action ="{{route('sub-category-edit', ['id' => ''])}}" enctype="multipart/form-data">
+                        {{ method_field('PUT') }}
+                        <div class="form-group">
+                            <label for="picture">Картинка подкатегории</label>
+                            <input type="file" class="form-control-file" id="picture" name="picture">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Обновить кактинку</button>
                         {{ csrf_field() }}
                     </form>
                 </div>

@@ -40,11 +40,11 @@
                                 @endif
                                 <td width="10%">{{$model->autoMark->name_mark}}</td>
                                 <td width="15%">{{$model->name_model}}</td>
-                                <td width="10%">{{$model->year}}</td>
-                                <td width="15%">{{$model->engine}}</td>
+                                <td width="15%">{{$model->last_year?$model->year.' - '.$model->last_year:$model->year}}</td>
+                                <td width="10%">{{$model->engine}}</td>
                                 <td>{{$model->type_of_engine}}</td>
                                 <td>{{$model->transmission}}</td>
-                                <td>{{$model->type_of_transmission}}</td>
+                                <td>{{$model->type_of_transmission?$model->type_of_transmission:'-'}}</td>
                                 <td width="5%">
                                     <a href="{{ route('edit-model-auto', ['model' => $model->id]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
                                 </td>

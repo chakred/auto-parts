@@ -17,11 +17,11 @@ class CreateAutoModelsTable extends Migration
             $table->increments('id');
             $table->integer('auto_mark_id')->unsigned();
             $table->string('name_model');
-            $table->integer('year');
+            $table->integer('year')->nullable();
             $table->string('engine', 100);
-            $table->string('type_of_engine');
+            $table->string('type_of_engine')->nullable();
             $table->string('transmission');
-            $table->string('type_of_transmission')->nullable();;
+            $table->string('type_of_transmission')->nullable();
             $table->string('img_path')->nullable();
             $table->string('slug', 255)->default('');
 

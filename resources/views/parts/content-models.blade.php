@@ -26,7 +26,7 @@
                     </h5>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Год выпуска: {{$models->year}}г.</small>
+                    <small class="text-muted">Год выпуска: {{$models->last_year?$models->year.' - '.$models->last_year.'г.':$models->last_year.'г.'}}</small>
                 </div>
             </div>
         </div>

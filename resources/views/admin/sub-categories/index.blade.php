@@ -16,8 +16,8 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Картинка</th>
-                            <th scope="col">Категория запчастей</th>
                             <th scope="col">Подкатегория запчастей</th>
+                            <th scope="col">Категория запчастей</th>
                             <th scope="col"></th>
                             <th scope="col">Картинка</th>
                         </tr>
@@ -31,8 +31,8 @@
                                 @else
                                     <td><img src="http://placehold.jp/80x80.png?text=Нет картинки"></td>
                                 @endif
-                                <td scope="row">{{$sub_category->category->category}}</td>
                                 <td>{{$sub_category->sub_category}}</td>
+                                <td scope="row">{{$sub_category->category->category}}</td>
                                 <td width="5%">
                                     {{--<form method="POST" action ="{{ route('category-delete', ['category' => $category->id]) }}">--}}
                                     {{--{{ method_field('DELETE') }}--}}
@@ -80,6 +80,7 @@
                                 <option>Фильтр топливный</option>
                                 <option>Воздушный фильтр</option>
                                 <option>Фильтр салона</option>
+                                <option>Комплектующие фильтров</option>
                                 <option>Система амортизации</option>
                                 <option>Корпус фильтра и комплектующие</option>
 

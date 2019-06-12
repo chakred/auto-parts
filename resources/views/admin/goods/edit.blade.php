@@ -127,6 +127,18 @@
                     </form>
                 </div>
             </div>
+            <div class="col-sm-4">
+                <div class="custom-border pad-15 text-white bg-dark">
+                    <h5>Актуальный курс НБУ</h5>
+                    @foreach($apiCurrencyUsd as $value)
+                        <p>{{$value}}</p>
+                    @endforeach
+                    <hr>
+                    @foreach($apiCurrencyEur as $value)
+                        <p>{{$value}}</p>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 @endsection

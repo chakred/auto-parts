@@ -67,7 +67,7 @@
   margin: auto;
 }
 
-.cat-block .card-body ul {
+.cat-block .card-body > ul {
   list-style: none;
   padding-left: 0;
 }
@@ -125,6 +125,20 @@
 
 .goods-image img {
   margin: auto;
+}
+
+.card-body > ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card-body > ul > li a {
+  color: #212529;
+}
+
+.card-header button {
+  font-weight: bold;
+  color: #212529;
 }
 
 /*!

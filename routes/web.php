@@ -23,7 +23,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/model-auto/edit/{id}', 'ModelAutoController@edit')->name('edit-model-auto');
     Route::put('/model-auto/edit/{id}', 'ModelAutoController@update')->name('update-model-auto');
 
-
     Route::get('/categories', 'CategoriesController@index')->name('categories');
     Route::post('/categories', 'CategoriesController@store')->name('store-category');
     Route::delete('/categories/{category}', 'CategoriesController@destroy')->name('category-delete');
@@ -42,9 +41,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::delete('/goods/{id}', 'GoodsController@destroy')->name('delete-goods');
 
     Route::get('/orders', 'OrdersController@index')->name('orders');
-    Route::delete('/orders/delete/{id}', 'OrdersController@destroy')->name('delete-orders');
-
-
+    Route::get('/orders/edit/{id}', 'OrdersController@edit')->name('edit-order');
+    Route::put('/orders/edit/{id}', 'OrdersController@update')->name('update-order');
+    Route::delete('/orders/delete/{id}', 'OrdersController@destroy')->name('delete-order');
 });
 
 Route::get('/', 'Web\FrontPageController@index')->name('front-page');
@@ -54,12 +53,7 @@ Route::get('goods/{subCategory}/{model}', 'Web\GoodsController@index')->name('go
 Route::get('goods/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
 Route::post('goods/order', 'Web\OrderController@store')->name('store-order');
 
-
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

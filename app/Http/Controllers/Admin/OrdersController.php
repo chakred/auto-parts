@@ -75,9 +75,22 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BankUkrainian $apiBank)
     {
-        //
+        $order = Order::find($id);
+        if (isset($order->goods)) {
+            if ($order->goods->currency == 'USD') {
+                $apiCurrency = $apiBank->chooseOneCurrency('USD');
+                $order->convertedPrice = rtrim(round($order->goods->cost*$apiCurrency['rate'],0),0);
+            } elseif ($order->goods->currency == 'EUR') {
+                $apiCurrency = $apiBank->chooseOneCurrency('EUR');
+                $order->convertedPrice = rtrim(round($order->goods->cost*$apiCurrency['rate'],0),0);
+            } else {
+                $order->convertedPrice = $order->cost;
+            }
+            $order->totalSum = $order->convertedPrice*$order->quantity;
+        }
+        return view('admin.orders.edit', compact( 'order'));
     }
 
     /**
@@ -89,7 +102,7 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($id);
     }
 
     /**

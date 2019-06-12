@@ -151,12 +151,14 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BankUkrainian $apiBank)
     {
+        $apiCurrencyUsd = $apiBank->chooseOneCurrency('USD');
+        $apiCurrencyEur = $apiBank->chooseOneCurrency('EUR');
         $good = Good::find($id);
         $models = Auto_model::all();
         $subCategories = Sub_category::all();
-        return view ('admin.goods.edit', compact('good', 'models', 'subCategories'));
+        return view ('admin.goods.edit', compact('good', 'models', 'subCategories', 'apiCurrencyUsd', 'apiCurrencyEur'));
     }
 
     /**

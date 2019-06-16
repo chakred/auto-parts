@@ -21,6 +21,7 @@
             <div class="col-12 mt-4">
                 <p>Результат поиска:</p>
             </div>
+            <div class="row">
             @if($matchGoods->isNotEmpty())
                 @foreach($matchGoods as $goods)
                     <div class="col-lg-4 col-md-6 mb-4">
@@ -66,6 +67,7 @@
                 <p>По вашему запросу ничего не найдено</p>
             </div>
             @endif
+            </div>
         </div>
         <!-- /.col-lg-9 -->
     </div>

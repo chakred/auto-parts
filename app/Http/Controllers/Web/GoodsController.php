@@ -120,4 +120,42 @@ class GoodsController extends Controller
     {
         //
     }
+
+    public function search(Request $request, ViewCounter $viewCounter, BankUkrainian $apiBank)
+    {
+        $searchKey = $request->searchForGoods;
+        $viewNumbers = $viewCounter->createCookie();
+        $models = Auto_model::all();
+        $marks = Auto_mark::all();
+
+        $matchGoods = Good::where('name_good','LIKE','%'.$searchKey.'%')
+            ->orWhere('desc_good','LIKE','%'.$searchKey.'%')
+            ->get();
+
+        foreach ($matchGoods as $good) {
+            if (isset($good->profit) && $good->profit != null) {
+                $percentOfProfit = $good->cost/100*$good->profit;
+                $good->convertedPrice = $good->cost+$percentOfProfit;
+            } else {
+                $good->convertedPrice = $good->cost;
+            }
+            if (isset($good->discount) && $good->discount != null) {
+                $percentOfDiscount = $good->convertedPrice/100*$good->profit;
+                $good->convertedPrice = $good->convertedPrice-$percentOfDiscount;
+            }
+
+            switch($good->currency) {
+                case 'EUR':
+                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
+                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                    break;
+                case 'USD':
+                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
+                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                    break;
+            }
+        }
+
+        return view('pages.search', compact('matchGoods', '$searchKe', 'viewNumbers', 'models', 'marks'));
+    }
 }

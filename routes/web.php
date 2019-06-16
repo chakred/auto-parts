@@ -52,8 +52,10 @@ Route::get('sub-categories/{category}/{model}', 'Web\SubCategoriesController@ind
 Route::get('goods/{subCategory}/{model}', 'Web\GoodsController@index')->name('goods-site');
 Route::get('goods/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
 Route::post('goods/order', 'Web\OrderController@store')->name('store-order');
+Route::any('/search','Web\GoodsController@search')->name('search-for-goods');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+

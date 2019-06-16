@@ -1,58 +1,78 @@
-<div class="row">
-        <div class="col-sm-12 mb-3">
-            <div class="card head-block">
-                <div>
-                    <div>
-                        <img src="{{env('APP_URL').'/storage/upload'.$model->img_path}}">
-                    </div>
-                    <p><span>Запчасти к</span> {{$model->autoMark->name_mark.' '.$model->name_model}}</p>
-                </div>
+
+@include('layouts.site-header')
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row" style="margin-top: 100px">
+        <div class="col-12">
+            @include('parts.search-for-goods')
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 mb-3">
+            @include('parts.sidebar_marks-and-models')
+            <br/>
+            @include('parts.sidebar_contacts')
+            <br/>
+            @include('parts.sidebar_working-hours')
+        </div>
+        <!-- /.col-lg-3 -->
+        <div class="col-lg-9">
+            <div class="col-12 mt-4">
+                <p>Результат поиска:</p>
             </div>
-        </div>
-    @forelse($relatedGoods as $goods)
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100 cat-block">
-                <a href="{{ route('goods-single-site', ['subCategory' => $goods->id_sub_category, 'model' => $model->id, 'id' => $goods->id]) }}">
-                    @if($goods->img_path)
-                        <img src="{{env('APP_URL').'/storage/upload'.$goods->img_path}}">
-                    @else
-                        <img src="http://dummyimage.com/450x350/ffffff/545454&text=No+image" />
-                    @endif
-                </a>
-                <div class="card-body">
-                    <div class="card-title">
-                        <h4>
-                            <a href="{{ route('goods-single-site', ['subCategory' => $goods->id_sub_category, 'model' => $model->id, 'id' => $goods->id]) }}">{{$goods->name_good}}</a>
-                        </h4>
-                        <h6>{{$goods->convertedPrice}} грн.</h6>
+            @if($matchGoods->isNotEmpty())
+                @foreach($matchGoods as $goods)
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100 cat-block">
+                            <a href="{{ route('goods-single-site', ['subCategory' => $goods->id_sub_category, 'model' => $goods->id_model, 'id' => $goods->id]) }}">
+                                @if($goods->img_path)
+                                    <img src="{{env('APP_URL').'/storage/upload'.$goods->img_path}}">
+                                @else
+                                    <img src="http://dummyimage.com/450x350/ffffff/545454&text=No+image" />
+                                @endif
+                            </a>
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h4>
+                                        <a href="{{ route('goods-single-site', ['subCategory' => $goods->id_sub_category, 'model' => $goods->id_model, 'id' => $goods->id]) }}">{{$goods->name_good}}</a>
+                                    </h4>
+                                    <h6>{{$goods->convertedPrice}} грн.</h6>
+                                </div>
+                                <p class="card-text">
+                                    {{$goods->desc_good}}
+                                </p>
+                                <p class="card-text trade-mark">
+                                    TM {{$goods->mark_good}}
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-primary btn-success define-goods"
+                                        data-goods-id="{{$goods->id}}"
+                                        data-goods-name="{{$goods->name_good}}"
+                                        data-goods-image="{{env('APP_URL').'/storage/upload'.$goods->img_path}}"
+                                        data-goods-price="{{$goods->convertedPrice}}"
+                                        data-goods-mark="{{$goods->mark_good}}"
+                                        data-toggle="modal"
+                                        data-target="#buyProductModal">
+                                    Купить
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <p class="card-text">
-                        {{$goods->desc_good}}
-                    </p>
-                    <p class="card-text trade-mark">
-                        TM {{$goods->mark_good}}
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <button type="button" class="btn btn-primary btn-success define-goods"
-                            data-goods-id="{{$goods->id}}"
-                            data-goods-name="{{$goods->name_good}}"
-                            data-goods-image="{{env('APP_URL').'/storage/upload'.$goods->img_path}}"
-                            data-goods-price="{{$goods->convertedPrice}}"
-                            data-goods-mark="{{$goods->mark_good}}"
-                            data-toggle="modal"
-                            data-target="#buyProductModal">
-                        Купить
-                    </button>
-                </div>
+                @endforeach
+            @else
+            <div class="col-12 mt-4">
+                <p>По вашему запросу ничего не найдено</p>
             </div>
+            @endif
         </div>
-    @empty
-        <div class="col-sm-12 mb-3">
-            Нет товаров
-        </div>
-    @endforelse
+        <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
 </div>
+<!-- /.container -->
+
 
 <!-- Modal -->
 <div class="modal fade" id="buyProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -134,3 +154,4 @@
     </div>
 </div>
 
+@include('layouts.site-footer')

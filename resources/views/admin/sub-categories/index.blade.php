@@ -84,7 +84,7 @@
                                 <option>Система амортизации</option>
                                 <option>Корпус фильтра и комплектующие</option>
 
-                                <option>Ремни и ролики</option>
+                                <option>Комплект ремня ГРМ</option>
                                 <option>Моторная группа</option>
                                 <option>Щуп уровня масла</option>
                                 <option>Компрессор наддува (турбина)</option>
@@ -97,6 +97,9 @@
                                 <option>Шестерни, валы, синхронизаторы, вилки КПП</option>
                                 <option>Сальники, шайбы и мастлоотражатели кпп</option>
                                 <option>Вилка КПП, штифты , втулки</option>
+
+                                <option>Комплект ремня генератора</option>
+                                <option>Ремни и ролики генератора</option>
                             </select>
                         </div>
                         <div class="form-group">

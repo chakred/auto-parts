@@ -2,8 +2,12 @@
 
 <!-- Page Content -->
 <div class="container">
-
     <div class="row" style="margin-top: 100px">
+        <div class="col-12">
+            @include('parts.search-for-goods')
+        </div>
+    </div>
+    <div class="row">
 
         <div class="col-lg-3">
             @include('parts.sidebar_marks-and-models')

@@ -27,7 +27,7 @@
                         <h6>{{$goods->convertedPrice}} грн.</h6>
                     </div>
                     <p class="card-text">
-                        {{$goods->desc_good}}
+                        {{str_limit($goods->desc_good, $limit = 150, $end = '...')}}
                     </p>
                     <p class="card-text trade-mark">
                         TM {{$goods->mark_good}}

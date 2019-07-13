@@ -30,6 +30,7 @@
                             <th scope="col">Модель авто</th>
                             <th scope="col">Год авто</th>
                             <th scope="col">Подкат.</th>
+                            <th scope="col">Под-подкат.</th>
                             <th scope="col">Действие</th>
                         </tr>
                         </thead>
@@ -52,6 +53,7 @@
                         <td>{{$good->autoModels->name_model}}</td>
                         <td>{{$good->autoModels->year}}</td>
                         <td>{{$good->subCategories->sub_category}}</td>
+                        <td>{{$good->furtherSubCategories->further_sub_category?$good->furtherSubCategories->further_sub_category:'нет'}}</td>
                         <td width="5%">
                             <a href="{{ route('edit-goods', ['good' => $good->id]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
                             <form method="POST" action ="{{ route('delete-goods', ['good' => $good->id]) }}">

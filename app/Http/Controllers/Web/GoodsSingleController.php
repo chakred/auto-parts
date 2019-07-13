@@ -36,7 +36,7 @@ class GoodsSingleController extends Controller
             $relatedGoods->convertedPrice = $relatedGoods->cost;
         }
         if (isset($relatedGoods->discount) && $relatedGoods->discount != null) {
-            $percentOfDiscount = $relatedGoods->convertedPrice/100*$relatedGoods->profit;
+            $percentOfDiscount = $relatedGoods->convertedPrice/100*$relatedGoods->discount;
             $relatedGoods->convertedPrice = $relatedGoods->convertedPrice-$percentOfDiscount;
         }
 

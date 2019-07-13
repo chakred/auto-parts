@@ -16,10 +16,10 @@ class CurrentCurrency extends Model
 
         $currentCurrency = new CurrentCurrency();
 
-        foreach ($currentCurrency->all() as $storedCurrncy) {
+        foreach ($currentCurrency->all() as $storedCurrency) {
 
             if ($bankUkrainian->chooseOneCurrency('EUR') != null && $bankUkrainian->chooseOneCurrency('EUR') != "" ) {
-                if ($storedCurrncy->updated_at < $today && $storedCurrncy->currency_name === 'EUR') {
+                if ($storedCurrency->updated_at < $today && $storedCurrency->currency_name === 'EUR') {
                     $euro = $currentCurrency->where('currency_name','EUR')->first();
                     $euro->rate = round($bankUkrainian->chooseOneCurrency('EUR')['rate'], 2);
                     $euro->save();
@@ -27,7 +27,7 @@ class CurrentCurrency extends Model
             }
 
             if ($bankUkrainian->chooseOneCurrency('USD') != null && $bankUkrainian->chooseOneCurrency('USD') != "" ) {
-                if ($storedCurrncy->updated_at < $today && $storedCurrncy->currency_name === 'USD') {
+                if ($storedCurrency->updated_at < $today && $storedCurrency->currency_name === 'USD') {
                     $euro = $currentCurrency->where('currency_name','USD')->first();
                     $euro->rate = round($bankUkrainian->chooseOneCurrency('USD')['rate'], 2);
                     $euro->save();
@@ -37,3 +37,4 @@ class CurrentCurrency extends Model
 
     }
 }
+

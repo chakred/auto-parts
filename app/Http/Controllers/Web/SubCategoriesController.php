@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Auto_model;
-use App\Auto_mark;
-use App\Good;
-use App\Category;
-use App\Sub_category;
-use App\ViewCounter;
+use App\{
+    Auto_model,
+    Auto_mark,
+    Sub_category,
+    ViewCounter
+};
+
 
 class SubCategoriesController extends Controller
 {
@@ -26,7 +27,6 @@ class SubCategoriesController extends Controller
         $model = Auto_model::where('id','=',  $modelId)->first();
         $marks = Auto_mark::all();
         $subCategories = Sub_category::where('id_category','=', $categoryId)->get();
-
         return view ('pages.sub-categories-page', compact('model','marks', 'subCategories', 'viewNumbers'));
     }
 

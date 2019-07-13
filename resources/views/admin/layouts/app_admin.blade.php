@@ -47,6 +47,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('categories') }}">Категории зпч</a>
                             <a class="dropdown-item" href="{{ route('sub-categories') }}">Подкатегории зпч</a>
+                            <a class="dropdown-item" href="{{ route('further-sub-categories') }}">Под-подкатегории зпч</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">

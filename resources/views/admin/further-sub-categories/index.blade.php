@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
-                <h1>Раздел:Под-категории запчастей</h1>
+                <h1>Раздел:Под-подкатегории запчастей</h1>
             </div>
         </div>
         @include('admin.notification.error')
@@ -16,23 +16,23 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Картинка</th>
+                            <th scope="col">Под-подкатегория запчастей</th>
                             <th scope="col">Подкатегория запчастей</th>
-                            <th scope="col">Категория запчастей</th>
                             <th scope="col"></th>
                             <th scope="col">Картинка</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($sub_categories as $sub_category)
+                        @forelse($further_sub_categories as $further_sub_category)
                             <tr>
-                                <td>{{$sub_category->id}}</td>
-                                @if($sub_category->img_path)
-                                    <td><img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$sub_category->img_path}}"></td>
+                                <td>{{$further_sub_category->id}}</td>
+                                @if($further_sub_category->img_path)
+                                    <td><img width="80" height="80" src="{{env('APP_URL').'/storage/upload'.$further_sub_category->img_path}}"></td>
                                 @else
                                     <td><img src="http://placehold.jp/80x80.png?text=Нет картинки"></td>
                                 @endif
-                                <td>{{$sub_category->sub_category}}</td>
-                                <td scope="row">{{$sub_category->category->category}}</td>
+                                <td>{{$further_sub_category->further_sub_category}}</td>
+                                <td scope="row">{{$further_sub_category->subCategory->sub_category}}</td>
                                 <td width="5%">
                                     {{--<form method="POST" action ="{{ route('category-delete', ['category' => $category->id]) }}">--}}
                                     {{--{{ method_field('DELETE') }}--}}
@@ -45,9 +45,9 @@
                                     <button type="button" class="btn btn-primary update-image"
                                             data-toggle="modal"
                                             data-target="#subCategoryModal"
-                                            data-sub-cat-name="{{$sub_category->sub_category}}"
-                                            data-sub-cat-id="{{$sub_category->id}}"
-                                            data-sub-cat-img="{{env('APP_URL').'/storage/upload'.$sub_category->img_path}}">
+                                            data-sub-cat-name="{{$further_sub_category->sub_category}}"
+                                            data-sub-cat-id="{{$further_sub_category->id}}"
+                                            data-sub-cat-img="{{env('APP_URL').'/storage/upload'.$further_sub_category->img_path}}">
                                         <i class="fas fa-image"></i>
                                     </button>
                                 </td>
@@ -63,43 +63,21 @@
             </div>
             <div class="col-sm-4">
                 <div class="custom-border pad-15 silver">
-                    <form method="POST" action ="{{ route('store-sub-category') }}" enctype="multipart/form-data">
+                    <form method="POST" action ="{{ route('further-sub-category-store') }}" enctype="multipart/form-data">
                         <div class="form-group">
                             <p><strong>Добавить подкатегорию запчастей, привязать подкатегорию к категирии</strong></p>
-                            <label for="category">Категории:</label>
-                            <select class="form-control" id="category" name="category">
-                                @foreach($categories as $category)
-                                    <option value="{{$category->category}}">{{$category->category}}</option>
+                            <label for="sub-category">Подкатегории:</label>
+                            <select class="form-control" id="sub-category" name="sub_category">
+                                @foreach($sub_categories as $sub_category)
+                                    <option value="{{$sub_category->sub_category}}">{{$sub_category->sub_category}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="sub-category">Подкатегории:</label>
-                            <select class="form-control" id="sub-category" name="sub_category">
-                                <option>Фильтр масляный</option>
-                                <option>Фильтр топливный</option>
-                                <option>Воздушный фильтр</option>
-                                <option>Фильтр салона</option>
-                                <option>Комплектующие фильтров</option>
-                                <option>Система амортизации</option>
-                                <option>Корпус фильтра и комплектующие</option>
-
-                                <option>Комплект ремня ГРМ</option>
-                                <option>Моторная группа</option>
-                                <option>Щуп уровня масла</option>
-                                <option>Компрессор наддува (турбина)</option>
-                                <option>Шкивы и шестерни привода</option>
-                                <option>Подвеска двигателя, коробки, передач</option>
-                                <option>Защита двигателя, кпп, генератора, ремней</option>
-                                <option>Зажимы, заглушки</option>
-
-                                <option>Подшипники КПП</option>
-                                <option>Шестерни, валы, синхронизаторы, вилки КПП</option>
-                                <option>Сальники, шайбы и мастлоотражатели кпп</option>
-                                <option>Вилка КПП, штифты , втулки</option>
-
-                                <option>Комплект ремня генератора</option>
-                                <option>Ремни и ролики генератора</option>
+                            <label for="further-sub-category">Под-подкатегории:</label>
+                            <select class="form-control" id="further-sub-category" name="further_sub_category">
+                                <option>test1</option>
+                                <option>test2</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -128,10 +106,10 @@
                     <img class="sub-cat-image" src="">
                 </div>
                 <div class="modal-footer">
-                    <form method="POST" id="subCategoryForm" action ="{{route('sub-category-edit', ['id' => ''])}}" enctype="multipart/form-data">
+                    <form method="POST" id="subCategoryForm" action ="{{route('further-sub-category-edit', ['id' => ''])}}" enctype="multipart/form-data">
                         {{ method_field('PUT') }}
                         <div class="form-group">
-                            <label for="picture">Картинка подкатегории</label>
+                            <label for="picture">Картинка под-подкатегории</label>
                             <input type="file" class="form-control-file" id="picture" name="picture">
                         </div>
                         <button type="submit" class="btn btn-primary">Обновить кактинку</button>

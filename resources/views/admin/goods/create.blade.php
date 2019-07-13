@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        @include('admin.errors.error')
+        @include('admin.notification.success')
+        @include('admin.notification.error')
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
@@ -101,7 +102,7 @@
                         <div class="form-group">
                             <label for="auto">Модель авто</label>
                             <select class="form-control" id="auto" name="auto">
-                                @forelse($models as $model)
+                                @foreach($models as $model)
                                 <option value="{{$model->id}}">{{$model->autoMark->name_mark .' '.$model->name_model .' / '.$model->year.'г.'.' / '.$model->engine.'L.'}}</option>
                                 @endforeach
                             </select>
@@ -109,8 +110,17 @@
                         <div class="form-group">
                             <label for="sub-category">Подкатегория</label>
                             <select class="form-control" id="sub-category" name="sub-category">
-                                @forelse($subCategories as $subCategory)
+                                @foreach($subCategories as $subCategory)
                                 <option value="{{$subCategory->id}}">{{$subCategory->sub_category}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="further-sub-category">Под-подкатегория</label>
+                            <select class="form-control" id="further-sub-category" name="further-sub-category">
+                                @foreach($furtherSubCategories as $furtherSubCategory)
+                                <option value="null">Нет</option>
+                                <option value="{{$furtherSubCategory->id}}">{{$furtherSubCategory->further_sub_category}}</option>
                                 @endforeach
                             </select>
                         </div>

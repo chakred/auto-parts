@@ -12,15 +12,25 @@
     @forelse($subCategories as $subCategory)
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100 cat-block">
-                <a href="{{ route('goods-site', ['subCategory' => $subCategory->id , 'model' => $model->id]) }}">
+                <a href="{{
+                $subCategory->furtherSubCategory->first()?
+                route('further-sub-categories-site', ['subCategory' => $subCategory->id, 'model' => $model->id]):
+                route('goods-site', ['subCategory' => $subCategory->id, 'furtherSubCategory' => 0, 'model' => $model->id])
+                 }}">
                     @if($subCategory->img_path)
-                        <img src="{{env('APP_URL').'/storage/upload'.$subCategory->img_path}}">
+                    <img src="{{env('APP_URL').'/storage/upload'.$subCategory->img_path}}">
                     @else
-                        <img src="http://dummyimage.com/450x350/ffffff/545454&text=No+image" />
+                    <img src="http://dummyimage.com/450x350/ffffff/545454&text=No+image">
                     @endif
                 </a>
                 <div class="card-footer">
-                    <small class="text-muted"><a href="{{ route('goods-site', ['subCategory' => $subCategory->id , 'model' => $model->id]) }}">{{$subCategory->sub_category}}</a></small>
+                    <small class="text-muted">
+                        @if($subCategory->furtherSubCategory->first())
+                        <a href="{{ route('further-sub-categories-site', ['subCategory' => $subCategory->id, 'model' => $model->id]) }}">{{$subCategory->sub_category}}</a>
+                        @else
+                        <a href="{{ route('goods-site', ['subCategory' => $subCategory->id , 'furtherSubCategory' => 0, 'model' => $model->id]) }}">{{$subCategory->sub_category}}</a>
+                        @endif
+                    </small>
                 </div>
             </div>
         </div>

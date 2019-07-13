@@ -14,8 +14,9 @@ class BankUkrainian
 
     public function chooseOneCurrency($countryCode)
     {
-        if(!empty(json_decode(file_get_contents($this->apiUrl), true))) {
-            $currencyList = json_decode(file_get_contents($this->apiUrl), true);
+
+        if(!empty(json_decode(file_get_contents($this->apiUrl, false), true))) {
+            $currencyList = json_decode(file_get_contents($this->apiUrl, false), true);
             foreach ($currencyList as $key => $currency) {
                 if (in_array($countryCode,$currency)) {
                     return $currency;

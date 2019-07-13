@@ -12,7 +12,12 @@
     @forelse($relatedGoods as $goods)
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100 cat-block">
-                <a href="{{ route('goods-single-site', ['subCategory' => $goods->id_sub_category, 'model' => $model->id, 'id' => $goods->id]) }}">
+                <a href="{{ route('goods-single-site',
+                [
+                    'subCategory' => $goods->id_sub_category,
+                    'model' => $model->id,
+                    'id' => $goods->id
+                ]) }}">
                     @if($goods->img_path)
                         <img src="{{env('APP_URL').'/storage/upload'.$goods->img_path}}">
                     @else

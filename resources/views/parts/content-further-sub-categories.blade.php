@@ -1,0 +1,41 @@
+<div class="row">
+        <div class="col-sm-12 mb-3">
+            <div class="card head-block">
+                <div>
+                    <div>
+                        <img src="{{env('APP_URL').'/storage/upload'.$model->img_path}}">
+                    </div>
+                    <p><span>Под-подкатегории запчастей к</span> {{$model->autoMark->name_mark.' '.$model->name_model}}</p>
+                </div>
+            </div>
+        </div>
+    @forelse($furtherSubCategories as $furtherSubCategory)
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 cat-block">
+                <a href="{{ route('goods-site',
+                [
+                    'subCategory' => $furtherSubCategory->id_sub_category,
+                    'furtherSubCategory'=> $furtherSubCategory->id,
+                    'model' => $model->id
+                ]) }}">
+                    @if($furtherSubCategory->img_path)
+                        <img src="{{env('APP_URL').'/storage/upload'.$furtherSubCategory->img_path}}">
+                    @else
+                        <img src="http://dummyimage.com/450x350/ffffff/545454&text=No+image" />
+                    @endif
+                </a>
+                <div class="card-footer">
+                    <small class="text-muted"><a href="{{ route('goods-site',
+                    [
+                        'subCategory' => $furtherSubCategory->id_sub_category,
+                        'furtherSubCategory'=> $furtherSubCategory->id,
+                        'model' => $model->id
+                    ]
+                    ) }}">{{$furtherSubCategory->further_sub_category}}</a></small>
+                </div>
+            </div>
+        </div>
+    @empty
+        Нет под-подкатегорий
+    @endforelse
+</div>

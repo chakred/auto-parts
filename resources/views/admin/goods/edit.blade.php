@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        @include('admin.errors.error')
+        @include('admin.notification.error')
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border pad-15">
@@ -115,9 +115,25 @@
                         <div class="form-group">
                             <label for="sub-category">Подкатегория</label>
                             <select class="form-control" id="sub-category" name="sub-category">
-                                <option value="{{$good->subCategories->id}}">{{$good->subCategories->sub_category}}</option>
                                 @forelse($subCategories as $subCategory)
-                                    <option value="{{$subCategory->id}}">{{$subCategory->sub_category}}</option>
+                                    <option
+                                        @if($good->subCategories->id == $subCategory->id)
+                                        <?='selected'?>
+                                        @endif
+                                        value="{{$subCategory->id}}">{{$subCategory->sub_category}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="further-sub-category">Под-подкатегория</label>
+                            <select class="form-control" id="further-sub-category" name="further-sub-category">
+                                <option value="null">Нет</option>
+                                @foreach($furtherSubCategories as $furtherSubCategory)
+                                    <option
+                                        @if($good->furtherSubCategories->id == $furtherSubCategory->id)
+                                        <?='selected'?>
+                                        @endif value="{{$furtherSubCategory->id}}"
+                                    >{{$furtherSubCategory->further_sub_category}}</option>
                                 @endforeach
                             </select>
                         </div>

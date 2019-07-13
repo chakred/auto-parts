@@ -33,6 +33,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::put('/sub-categories/edit/{id}', 'SubCategoriesController@update')->name('sub-category-edit');
     Route::delete('/sub-categories/{sub-category}', 'SubCategoriesController@destroy')->name('sub-category-delete');
 
+    Route::get('/further-sub-categories', 'FurtherSubCategoriesController@index')->name('further-sub-categories');
+    Route::post('/further-sub-categories', 'FurtherSubCategoriesController@store')->name('further-sub-category-store');
+    Route::put('/further-sub-categories/edit/{id}', 'FurtherSubCategoriesController@update')->name('further-sub-category-edit');
+    Route::delete('/further-sub-categories/{further-sub-category}', 'FurtherSubCategoriesController@destroy')->name('further-sub-category-delete');
+
     Route::get('/goods', 'GoodsController@index')->name('goods');
     Route::get('/goods/add', 'GoodsController@add')->name('add-goods');
     Route::post('/goods/add', 'GoodsController@store')->name('store-goods');
@@ -49,9 +54,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
 Route::get('/', 'Web\FrontPageController@index')->name('front-page');
 Route::get('categories/{id}', 'Web\CategoriesController@index')->name('categories-site');
 Route::get('sub-categories/{category}/{model}', 'Web\SubCategoriesController@index')->name('sub-categories-site');
-Route::get('goods/{subCategory}/{model}', 'Web\GoodsController@index')->name('goods-site');
-Route::get('goods/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
-Route::post('goods/order', 'Web\OrderController@store')->name('store-order');
+Route::get('further-sub-categories/{subCategory}/{model}', 'Web\FurtherSubCategoriesController@index')->name('further-sub-categories-site');
+Route::get('products/{subCategory}/{furtherSubCategory?}/{model}', 'Web\GoodsController@index')->name('goods-site');
+Route::get('product/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
+Route::post('products/order', 'Web\OrderController@store')->name('store-order');
 Route::any('/search','Web\GoodsController@search')->name('search-for-goods');
 
 Auth::routes();

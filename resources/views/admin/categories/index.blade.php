@@ -7,7 +7,7 @@
                 <h1>Раздел:Категории запчастей</h1>
             </div>
         </div>
-        @include('admin.errors.error')
+        @include('admin.notification.error')
         <div class="row">
             <div class="col-sm-8">
                 <div class="custom-border">

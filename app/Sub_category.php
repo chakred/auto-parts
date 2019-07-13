@@ -11,11 +11,16 @@ class Sub_category extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Category', 'id_category' , 'id');
+        return $this->belongsTo(Category::class, 'id_category' , 'id');
     }
 
     public function goods()
     {
-        return $this->hasMany('App\Good', 'id_sub_category' , 'id');
+        return $this->hasMany(Good::class, 'id_sub_category' , 'id');
+    }
+
+    public function furtherSubCategory()
+    {
+        return $this->hasMany(FurtherSubCategory::class, 'id_sub_category' , 'id');
     }
 }

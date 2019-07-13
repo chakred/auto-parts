@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use App\{
     Auto_model,
     Auto_mark,
-    Good,
+    Sub_category,
+    FurtherSubCategory,
     ViewCounter
 };
-use App\Calculation\PriceCalculation;
 
-class GoodsController extends Controller
+
+class FurtherSubCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,17 +24,12 @@ class GoodsController extends Controller
     {
         $viewNumbers = $viewCounter->createCookie();
         $subCategoryId = $request->route('subCategory');
-        $furtherSubCategoryId = $request->route('furtherSubCategory')!=0?$request->route('furtherSubCategory'):null;
+//        $categoryId = $request->route('category');
         $modelId = $request->route('model');
-        $model = Auto_model::where('id','=', $modelId)->first();
+        $model = Auto_model::where('id','=',  $modelId)->first();
         $marks = Auto_mark::all();
-        $relatedGoods = Good::where('id_model','=', $modelId)
-            ->where('id_sub_category','=', $subCategoryId)
-            ->where('id_further_sub_category', '=', $furtherSubCategoryId)
-            ->get();
-        $priceCalculation = new PriceCalculation();
-        $relatedGoods = $priceCalculation->calculate($relatedGoods);
-        return view ('pages.goods-page', compact('model','marks', 'relatedGoods', 'viewNumbers'));
+        $furtherSubCategories = FurtherSubCategory::where('id_sub_category','=', $subCategoryId)->get();
+        return view ('pages.further-sub-categories-page', compact('model','marks', 'furtherSubCategories', 'viewNumbers'));
     }
 
     /**
@@ -100,19 +96,5 @@ class GoodsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function search(Request $request, ViewCounter $viewCounter)
-    {
-        $searchKey = $request->searchForGoods;
-        $viewNumbers = $viewCounter->createCookie();
-        $models = Auto_model::all();
-        $marks = Auto_mark::all();
-        $matchGoods = Good::where('name_good','LIKE','%'.$searchKey.'%')
-            ->orWhere('desc_good','LIKE','%'.$searchKey.'%')
-            ->get();
-        $priceCalculation = new PriceCalculation();
-        $matchGoods = $priceCalculation->calculate($matchGoods);
-        return view('pages.search', compact('matchGoods', '$searchKe', 'viewNumbers', 'models', 'marks'));
     }
 }

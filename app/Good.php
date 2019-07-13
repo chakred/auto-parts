@@ -21,4 +21,9 @@ class Good extends Model
         return $this->belongsTo('App\Sub_category', 'id_sub_category' , 'id');
     }
 
+    public function furtherSubCategories()
+    {
+        return $this->belongsTo('App\FurtherSubCategory', 'id_further_sub_category' , 'id');
+    }
+
 }

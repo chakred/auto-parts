@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Good;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Auto_model;
-use App\Sub_category;
+use App\{
+    Good,
+    Auto_model,
+    Sub_category,
+    FurtherSubCategory
+};
 use App\ApiBank\BankUkrainian;
 use Image as ImageCrop;
+use App\Calculation\PriceCalculation;
 
 class GoodsController extends Controller
 {
@@ -17,38 +21,26 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(BankUkrainian $apiBank)
+    public function index()
     {
         $models = Auto_model::all();
         $goods = Good::all();
-
-        foreach ($goods as $good) {
-            if (isset($good->profit) && $good->profit != null) {
-                $percentOfProfit = $good->cost/100*$good->profit;
-                $good->convertedPrice = $good->cost+$percentOfProfit;
-            } else {
-                $good->convertedPrice = $good->cost;
-            }
-            if (isset($good->discount) && $good->discount != null) {
-                $percentOfDiscount = $good->convertedPrice/100*$good->profit;
-                $good->convertedPrice = $good->convertedPrice-$percentOfDiscount;
-            }
-
-            switch($good->currency) {
-                case 'EUR':
-                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
-                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
-                    break;
-                case 'USD':
-                    $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
-                    $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
-                    break;
-            }
-        }
-
+        $priceCalculation = new PriceCalculation();
+        $goods = $priceCalculation->calculate($goods);
         return view('admin.goods.index', compact('models', 'goods'));
     }
 
+    public function includeProfit($good)
+    {
+        $percentOfProfit = $good->cost/100*$good->profit;
+        return $good->cost+$percentOfProfit;
+    }
+
+    public function includeDiscount($good)
+    {
+        $percentOfDiscount = $good->convertedPrice/100*$good->discount;
+        return $good->convertedPrice-$percentOfDiscount;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -60,7 +52,8 @@ class GoodsController extends Controller
         $apiCurrencyEur = $apiBank->chooseOneCurrency('EUR');
         $models = Auto_model::all();
         $subCategories = Sub_category::all();
-        return view('admin.goods.create', compact('models', 'subCategories', 'apiCurrencyUsd', 'apiCurrencyEur'));
+        $furtherSubCategories = FurtherSubCategory::all();
+        return view('admin.goods.create', compact('models', 'subCategories', 'furtherSubCategories', 'apiCurrencyUsd', 'apiCurrencyEur'));
     }
 
     /**
@@ -118,8 +111,10 @@ class GoodsController extends Controller
 
         $good->id_model = $request->input('auto');
         $good->id_sub_category = $request->input('sub-category');
+        if ($request->input('further-sub-category') != 'null') {
+            $good->id_further_sub_category = $request->input('further-sub-category');
+        }
         $good->slug = str_slug($good->name_good, '-');
-
         $good->save();
 
         if (isset($picture_name)) {
@@ -130,7 +125,7 @@ class GoodsController extends Controller
             $img->save();
         }
 
-        return back();
+        return back()->withSuccess('You have just added - '.$good->name_good);
 
     }
 
@@ -158,7 +153,8 @@ class GoodsController extends Controller
         $good = Good::find($id);
         $models = Auto_model::all();
         $subCategories = Sub_category::all();
-        return view ('admin.goods.edit', compact('good', 'models', 'subCategories', 'apiCurrencyUsd', 'apiCurrencyEur'));
+        $furtherSubCategories = FurtherSubCategory::all();
+        return view ('admin.goods.edit', compact('good', 'models', 'subCategories', 'apiCurrencyUsd', 'apiCurrencyEur', 'furtherSubCategories'));
     }
 
     /**
@@ -208,6 +204,9 @@ class GoodsController extends Controller
 
         $good->id_model = $request->input('auto');
         $good->id_sub_category = $request->input('sub-category');
+        if ($request->input('further-sub-category') != 'null') {
+            $good->id_further_sub_category = $request->input('further-sub-category');
+        }
         $good->slug = str_slug($good->name_good, '-');
 
         if (isset($picture_name)) {

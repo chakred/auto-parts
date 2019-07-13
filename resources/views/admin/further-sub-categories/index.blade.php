@@ -76,8 +76,10 @@
                         <div class="form-group">
                             <label for="further-sub-category">Под-подкатегории:</label>
                             <select class="form-control" id="further-sub-category" name="further_sub_category">
-                                <option>test1</option>
-                                <option>test2</option>
+                                <option>Комплект ремня ГРМ с роликами</option>
+                                <option>Комплект ремня генератора с роликами</option>
+                                <option>Ремень генератора</option>
+                                <option>Ролик, натяжитель ремня генератора</option>
                             </select>
                         </div>
                         <div class="form-group">

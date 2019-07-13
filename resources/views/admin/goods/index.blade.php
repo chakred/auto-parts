@@ -53,7 +53,7 @@
                         <td>{{$good->autoModels->name_model}}</td>
                         <td>{{$good->autoModels->year}}</td>
                         <td>{{$good->subCategories->sub_category}}</td>
-                        <td>{{$good->furtherSubCategories->further_sub_category?$good->furtherSubCategories->further_sub_category:'нет'}}</td>
+                        <td>{{isset($good->furtherSubCategories->further_sub_category)?$good->furtherSubCategories->further_sub_category:'нет'}}</td>
                         <td width="5%">
                             <a href="{{ route('edit-goods', ['good' => $good->id]) }}" class="btn btn-outline-secondary" title="Редактировать"><i class="far fa-edit"></i></a>
                             <form method="POST" action ="{{ route('delete-goods', ['good' => $good->id]) }}">

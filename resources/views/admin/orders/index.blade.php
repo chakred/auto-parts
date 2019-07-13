@@ -1,7 +1,7 @@
 @extends('admin.layouts.app_admin')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
                 <h1>Раздел:Все заказы</h1>

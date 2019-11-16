@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Auto_mark extends Model
 {
+    protected $fillable = ['name_mark', 'img_path', 'slug'];
+
     public $timestamps = false;
 
     public function autoModels()

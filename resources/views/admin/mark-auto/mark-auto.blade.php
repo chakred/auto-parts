@@ -48,6 +48,7 @@
                             <select class="form-control" id="yearAuto" name="name_mark">
                                 <option>Renault</option>
                                 <option>Smart</option>
+                                <option>Saab</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Добавить в базу</button>

@@ -13,6 +13,7 @@
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function(){
     Route::get('/', 'DashboardController@dashboard')->name('admin.index');
+    Route::put('/update-currency-rate/{id}', 'DashboardController@updateCurrencyRate')->name('update-currency-rate');
     Route::get('/mark-auto', 'MarkAutoController@index')->name('mark-auto');
     Route::post('/mark-auto', 'MarkAutoController@store')->name('store-mark-auto');
 

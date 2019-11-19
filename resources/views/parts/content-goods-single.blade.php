@@ -1,5 +1,14 @@
 <div class="col-lg-8">
-
+    <div class="mb-3">
+        <div class="card head-block">
+            <div>
+                <div>
+                    <img src="{{env('APP_URL').'/storage/upload'.$relatedGoods->autoModels->img_path}}">
+                </div>
+                <p><span>Запчасти к</span> {{$relatedGoods->autoModels->autoMark->name_mark.' '.$relatedGoods->autoModels->name_model}}</p>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">{{$relatedGoods->name_good}}</h3>
@@ -97,10 +106,10 @@
                     <input type="hidden" class="form-control" name="good_id" value="{{$relatedGoods->id}}">
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="text" class="form-control" name="buyer_name" placeholder="Имя">
+                    <input type="text" class="form-control" name="buyer_name" placeholder="Имя" required="required">
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="phone" class="form-control" name="buyer_phone" placeholder="Номер телефона">
+                    <input type="phone" class="form-control" name="buyer_phone" placeholder="Номер телефона" required="required">
                 </div>
                 <p>Разместите Ваш заказ и мы в течении часа свяжимся с вами для уточнения условий доставки и оплаты товара.</p>
                 <p>В скорем времени будет доступка онлайн покупка через Приват24</p>

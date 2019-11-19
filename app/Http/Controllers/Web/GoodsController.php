@@ -23,13 +23,13 @@ class GoodsController extends Controller
     {
         $viewNumbers = $viewCounter->createCookie();
         $subCategoryId = $request->route('subCategory');
-        $furtherSubCategoryId = $request->route('furtherSubCategory')!=0?$request->route('furtherSubCategory'):null;
+        $furtherSubCategoryId = $request->route('furtherSubCategory') != 0 ? $request->route('furtherSubCategory') : null;
         $modelId = $request->route('model');
-        $model = Auto_model::where('id','=', $modelId)->first();
+        $model = Auto_model::find($modelId);
         $marks = Auto_mark::all();
-        $relatedGoods = Good::where('id_model','=', $modelId)
-            ->where('id_sub_category','=', $subCategoryId)
-            ->where('id_further_sub_category', '=', $furtherSubCategoryId)
+        $relatedGoods = Good::where('id_model', $modelId)
+            ->where('id_sub_category', $subCategoryId)
+            ->where('id_further_sub_category', $furtherSubCategoryId)
             ->get();
         $priceCalculation = new PriceCalculation();
         $relatedGoods = $priceCalculation->calculate($relatedGoods);
@@ -37,71 +37,12 @@ class GoodsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Search between goods
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ViewCounter $viewCounter
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function search(Request $request, ViewCounter $viewCounter)
     {
         $searchKey = $request->searchForGoods;
@@ -110,9 +51,9 @@ class GoodsController extends Controller
         $marks = Auto_mark::all();
         $matchGoods = Good::where('name_good','LIKE','%'.$searchKey.'%')
             ->orWhere('desc_good','LIKE','%'.$searchKey.'%')
-            ->get();
+            ->paginate(12);
         $priceCalculation = new PriceCalculation();
         $matchGoods = $priceCalculation->calculate($matchGoods);
-        return view('pages.search', compact('matchGoods', '$searchKe', 'viewNumbers', 'models', 'marks'));
+        return view('pages.search', compact('matchGoods', 'searchKey', 'viewNumbers', 'models', 'marks'));
     }
 }

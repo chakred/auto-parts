@@ -10,6 +10,8 @@ class CurrentCurrency extends Model
 {
     protected $table = 'current_currency';
 
+    protected $fillable = ['currency_name', 'rate'];
+
     public function updateCurrentCurrency(BankUkrainian $bankUkrainian)
     {
         $today = Carbon::now();
@@ -35,6 +37,11 @@ class CurrentCurrency extends Model
             }
         }
 
+    }
+
+    public function rate($currencyCode)
+    {
+        return $this->where('currency_name', $currencyCode)->first();
     }
 }
 

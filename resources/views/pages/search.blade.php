@@ -62,6 +62,9 @@
                         </div>
                     </div>
                 @endforeach
+                    <div class="col-12 mt-4">
+                        {{ $matchGoods->links() }}
+                    </div>
             @else
             <div class="col-12 mt-4">
                 <p>По вашему запросу ничего не найдено</p>

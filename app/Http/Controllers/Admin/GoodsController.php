@@ -13,6 +13,7 @@ use App\{
 use App\ApiBank\BankUkrainian;
 use Image as ImageCrop;
 use App\Calculation\PriceCalculation;
+use App\CurrentCurrency;
 
 class GoodsController extends Controller
 {
@@ -24,7 +25,7 @@ class GoodsController extends Controller
     public function index()
     {
         $models = Auto_model::all();
-        $goods = Good::all();
+        $goods = Good::paginate(20);
         $priceCalculation = new PriceCalculation();
         $goods = $priceCalculation->calculate($goods);
         return view('admin.goods.index', compact('models', 'goods'));
@@ -130,31 +131,19 @@ class GoodsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BankUkrainian $apiBank)
+    public function edit($id)
     {
-        $apiCurrencyUsd = $apiBank->chooseOneCurrency('USD');
-        $apiCurrencyEur = $apiBank->chooseOneCurrency('EUR');
+        $currentCurrency = CurrentCurrency::all();
         $good = Good::find($id);
         $models = Auto_model::all();
         $subCategories = Sub_category::all();
         $furtherSubCategories = FurtherSubCategory::all();
-        return view ('admin.goods.edit', compact('good', 'models', 'subCategories', 'apiCurrencyUsd', 'apiCurrencyEur', 'furtherSubCategories'));
+        return view ('admin.goods.edit', compact('good', 'models', 'subCategories', 'currentCurrency', 'furtherSubCategories'));
     }
 
     /**

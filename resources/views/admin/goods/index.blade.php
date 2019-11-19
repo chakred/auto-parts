@@ -70,6 +70,7 @@
                         @endforelse
                         </tbody>
                     </table>
+                    {{$goods->links()}}
                 </div>
             </div>
         </div>

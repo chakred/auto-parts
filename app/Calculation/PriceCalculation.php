@@ -1,13 +1,19 @@
 <?php
 
 namespace App\Calculation;
-use App\ApiBank\BankUkrainian;
+use App\CurrentCurrency;
 
 class PriceCalculation
 {
+    /**
+     * Calculate cost according to currency rate, discount and profit
+     *
+     * @param $goods
+     * @return mixed
+     */
     public  function calculate($goods)
     {
-        $apiBank = new BankUkrainian();
+        $currentCurrency = new CurrentCurrency();
         if (isset($goods)) {
             foreach ($goods as $good) {
                 if (isset($good->profit) && $good->profit != null) {
@@ -21,35 +27,68 @@ class PriceCalculation
 
                 switch($good->currency) {
                     case 'EUR':
-                        $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
-                        $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                        $currency = $currentCurrency->rate($good->currency);
+                        $good->convertedPrice = round($good->convertedPrice*$currency->rate);
                         break;
                     case 'USD':
-                        $apiCurrency = $apiBank->chooseOneCurrency($good->currency);
-                        $good->convertedPrice = round($good->convertedPrice*$apiCurrency['rate']);
+                        $currency = $currentCurrency->rate($good->currency);
+                        $good->convertedPrice = round($good->convertedPrice*$currency->rate);
                         break;
                 }
             }
             return $goods;
         }
     }
+
     /**
+     * Calculate profit
+     *
      * @param $good
      * @return float|int
      */
-    public function includeProfit($good)
+    private function includeProfit($good)
     {
         $percentOfProfit = $good->cost/100*$good->profit;
         return $good->cost+$percentOfProfit;
     }
 
     /**
+     * Calculate discount
+     *
      * @param $good
      * @return float|int
      */
-    public function includeDiscount($good)
+    private function includeDiscount($good)
     {
         $percentOfDiscount = $good->convertedPrice/100*$good->discount;
         return $good->convertedPrice-$percentOfDiscount;
+    }
+
+    public function calculateSingle($relatedGoods)
+    {
+        $currentCurrency = new CurrentCurrency();
+        if (isset($relatedGoods->profit) && $relatedGoods->profit != null) {
+            $percentOfProfit = $relatedGoods->cost/100*$relatedGoods->profit;
+            $relatedGoods->convertedPrice = $relatedGoods->cost+$percentOfProfit;
+        } else {
+            $relatedGoods->convertedPrice = $relatedGoods->cost;
+        }
+        if (isset($relatedGoods->discount) && $relatedGoods->discount != null) {
+            $percentOfDiscount = $relatedGoods->convertedPrice/100*$relatedGoods->discount;
+            $relatedGoods->convertedPrice = $relatedGoods->convertedPrice-$percentOfDiscount;
+        }
+
+        switch($relatedGoods->currency) {
+            case 'EUR':
+                $currency = $currentCurrency->rate($relatedGoods->currency);
+                $relatedGoods->convertedPrice = round($relatedGoods->convertedPrice*$currency->rate);
+                break;
+            case 'USD':
+                $currency = $currentCurrency->rate($relatedGoods->currency);
+                $relatedGoods->convertedPrice = round($relatedGoods->convertedPrice*$currency->rate);
+                break;
+        }
+
+        return $relatedGoods;
     }
 }

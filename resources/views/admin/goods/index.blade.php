@@ -25,12 +25,12 @@
                             <th scope="col">Страна</th>
                             <th scope="col">Цена закупки за шт.</th>
                             <th scope="col">Цена продажи за шт.</th>
-                            <th scope="col">Кол</th>
+                            <th scope="col">Количесвто</th>
                             <th scope="col">Марка авто</th>
                             <th scope="col">Модель авто</th>
                             <th scope="col">Год авто</th>
-                            <th scope="col">Подкат.</th>
-                            <th scope="col">Под-подкат.</th>
+                            <th scope="col">Подкатигория</th>
+                            <th scope="col">Под-подкатигория</th>
                             <th scope="col">Действие</th>
                         </tr>
                         </thead>
@@ -43,10 +43,10 @@
                             @else
                                 <td><img src="http://placehold.jp/80x80.png?text=Нет картинки"></td>
                             @endif
-                        <td width="10%">{{$good->name_good}}</td>
-                        <td width="15%">{{$good->mark_good}}</td>
-                        <td width="10%">{{$good->country}}</td>
-                        <td width="15%">{{$good->cost.' '.$good->currency}}</td>
+                        <td width="5%">{{$good->name_good}}</td>
+                        <td>{{$good->mark_good}}</td>
+                        <td>{{$good->country}}</td>
+                        <td>{{$good->cost.' '.$good->currency}}</td>
                         <td>{{$good->convertedPrice.' грн'}}</td>
                         <td>{{$good->quantity}}</td>
                         <td>{{$good->autoModels->autoMark->name_mark}}</td>

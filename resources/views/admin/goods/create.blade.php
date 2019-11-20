@@ -109,7 +109,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sub-category">Подкатегория</label>
-                            <select class="form-control" id="sub-category" name="sub-category">
+                            <select class="form-control" id="sub-category" name="sub_category">
                                 @foreach($subCategories as $subCategory)
                                 <option value="{{$subCategory->id}}">{{$subCategory->sub_category}}</option>
                                 @endforeach
@@ -117,7 +117,7 @@
                         </div>
                         <div class="form-group">
                             <label for="further-sub-category">Под-подкатегория</label>
-                            <select class="form-control" id="further-sub-category" name="further-sub-category">
+                            <select class="form-control" id="further-sub-category" name="further_sub_category">
                                 <option value="null">Нет</option>
                                 @foreach($furtherSubCategories as $furtherSubCategory)
                                 <option value="{{$furtherSubCategory->id}}">{{$furtherSubCategory->further_sub_category}}</option>
@@ -129,18 +129,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="custom-border pad-15 text-white bg-dark">
-                    <h5>Актуальный курс НБУ</h5>
-                    @foreach($apiCurrencyUsd as $value)
-                        <p>{{$value}}</p>
-                    @endforeach
-                    <hr>
-                    @foreach($apiCurrencyEur as $value)
-                        <p>{{$value}}</p>
-                    @endforeach
-                </div>
-            </div>
+            @include('admin.goods.currency')
         </div>
     </div>
 @endsection

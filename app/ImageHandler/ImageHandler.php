@@ -15,13 +15,17 @@ class ImageHandler
      * @param $folderDirectoryName
      * @return null|string
      */
-    public static function saveImage($request, $folderDirectoryName)
+    public static function saveImage($request, $folderDirectoryName, $resizment = null)
     {
         if ($request->has('picture')) {
             $file = $request->picture;
             $pictureName = '/'.$folderDirectoryName.'/'.uniqid().'-'.$file->getClientOriginalName();
             $request->picture->storeAs('/public/upload/', $pictureName);
-            (new self)->cropImage($pictureName);
+            if ($resizment == true) {
+                (new self)->cropImage($pictureName);
+            } else {
+                (new self)->cropAndResizeImage($pictureName);
+            }
         }
         return isset($pictureName) ? $pictureName : null;
 
@@ -37,6 +41,22 @@ class ImageHandler
         if (isset($pictureName) && $pictureName != null) {
             $img = ImageCrop::make(public_path('storage/upload' . $pictureName));
             $img->fit(200);
+            $img->save();
+        }
+    }
+
+    /**
+     * This method searches for saved file then crops it and resizes
+     *
+     * @param $pictureName
+     */
+    private function cropAndResizeImage($pictureName)
+    {
+        if (isset($pictureName) && $pictureName != null) {
+            $img = ImageCrop::make(public_path('storage/upload' . $pictureName));
+            $img->resize(null, 300, function ($constraint) {
+                $constraint->aspectRatio();
+            });
             $img->save();
         }
     }

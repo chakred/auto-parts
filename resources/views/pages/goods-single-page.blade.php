@@ -9,8 +9,8 @@
             <div>
                 <div class="card head-block mb-3">
                     <div>
-                        <a href="{{ URL::previous() }}" class="badge badge-success" style="font-size: 30px; margin: 2px 5px;">
-                            <i class="fas fa-arrow-alt-circle-left"></i>
+                        <a href="{{ URL::previous() }}" class="badge badge-dark" style="font-size: 25px; margin: 6px 5px;">
+                            <i class="fas fa-long-arrow-alt-left"></i>
                         </a>
                         <span> Вернуться назад</span>
                     </div>

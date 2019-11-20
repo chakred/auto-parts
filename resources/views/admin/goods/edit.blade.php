@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('admin.notification.success')
         @include('admin.notification.error')
         <div class="row">
             <div class="col-sm-8">
@@ -114,7 +115,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sub-category">Подкатегория</label>
-                            <select class="form-control" id="sub-category" name="sub-category">
+                            <select class="form-control" id="sub-category" name="sub_category">
                                 @forelse($subCategories as $subCategory)
                                     <option
                                         @if($good->subCategories->id == $subCategory->id)
@@ -126,7 +127,7 @@
                         </div>
                         <div class="form-group">
                             <label for="further-sub-category">Под-подкатегория</label>
-                            <select class="form-control" id="further-sub-category" name="further-sub-category">
+                            <select class="form-control" id="further-sub-category" name="further_sub_category">
                                 <option value="null">Нет</option>
                                 @foreach($furtherSubCategories as $furtherSubCategory)
                                     <option
@@ -143,21 +144,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="custom-border pad-15 text-white bg-dark">
-                    @foreach($currentCurrency as $value)
-                        @if(\Carbon\Carbon::parse($value->updated_at)->format('d.m.Y') == \Carbon\Carbon::today()->format('d.m.Y'))
-                            <h5>Aктуальный курс НБУ</h5>
-                        @else
-                            <h5>Установленный курс НБУ</h5>
-                        @endif
-                        <p>{{$value->currency_name}}</p>
-                        <p>{{$value->rate}}</p>
-                        <p>{{\Carbon\Carbon::parse($value->updated_at)->format('d.m.Y')}}</p>
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
+            @include('admin.goods.currency')
         </div>
     </div>
 @endsection

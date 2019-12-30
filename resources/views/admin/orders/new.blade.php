@@ -56,6 +56,7 @@
                                 <button type="submit" class="btn btn-danger delete-good" data-good-id ="{{$order->id}}" title="Удалить"><i class="far fa-trash-alt"></i></button>
                                 {{ csrf_field() }}
                             </form>
+                            <a href="{{ route('handle-order', ['id' => $order->id]) }}" class="btn btn-success" title="Изменить статус на обработан"><i class="fas fa-check"></i></a>
                         </td>
                         </tr>
                         @empty

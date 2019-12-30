@@ -48,10 +48,10 @@
                             <div class="form-group col-md-4">
                                 <label for="status">Статус</label>
                                 <select class="form-control" id="status" name="status">
-                                    <option>Новый</option>
-                                    <option>Обработан</option>
-                                    <option>Заказан</option>
-                                    <option>Отменен</option>
+                                    <option value="new">Новый</option>
+                                    <option value="handled">Обработан</option>
+                                    <option value="ordered">Заказан</option>
+                                    <option value="canseled">Отменен</option>
                                 </select>
                             </div>
                         </div>

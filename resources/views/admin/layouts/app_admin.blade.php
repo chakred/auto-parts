@@ -63,7 +63,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('orders') }}">Все заказы</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('orders') }}">Новые заказы</a>
+                            <a class="dropdown-item" href="{{ route('orders-new') }}">Новые заказы</a>
                         </div>
                     </li>
                 </ul>

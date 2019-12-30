@@ -12,11 +12,11 @@
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">{{$relatedGoods->name_good}}</h3>
-            <h4>{{$relatedGoods->convertedPrice}} грн.</h4>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-success mb-3" data-toggle="modal" data-target="#buyProductModal">
-                    Купить
-                </button>
+            <h4><span>{{$relatedGoods->convertedPrice}}</span> грн.</h4>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#buyProductModal">
+                Купить
+            </button>
             <p class="card-text">{{$relatedGoods->desc_good}}</p>
             <p class="card-text">Производитель - {{$relatedGoods->mark_good}}</p>
             <p class="card-text">Страна производства - {{$relatedGoods->country}}</p>
@@ -67,7 +67,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('store-order') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('store-order') }}" enctype="multipart/form-data" id="form-order-goods">
                 <table class="table">
                     <thead>
                     <tr>
@@ -91,12 +91,12 @@
                         </td>
                         <td>{{$relatedGoods->name_good}}</td>
                         <td>{{$relatedGoods->mark_good}}</td>
-                        <td>{{$relatedGoods->convertedPrice}} грн.</td>
-                        <td>
-                            <div id="field1">
-                                <button type="button" id="sub" class="sub">-</button>
-                                <input type="number" id="1" value="1" min="1" max="100" name ="quantity" style="text-align: center;"/>
-                                <button type="button" id="add" class="add">+</button>
+                        <td width="10%"  width="10%" id="transferred-goods-price" data-goods-price="{{$relatedGoods->convertedPrice}}">{{$relatedGoods->convertedPrice}} грн.</td>
+                        <td width="25%">
+                            <div id="goodsQuantity">
+                                <button type="button" id="sub" class="sub btn btn-success mb-3">-</button>
+                                <input class="btn mb-3" type="number" id="1" value="1" min="1" max="10" name ="quantity" style="text-align: center;"/>
+                                <button type="button" id="add" class="add btn btn-success mb-3">+</button>
                             </div>
                         </td>
                     </tr>
@@ -104,6 +104,9 @@
                 </table>
                 <div class="form-group col-md-4">
                     <input type="hidden" class="form-control" name="good_id" value="{{$relatedGoods->id}}">
+                    <input type="hidden" class="form-control" name="fixed_rate" value="{{$relatedGoods->rate}}" id="fixed-rate">
+                    <input type="hidden" class="form-control" name="bought_price" value="{{$relatedGoods->convertedPrice}}" id="bought-price">
+                    <input type="hidden" class="form-control" name="currency_name" value="{{$relatedGoods->currency}}" id="currency-name">
                 </div>
                 <div class="form-group col-md-4">
                     <input type="text" class="form-control" name="buyer_name" placeholder="Имя" required="required">
@@ -115,7 +118,7 @@
                 <p>В скорем времени будет доступка онлайн покупка через Приват24</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                 <button type="submit" class="btn btn-success">Заказать</button>
                 {{ csrf_field() }}
                 </form>

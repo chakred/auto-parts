@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\ApiBank\BankUkrainian;
 use App\Order;
 
 class OrdersController extends Controller
@@ -14,58 +13,45 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(BankUkrainian $apiBank)
+    public function index()
     {
-        $orders = Order::orderBy('id', 'DESC')->paginate(15);
+        $orders = Order::with('goods')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(15);
 
-        foreach ($orders as $value) {
-            if (isset($value->goods)) {
-                if ($value->goods->currency == 'USD') {
-                    $apiCurrency = $apiBank->chooseOneCurrency('USD');
-                    $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
-                } elseif ($value->goods->currency == 'EUR') {
-                    $apiCurrency = $apiBank->chooseOneCurrency('EUR');
-                    $value->convertedPrice = rtrim(round($value->goods->cost*$apiCurrency['rate'],0),0);
-                } else {
-                    $value->convertedPrice = $value->cost;
-                }
-                $value->totalSum = $value->convertedPrice*$value->quantity;
-            }
-        }
+        $orders = $orders->each(function($item) {
+           $item->convertedPrice = $item->bought_price;
+           $item->totalSum = $item->quantity * $item->bought_price;
+        });
 
         return view('admin.orders.index', compact( 'orders'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * This function return only new orders
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function indexNew()
     {
-        //
+        $orders = Order::new()
+            ->orderBy('created_at', 'DESC')
+            ->paginate(15);
+        return view('admin.orders.new', compact( 'orders'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Change status of a new order to handled
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function handle($id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        Order::find($id)->update([
+            'status' => 'handled'
+        ]);
+        return back();
     }
 
     /**
@@ -74,21 +60,10 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BankUkrainian $apiBank)
+    public function edit($id)
     {
         $order = Order::find($id);
-        if (isset($order->goods)) {
-            if ($order->goods->currency == 'USD') {
-                $apiCurrency = $apiBank->chooseOneCurrency('USD');
-                $order->convertedPrice = rtrim(round($order->goods->cost*$apiCurrency['rate'],0),0);
-            } elseif ($order->goods->currency == 'EUR') {
-                $apiCurrency = $apiBank->chooseOneCurrency('EUR');
-                $order->convertedPrice = rtrim(round($order->goods->cost*$apiCurrency['rate'],0),0);
-            } else {
-                $order->convertedPrice = $order->cost;
-            }
-            $order->totalSum = $order->convertedPrice*$order->quantity;
-        }
+        $order->totalSum = $order->convertedPrice * $order->quantity;
         return view('admin.orders.edit', compact( 'order'));
     }
 

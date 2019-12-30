@@ -3,9 +3,23 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    use SoftDeletes;
+
+    protected $fillable = [
+        'goods_id',
+        'quantity',
+        'bought_price',
+        'buyer_name',
+        'buyer_phone',
+        'rate',
+        'currency_name',
+        'status'
+    ];
+
     public function goods()
     {
         return $this->belongsTo('App\Good', 'goods_id' , 'id');
@@ -22,5 +36,10 @@ class Order extends Model
             return false;
         }
 
+    }
+
+    public function scopeNew($query)
+    {
+        return $query->where('status', 'new');
     }
 }

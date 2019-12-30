@@ -1,18 +1,94 @@
 $(document).ready(function(){
     var goodsId = $('.define-goods').data('goods-id'),
+        currencyName = $('.define-goods').data('currency-name'),
+        fixedRateAtDate = $('.define-goods').data('fixed-rate'),
         buttonBuy = $('.define-goods'),
         goodsName = $('#transferred-goods-name'),
         goodsImage = $('#transferred-goods-image'),
         goodsMark = $('#transferred-goods-mark'),
         goodsPrice = $('#transferred-goods-price'),
+        convertedPrice,
+        calculatedPrice,
+        goodsQuantity,
         form = $('#form-order-goods');
 
+
+    var singleGoodsFormModal = function() {
+        $('#goodsQuantity #add').on('click', function () {
+            convertedPrice = goodsPrice.data('goods-price');
+            goodsQuantity = parseInt(form.find('input[type=number]').val());
+            if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
+                goodsQuantity = parseInt(goodsQuantity)+1;
+                goodsQuantity = goodsQuantity >= 10 ? 10 : goodsQuantity;
+                calculatedPrice = goodsQuantity * convertedPrice;
+                goodsPrice.text(calculatedPrice +'грн');
+            } else {
+                goodsPrice.text(convertedPrice +'грн');
+            }
+        });
+
+        $('#goodsQuantity #sub').on('click', function () {
+            goodsQuantity = parseInt(form.find('input[type=number]').val());
+            if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
+                goodsQuantity = parseInt(goodsQuantity)-1;
+                goodsQuantity = goodsQuantity <= 1 ? 1 : goodsQuantity;
+                console.log(goodsQuantity);
+                calculatedPrice = goodsQuantity * convertedPrice;
+                goodsPrice.text(calculatedPrice +'грн');
+            } else {
+                goodsPrice.text(convertedPrice +'грн');
+            }
+        });
+    };
+
+    $('#quantity').on('input', function () {
+        if ($(this).val() != null && $(this).val() > 0 && $(this).val() !== undefined && $(this).val() != "") {
+            calculatedPrice = $(this).val() * convertedPrice;
+            goodsPrice.text(calculatedPrice +'грн');
+        } else {
+            goodsPrice.text(0 +'грн');
+        }
+    });
+
+    var generaGoodsFormModal = function() {
+        $('#field1 #add').on('click', function () {
+            goodsQuantity = parseInt(form.find('input[type=number]').val());
+            if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
+                goodsQuantity = parseInt(goodsQuantity)+1;
+                goodsQuantity = goodsQuantity >= 10 ? 10 : goodsQuantity;
+                calculatedPrice = goodsQuantity * convertedPrice;
+                goodsPrice.text(calculatedPrice +'грн');
+            } else {
+                goodsPrice.text(convertedPrice +'грн');
+            }
+        });
+
+        $('#field1 #sub').on('click', function () {
+            goodsQuantity = parseInt(form.find('input[type=number]').val());
+            if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
+                goodsQuantity = parseInt(goodsQuantity)-1;
+                goodsQuantity = goodsQuantity <= 1 ? 1 : goodsQuantity;
+                console.log(goodsQuantity);
+                calculatedPrice = goodsQuantity * convertedPrice;
+                goodsPrice.text(calculatedPrice +'грн');
+            } else {
+                goodsPrice.text(convertedPrice +'грн');
+            }
+        });
+    };
+
     buttonBuy.on('click',function (e) {
+        console.log(fixedRateAtDate);
+        form.find('input[type=number]').val(1);
         goodsName.text($(this).data('goods-name'));
         goodsImage.attr('src', $(this).data('goods-image'));
         goodsMark.text($(this).data('goods-mark'));
-        goodsPrice.text(form.find('input[type=number]').val() * $(this).data('goods-price')+'грн');
+        convertedPrice = $(this).data('goods-price');
+        goodsPrice.text(form.find('input[type=number]').val() * $(this).data('goods-price') +'грн');
         $('#goods-id').val(goodsId);
+        $('#currency-name').val(currencyName);
+        $('#fixed-rate').val(fixedRateAtDate);
+        $('#bought-price').val(convertedPrice);
     });
 
     form.submit(function(e) {
@@ -22,13 +98,18 @@ $(document).ready(function(){
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "/goods/order",
+            url: "/products/order",
             type: "POST",
             data: {
                 good_id : $('#goods-id').val(),
                 quantity: form.find('input[type=number]').val(),
+                bought_price: $('#bougth-price').val(),
                 buyer_name: form.find('input[type=text]').val(),
-                buyer_phone: form.find('input[type=phone]').val()
+                buyer_phone: form.find('input[type=phone]').val(),
+                bought_price: $('#bought-price').val(),
+                fixed_rate: $('#fixed-rate').val(),
+                currency_name: $('#currency-name').val(),
+
             },
             dataType: "html"
         });
@@ -56,7 +137,7 @@ $(document).ready(function(){
 
     function priceCounter() {
         $('.add').click(function () {
-            if ($(this).prev().val() < 3) {
+            if ($(this).prev().val() < 10) {
                 $(this).prev().val(+$(this).prev().val() + 1);
             }
         });
@@ -66,5 +147,11 @@ $(document).ready(function(){
             }
         });
     }
-    priceCounter();
+
+    function init() {
+        priceCounter();
+        generaGoodsFormModal();
+        singleGoodsFormModal();
+    }
+    init();
 })

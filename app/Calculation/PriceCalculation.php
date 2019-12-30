@@ -16,6 +16,8 @@ class PriceCalculation
         $currentCurrency = new CurrentCurrency();
         if (isset($goods)) {
             foreach ($goods as $good) {
+                $good->fixedRateAtDate = $currentCurrency->rate($good->currency)->rate;
+
                 if (isset($good->profit) && $good->profit != null) {
                     $good->convertedPrice = $this->includeProfit($good);
                 } else {

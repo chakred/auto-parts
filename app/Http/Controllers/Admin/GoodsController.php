@@ -10,10 +10,10 @@ use App\{
     Sub_category,
     FurtherSubCategory
 };
-use App\ApiBank\BankUkrainian;
 use Image as ImageCrop;
 use App\Calculation\PriceCalculation;
 use App\CurrentCurrency;
+use App\Http\Requests\StoreGoodsRequest;
 
 class GoodsController extends Controller
 {
@@ -25,70 +25,34 @@ class GoodsController extends Controller
     public function index()
     {
         $models = Auto_model::all();
-        $goods = Good::paginate(20);
+        $goods = Good::orderBy('id', 'desc')->paginate(20);
         $priceCalculation = new PriceCalculation();
         $goods = $priceCalculation->calculate($goods);
         return view('admin.goods.index', compact('models', 'goods'));
     }
 
-    public function includeProfit($good)
-    {
-        $percentOfProfit = $good->cost/100*$good->profit;
-        return $good->cost+$percentOfProfit;
-    }
-
-    public function includeDiscount($good)
-    {
-        $percentOfDiscount = $good->convertedPrice/100*$good->discount;
-        return $good->convertedPrice-$percentOfDiscount;
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function add(BankUkrainian $apiBank)
+    public function add()
     {
-        $apiCurrencyUsd = $apiBank->chooseOneCurrency('USD');
-        $apiCurrencyEur = $apiBank->chooseOneCurrency('EUR');
+        $currentCurrency = CurrentCurrency::all();
         $models = Auto_model::all();
         $subCategories = Sub_category::all();
         $furtherSubCategories = FurtherSubCategory::all();
-        return view('admin.goods.create', compact('models', 'subCategories', 'furtherSubCategories', 'apiCurrencyUsd', 'apiCurrencyEur'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('admin.goods.create', compact('models', 'subCategories', 'furtherSubCategories', 'currentCurrency'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreGoodsRequest $request
+     * @return mixed
      */
-    public function store(Request $request)
+    public function store(StoreGoodsRequest $request)
     {
-        $this->validate($request,[
-            'name_good' => 'required',
-            'desc_good' => 'required',
-            'img_path' => 'image|nullable|max:1999',
-            'mark_good' => 'required',
-            'country' =>'required',
-            'cost' => 'required',
-            'profit' => 'required',
-            'currency' => 'required',
-            'quantity' => 'required',
-            'auto' => 'required',
-            'sub-category' => 'required'
-        ]);
-
         $good = new Good();
         $picture_name = null;
 
@@ -98,17 +62,17 @@ class GoodsController extends Controller
             $request->picture->storeAs('public/upload', $picture_name);
         }
 
-        $good->id_inner = $request->input('inner_id') ? $request->input('inner_id') : null;
-        $good->name_good = $request->input('name_good');
-        $good->desc_good = $request->input('desc_good');
-        $good->mark_good = $request->input('mark_good');
-        $good->country = $request->input('country');
-        $good->cost = $request->input('cost');
-        $good->profit = $request->input('profit');
-        $good->discount = $request->input('discount');
-        $good->currency = $request->input('currency');
-        $good->quantity = $request->input('quantity');
-        $good->item = $request->input('item');
+        $good->id_inner     = $request->input('inner_id') ? $request->input('inner_id') : null;
+        $good->name_good    = $request->input('name_good');
+        $good->desc_good    = $request->input('desc_good');
+        $good->mark_good    = $request->input('mark_good');
+        $good->country      = $request->input('country');
+        $good->cost         = $request->input('cost');
+        $good->profit       = $request->input('profit');
+        $good->discount     = $request->input('discount');
+        $good->currency     = $request->input('currency');
+        $good->quantity     = $request->input('quantity');
+        $good->item         = $request->input('item');
 
         $good->id_model = $request->input('auto');
         $good->id_sub_category = $request->input('sub-category');
@@ -147,30 +111,15 @@ class GoodsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update goods
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StoreGoodsRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(StoreGoodsRequest $request, $id)
     {
-
         $good = Good::find($id);
-        $this->validate($request,[
-            'name_good' => 'required',
-            'desc_good' => 'required',
-            'img_path' => 'image|nullable|max:1999',
-            'mark_good' => 'required',
-            'country' =>'required',
-            'cost' => 'required',
-            'profit' => 'required',
-            'currency' => 'required',
-            'quantity' => 'required',
-            'auto' => 'required',
-            'sub-category' => 'required'
-        ]);
-
         $picture_name = null;
 
         if ($request->hasFile('picture')){

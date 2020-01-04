@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
-                <h1>Раздел:Все заказы</h1>
+                <h1>Раздел:Новые заказы</h1>
             </div>
         </div>
         <div class="row">

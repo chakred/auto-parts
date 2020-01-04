@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::delete('/further-sub-categories/{further-sub-category}', 'FurtherSubCategoriesController@destroy')->name('further-sub-category-delete');
 
     Route::get('/goods', 'GoodsController@index')->name('goods');
+    Route::post('/goods/search', 'GoodsController@search')->name('goods-search');
     Route::get('/goods/add', 'GoodsController@add')->name('add-goods');
     Route::post('/goods/add', 'GoodsController@store')->name('store-goods');
     Route::get('/goods/edit/{id}', 'GoodsController@edit')->name('edit-goods');

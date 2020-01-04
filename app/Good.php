@@ -26,4 +26,21 @@ class Good extends Model
         return $this->belongsTo('App\FurtherSubCategory', 'id_further_sub_category' , 'id');
     }
 
+    /**
+     * This query collects records according to key word
+     *
+     * @param $query
+     * @param $keyWord
+     * @return mixed
+     */
+    public function scopeKeyWord($query, $keyWord)
+    {
+        return $query->where(function($q) use ($keyWord){
+            $q->where('name_good', 'like', '%'.$keyWord.'%');
+            $q->orWhere('desc_good', 'like', '%'.$keyWord.'%');
+            $q->orWhere('mark_good', 'like', '%'.$keyWord.'%');
+            $q->orWhere('id_inner', 'like', '%'.$keyWord.'%');
+        });
+    }
+
 }

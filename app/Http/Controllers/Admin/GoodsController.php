@@ -24,11 +24,27 @@ class GoodsController extends Controller
      */
     public function index()
     {
-        $models = Auto_model::all();
         $goods = Good::orderBy('id', 'desc')->paginate(20);
         $priceCalculation = new PriceCalculation();
         $goods = $priceCalculation->calculate($goods);
-        return view('admin.goods.index', compact('models', 'goods'));
+        return view('admin.goods.index', compact('goods'));
+    }
+
+    /**
+     *
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $goods = new Good;
+        if ($request->has('searchKey')) {
+            $goods = $goods->keyWord($request->searchKey);
+        }
+        $goods = $goods->paginate(20);
+        return view('admin.goods.index', compact('goods'));
+
     }
 
     /**

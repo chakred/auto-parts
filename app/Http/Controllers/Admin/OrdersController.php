@@ -19,12 +19,13 @@ class OrdersController extends Controller
             ->orderBy('created_at', 'DESC')
             ->paginate(15);
 
-        $orders = $orders->each(function($item) {
-           $item->convertedPrice = $item->bought_price;
-           $item->totalSum = $item->quantity * $item->bought_price;
-        });
+        foreach ($orders as $order) {
+            $order->convertedPrice = $order->bought_price;
+            $order->totalSum = $order->quantity * $order->bought_price;
+        }
+        $notFound = false;
 
-        return view('admin.orders.index', compact( 'orders'));
+        return view('admin.orders.index', compact( 'orders', 'notFound'));
     }
 
     /**
@@ -37,7 +38,9 @@ class OrdersController extends Controller
         $orders = Order::new()
             ->orderBy('created_at', 'DESC')
             ->paginate(15);
-        return view('admin.orders.new', compact( 'orders'));
+        $notFound = false;
+
+        return view('admin.orders.new', compact( 'orders', 'notFound'));
     }
 
     /**
@@ -76,7 +79,41 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
+        return back();
+    }
+
+    /**
+     * Search in all orders according to key word
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function searchInAll(Request $request)
+    {
+        $orders = new Order;
+        if ($request->has('searchKey')) {
+            $orders = $orders->keyWord($request->searchKey);
+        }
+        $orders = $orders->paginate(15);
+        $notFound = $orders->count() == 0 ? true : false;
+        return view('admin.orders.index', compact( 'orders', 'notFound'));
+    }
+
+    /**
+     * Search in new orders according to key word
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function searchInNew(Request $request)
+    {
+        $orders = new Order;
+        if ($request->has('searchKey')) {
+            $orders = $orders->new()->keyWord($request->searchKey);
+        }
+        $orders = $orders->paginate(15);
+        $notFound = $orders->count() == 0 ? true : false;
+        return view('admin.orders.new', compact( 'orders', 'notFound'));
     }
 
     /**

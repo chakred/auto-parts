@@ -48,7 +48,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::delete('/goods/{id}', 'GoodsController@destroy')->name('delete-goods');
 
     Route::get('/orders-all', 'OrdersController@index')->name('orders');
+    Route::post('/orders-all/search', 'OrdersController@searchInAll')->name('orders-search-in-all');
+    Route::get('/orders-all/search', 'OrdersController@searchInAll');
     Route::get('/orders-new', 'OrdersController@indexNew')->name('orders-new');
+    Route::post('/orders-new/search', 'OrdersController@searchInNew')->name('orders-new-search');
+    Route::get('/orders-new/search', 'OrdersController@searchInNew');
     Route::get('/orders/edit/{id}', 'OrdersController@edit')->name('edit-order');
     Route::put('/orders/edit/{id}', 'OrdersController@update')->name('update-order');
     Route::get('/orders/handle/{id}', 'OrdersController@handle')->name('handle-order');

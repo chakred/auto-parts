@@ -8,6 +8,19 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12 mb-2">
+                {{ Form::open(array('route' => 'orders-search-in-all')) }}
+                <div class="input-group mb-3">
+                    <input type="text" name="searchKey" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <input class="btn btn-primary" type="submit" value="Поиск"></input>
+                        <a href="{{route('orders')}}" class="btn btn-success" title="Вернутся к полному списку"><i class="fab fa-accessible-icon"></i></a>
+                    </div>
+                </div>
+                {{ Form::close() }}
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12">
                 <div class="custom-border">
                     <table class="table">
@@ -24,7 +37,7 @@
                             <th scope="col">Сумма заказа</th>
                             <th scope="col">Заказчик</th>
                             <th scope="col">Телефон</th>
-                            <th scope="col">Дата</th>
+                            <th scope="col">Дата заказа</th>
                             <th scope="col">Статус</th>
                             <th scope="col">Опции</th>
                         </tr>
@@ -60,7 +73,11 @@
                         </tr>
                         @empty
                             <tr>
-                                <td colspan="100">Нет товаров</td>
+                                <td colspan="100" style="text-align: center">
+                                    <strong>
+                                    @if($notFound) Не найдено! @else Нет заказов @endif
+                                    </strong>
+                                </td>
                             </tr>
                         @endforelse
                         </tbody>
@@ -69,7 +86,7 @@
             </div>
             <div class="col-sm-12">
                 <div class="d-flex justify-content-center mt-3">
-                    {{--{{ $orders->links() }}--}}
+                    {{ $orders->links() }}
                 </div>
             </div>
         </div>

@@ -38,6 +38,11 @@ class OrdersController extends Controller
         $orders = Order::new()
             ->orderBy('created_at', 'DESC')
             ->paginate(15);
+
+        foreach ($orders as $order) {
+            $order->convertedPrice = $order->bought_price;
+            $order->totalSum = $order->quantity * $order->bought_price;
+        }
         $notFound = false;
 
         return view('admin.orders.new', compact( 'orders', 'notFound'));

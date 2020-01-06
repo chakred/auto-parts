@@ -4,110 +4,31 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Auto_model;
-use App\Auto_mark;
-use App\Good;
-use App\Category;
 use App\Order;
-use App\ApiBank\BankUkrainian;
+use App\Http\Requests\StoreOrderRequest;
 
 class OrderController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Store a new order
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function index()
+    public function store(StoreOrderRequest $request)
     {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        dump($request->all());
-        $this->validate($request,[
-            'good_id' => 'required',
-            'quantity' => 'required',
-            'buyer_name' => 'required',
-            'buyer_phone' => 'required'
-
+        Order::create([
+            'goods_id' => $request->input('good_id'),
+            'quantity' => $request->input('quantity'),
+            'bought_price' => $request->input('bought_price'),
+            'buyer_name' => $request->input('buyer_name'),
+            'buyer_phone' => $request->input('buyer_phone'),
+            'rate' => $request->input('fixed_rate'),
+            'currency_name' => $request->input('currency_name')
         ]);
-
-        $order = new Order();
-
-        $order->goods_id = $request->input('good_id');
-        $order->quantity = $request->input('quantity');
-        $order->bought_price = $request->input('bought_price');
-        $order->buyer_name = $request->input('buyer_name');
-        $order->buyer_phone = $request->input('buyer_phone');
-        $order->rate = $request->input('fixed_rate');
-        $order->currency_name = $request->input('currency_name');
-
-        $order->save();
-
         return back();
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

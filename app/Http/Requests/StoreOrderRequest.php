@@ -24,17 +24,11 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_good' => 'required',
-            'desc_good' => 'required',
-            'img_path' => 'image|nullable|max:1999',
-            'mark_good' => 'required',
-            'country' =>'required',
-            'cost' => 'required',
-            'profit' => 'required',
-            'currency' => 'required',
-            'quantity' => 'required',
-            'auto' => 'required',
-            'sub_category' => 'required'
+            'good_id'       => 'required|numeric',
+            'quantity'      => 'required|numeric|max:10',
+            'bought_price'  => 'required|numeric',
+            'buyer_name'    => 'required|max:20',
+            'buyer_phone'   => 'required|max:13'
         ];
     }
 }

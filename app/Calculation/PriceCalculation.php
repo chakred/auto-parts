@@ -69,6 +69,8 @@ class PriceCalculation
     public function calculateSingle($relatedGoods)
     {
         $currentCurrency = new CurrentCurrency();
+        $relatedGoods->fixedRateAtDate = $currentCurrency->rate($relatedGoods->currency)->rate;
+
         if (isset($relatedGoods->profit) && $relatedGoods->profit != null) {
             $percentOfProfit = $relatedGoods->cost/100*$relatedGoods->profit;
             $relatedGoods->convertedPrice = $relatedGoods->cost+$percentOfProfit;

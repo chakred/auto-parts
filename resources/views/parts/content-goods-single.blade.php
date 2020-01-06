@@ -118,7 +118,7 @@
                     </tbody>
                 </table>
                 <div class="form-group col-md-4">
-                    <input type="hidden" class="form-control" name="good_id" value="{{$relatedGoods->id}}">
+                    <input type="hidden" class="form-control" name="good_id" value="{{$relatedGoods->id}}" id="goods-id">
                     <input type="hidden" class="form-control" name="fixed_rate" value="{{$relatedGoods->fixedRateAtDate}}" id="fixed-rate">
                     <input type="hidden" class="form-control" name="bought_price" value="{{$relatedGoods->convertedPrice}}" id="bought-price">
                     <input type="hidden" class="form-control" name="currency_name" value="{{$relatedGoods->currency}}" id="currency-name">
@@ -141,3 +141,4 @@
         </div>
     </div>
 </div>
+

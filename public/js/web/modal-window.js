@@ -102,7 +102,6 @@ $(document).ready(function(){
             data: {
                 good_id : $('#goods-id').val(),
                 quantity: form.find('input[type=number]').val(),
-                bought_price: $('#bougth-price').val(),
                 buyer_name: form.find('input[type=text]').val(),
                 buyer_phone: form.find('input[type=phone]').val(),
                 bought_price: $('#bought-price').val(),

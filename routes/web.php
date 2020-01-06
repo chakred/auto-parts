@@ -40,15 +40,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::delete('/further-sub-categories/{further-sub-category}', 'FurtherSubCategoriesController@destroy')->name('further-sub-category-delete');
 
     Route::get('/goods', 'GoodsController@index')->name('goods');
+    Route::post('/goods/search', 'GoodsController@search')->name('goods-search');
     Route::get('/goods/add', 'GoodsController@add')->name('add-goods');
     Route::post('/goods/add', 'GoodsController@store')->name('store-goods');
     Route::get('/goods/edit/{id}', 'GoodsController@edit')->name('edit-goods');
     Route::put('/goods/edit/{id}', 'GoodsController@update')->name('update-goods');
     Route::delete('/goods/{id}', 'GoodsController@destroy')->name('delete-goods');
 
-    Route::get('/orders', 'OrdersController@index')->name('orders');
+    Route::get('/orders-all', 'OrdersController@index')->name('orders');
+    Route::post('/orders-all/search', 'OrdersController@searchInAll')->name('orders-search-in-all');
+    Route::get('/orders-all/search', 'OrdersController@searchInAll');
+    Route::get('/orders-new', 'OrdersController@indexNew')->name('orders-new');
+    Route::post('/orders-new/search', 'OrdersController@searchInNew')->name('orders-new-search');
+    Route::get('/orders-new/search', 'OrdersController@searchInNew');
     Route::get('/orders/edit/{id}', 'OrdersController@edit')->name('edit-order');
     Route::put('/orders/edit/{id}', 'OrdersController@update')->name('update-order');
+    Route::get('/orders/handle/{id}', 'OrdersController@handle')->name('handle-order');
     Route::delete('/orders/delete/{id}', 'OrdersController@destroy')->name('delete-order');
 });
 
@@ -58,11 +65,10 @@ Route::get('sub-categories/{category}/{model}', 'Web\SubCategoriesController@ind
 Route::get('further-sub-categories/{subCategory}/{model}', 'Web\FurtherSubCategoriesController@index')->name('further-sub-categories-site');
 Route::get('products/{subCategory}/{furtherSubCategory?}/{model}', 'Web\GoodsController@index')->name('goods-site');
 Route::get('product/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
+//Store order
 Route::post('products/order', 'Web\OrderController@store')->name('store-order');
 Route::any('/search','Web\GoodsController@search')->name('search-for-goods');
 
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 

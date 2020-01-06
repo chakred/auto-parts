@@ -41,6 +41,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        dump($request->all());
         $this->validate($request,[
             'good_id' => 'required',
             'quantity' => 'required',
@@ -53,8 +54,11 @@ class OrderController extends Controller
 
         $order->goods_id = $request->input('good_id');
         $order->quantity = $request->input('quantity');
+        $order->bought_price = $request->input('bought_price');
         $order->buyer_name = $request->input('buyer_name');
         $order->buyer_phone = $request->input('buyer_phone');
+        $order->rate = $request->input('fixed_rate');
+        $order->currency_name = $request->input('currency_name');
 
         $order->save();
 

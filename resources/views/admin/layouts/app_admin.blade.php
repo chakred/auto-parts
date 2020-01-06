@@ -25,8 +25,8 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+            <a class="navbar-brand" href="{{ url('/admin') }}">
+                Privoz
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
@@ -63,7 +63,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ route('orders') }}">Все заказы</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('orders') }}">Новые заказы</a>
+                            <a class="dropdown-item" href="{{ route('orders-new') }}">Новые заказы</a>
                         </div>
                     </li>
                 </ul>

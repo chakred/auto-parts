@@ -4,17 +4,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12 col-12 mb-5 mt-3 heavy">
-                <h1>Раздел:Все заказы</h1>
+                <h1>Раздел:Новые заказы</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-12 mb-2">
-                {{ Form::open(array('route' => 'orders-search-in-all')) }}
+                {{ Form::open(array('route' => 'orders-new-search')) }}
                 <div class="input-group mb-3">
                     <input type="text" name="searchKey" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <input class="btn btn-primary" type="submit" value="Поиск"></input>
-                        <a href="{{route('orders')}}" class="btn btn-success" title="Вернутся к полному списку"><i class="fab fa-accessible-icon"></i></a>
+                        <a href="{{route('orders-new')}}" class="btn btn-success" title="Вернутся к полному списку"><i class="fab fa-accessible-icon"></i></a>
                     </div>
                 </div>
                 {{ Form::close() }}
@@ -69,13 +69,14 @@
                                 <button type="submit" class="btn btn-danger delete-good" data-good-id ="{{$order->id}}" title="Удалить"><i class="far fa-trash-alt"></i></button>
                                 {{ csrf_field() }}
                             </form>
+                            <a href="{{ route('handle-order', ['id' => $order->id]) }}" class="btn btn-success" title="Изменить статус на обработан"><i class="fas fa-check"></i></a>
                         </td>
                         </tr>
                         @empty
                             <tr>
                                 <td colspan="100" style="text-align: center">
                                     <strong>
-                                    @if($notFound) Не найдено! @else Нет заказов @endif
+                                        @if($notFound) Не найдено! @else Нет заказов @endif
                                     </strong>
                                 </td>
                             </tr>

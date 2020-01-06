@@ -10,11 +10,10 @@ use App\{
     Sub_category,
     FurtherSubCategory
 };
-use App\Http\Requests\StoreGoodsRequest;
 use Image as ImageCrop;
 use App\Calculation\PriceCalculation;
 use App\CurrentCurrency;
-use App\ImageHandler\ImageHandler;
+use App\Http\Requests\StoreGoodsRequest;
 
 class GoodsController extends Controller
 {
@@ -25,11 +24,27 @@ class GoodsController extends Controller
      */
     public function index()
     {
-        $models = Auto_model::all();
-        $goods = Good::paginate(20);
+        $goods = Good::orderBy('id', 'desc')->paginate(20);
         $priceCalculation = new PriceCalculation();
         $goods = $priceCalculation->calculate($goods);
-        return view('admin.goods.index', compact('models', 'goods'));
+        return view('admin.goods.index', compact('goods'));
+    }
+
+    /**
+     * Search for goods
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $goods = new Good;
+        if ($request->has('searchKey')) {
+            $goods = $goods->keyWord($request->searchKey);
+        }
+        $goods = $goods->paginate(20);
+        return view('admin.goods.index', compact('goods'));
+
     }
 
     /**
@@ -49,35 +64,49 @@ class GoodsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreGoodsRequest $request
+     * @return mixed
      */
     public function store(StoreGoodsRequest $request)
     {
+        $good = new Good();
+        $picture_name = null;
 
-        $folderDirectoryName = 'goods';
-        $image = ImageHandler::saveImage($request, $folderDirectoryName, true);
+        if ($request->hasFile('picture')){
+            $picture_name = '/goods/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $good->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
 
-        Good::create([
-            'id_inner'  => $request->inner_id ? $request->inner_id : null,
-            'name_good' => $request->name_good,
-            'desc_good' => $request->desc_good,
-            'img_path'  => $image,
-            'mark_good' => $request->mark_good,
-            'country'   => $request->country,
-            'cost'      => $request->cost,
-            'profit'    => $request->profit,
-            'discount'  => $request->discount,
-            'currency'  => $request->currency,
-            'quantity'  => $request->quantity,
-            'item'      => $request->item,
-            'id_model'  => $request->auto,
-            'id_sub_category' => $request->sub_category,
-            'id_further_sub_category' => $request->further_sub_category != 'null' ? $request->further_sub_category : null,
-            'slug'      => str_slug($request->name_good, '-')
-        ]);
-        return back()->withSuccess('Вы только что добавили - '.$request->name_good);
+        $good->id_inner     = $request->input('inner_id') ? $request->input('inner_id') : null;
+        $good->name_good    = $request->input('name_good');
+        $good->desc_good    = $request->input('desc_good');
+        $good->mark_good    = $request->input('mark_good');
+        $good->country      = $request->input('country');
+        $good->cost         = $request->input('cost');
+        $good->profit       = $request->input('profit');
+        $good->discount     = $request->input('discount');
+        $good->currency     = $request->input('currency');
+        $good->quantity     = $request->input('quantity');
+        $good->item         = $request->input('item');
 
+        $good->id_model = $request->input('auto');
+        $good->id_sub_category = $request->input('sub-category');
+        if ($request->input('further-sub-category') != 'null') {
+            $good->id_further_sub_category = $request->input('further-sub-category');
+        }
+        $good->slug = str_slug($good->name_good, '-');
+        $good->save();
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+            $img->resize(null, 143, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
+
+        return back()->withSuccess('You have just added - '.$good->name_good);
     }
 
     /**
@@ -97,38 +126,52 @@ class GoodsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update goods
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StoreGoodsRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(StoreGoodsRequest $request, $id)
     {
-
         $good = Good::find($id);
-        $folderDirectoryName = 'goods';
-        $image = ImageHandler::saveImage($request, $folderDirectoryName, true);
+        $picture_name = null;
 
-        $good->update([
-            'id_inner'  => $request->inner_id ? $request->inner_id : null,
-            'name_good' => $request->name_good,
-            'desc_good' => $request->desc_good,
-            'img_path'  => $image != null ? $image : $good->img_path,
-            'mark_good' => $request->mark_good,
-            'country'   => $request->country,
-            'cost'      => $request->cost,
-            'profit'    => $request->profit,
-            'discount'  => $request->discount,
-            'currency'  => $request->currency,
-            'quantity'  => $request->quantity,
-            'item'      => $request->item,
-            'id_model'  => $request->auto,
-            'id_sub_category' => $request->sub_category,
-            'id_further_sub_category' => $request->further_sub_category != 'null' ? $request->further_sub_category : null,
-            'slug'      => str_slug($request->name_good, '-')
-        ]);
-        return back()->withSuccess('Информация обновлена - '.$request->name_good);
+        if ($request->hasFile('picture')){
+            $picture_name = '/goods/'.uniqid().'-'.$request->file('picture')->getClientOriginalName();
+            $good->img_path = $picture_name;
+            $request->picture->storeAs('public/upload', $picture_name);
+        }
+
+        $good->id_inner = $request->input('inner_id') ? $request->input('inner_id') : null;
+        $good->name_good = $request->input('name_good');
+        $good->desc_good = $request->input('desc_good');
+        $good->mark_good = $request->input('mark_good');
+        $good->country = $request->input('country');
+        $good->cost = $request->input('cost');
+        $good->profit = $request->input('profit');
+        $good->discount = $request->input('discount');
+        $good->currency = $request->input('currency');
+        $good->quantity = $request->input('quantity');
+        $good->item = $request->input('item');
+
+        $good->id_model = $request->input('auto');
+        $good->id_sub_category = $request->input('sub-category');
+        if ($request->input('further-sub-category') != 'null') {
+            $good->id_further_sub_category = $request->input('further-sub-category');
+        }
+        $good->slug = str_slug($good->name_good, '-');
+
+        if (isset($picture_name)) {
+            $img = ImageCrop::make(public_path('storage/upload'.$picture_name));
+            $img->resize(null, 300, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $img->save();
+        }
+
+        $good->save();
+        return redirect('/admin/goods');
     }
 
     /**

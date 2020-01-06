@@ -8,6 +8,18 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12">
+                {{ Form::open(array('route' => 'goods-search')) }}
+                <div class="input-group mb-3">
+                    <input type="text" name="searchKey" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <input class="btn btn-primary" type="submit" value="Поиск"></input>
+                    </div>
+                </div>
+                {{ Form::close() }}
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12 mb-3">
                 <a href="{{route('add-goods')}}" class="btn btn-primary" title="Добавить товар"><i class="far fa-plus-square"></i> Добавить</a>
             </div>
@@ -21,6 +33,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Картинка</th>
                             <th scope="col">Название товара</th>
+                            <th scope="col">Артикул</th>
                             <th scope="col">Марка товара</th>
                             <th scope="col">Страна</th>
                             <th scope="col">Цена закупки за шт.</th>
@@ -43,10 +56,11 @@
                             @else
                                 <td><img src="http://placehold.jp/80x80.png?text=Нет картинки"></td>
                             @endif
-                        <td width="5%">{{$good->name_good}}</td>
-                        <td>{{$good->mark_good}}</td>
-                        <td>{{$good->country}}</td>
-                        <td>{{$good->cost.' '.$good->currency}}</td>
+                        <td width="10%">{{$good->name_good}}</td>
+                        <td width="10%">{{$good->id_inner}}</td>
+                        <td width="10%">{{$good->mark_good}}</td>
+                        <td width="10%">{{$good->country}}</td>
+                        <td width="15%">{{$good->cost.' '.$good->currency}}</td>
                         <td>{{$good->convertedPrice.' грн'}}</td>
                         <td>{{$good->quantity}}</td>
                         <td>{{$good->autoModels->autoMark->name_mark}}</td>

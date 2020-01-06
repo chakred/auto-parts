@@ -115,7 +115,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sub-category">Подкатегория</label>
-                            <select class="form-control" id="sub-category" name="sub_category">
+                            <select class="form-control" id="sub-category" name="sub-category">
                                 @forelse($subCategories as $subCategory)
                                     <option
                                         @if($good->subCategories->id == $subCategory->id)
@@ -127,7 +127,7 @@
                         </div>
                         <div class="form-group">
                             <label for="further-sub-category">Под-подкатегория</label>
-                            <select class="form-control" id="further-sub-category" name="further_sub_category">
+                            <select class="form-control" id="further-sub-category" name="further-sub-category">
                                 <option value="null">Нет</option>
                                 @foreach($furtherSubCategories as $furtherSubCategory)
                                     <option

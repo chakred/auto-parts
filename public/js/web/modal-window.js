@@ -18,7 +18,7 @@ $(document).ready(function(){
             convertedPrice = goodsPrice.data('goods-price');
             goodsQuantity = parseInt(form.find('input[type=number]').val());
             if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
-                goodsQuantity = parseInt(goodsQuantity)+1;
+                goodsQuantity = parseInt(goodsQuantity);
                 goodsQuantity = goodsQuantity >= 10 ? 10 : goodsQuantity;
                 calculatedPrice = goodsQuantity * convertedPrice;
                 goodsPrice.text(calculatedPrice +'грн');
@@ -28,12 +28,13 @@ $(document).ready(function(){
         });
 
         $('#goodsQuantity #sub').on('click', function () {
+            convertedPrice = goodsPrice.data('goods-price');
             goodsQuantity = parseInt(form.find('input[type=number]').val());
             if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
-                goodsQuantity = parseInt(goodsQuantity)-1;
+                goodsQuantity = parseInt(goodsQuantity);
                 goodsQuantity = goodsQuantity <= 1 ? 1 : goodsQuantity;
-                console.log(goodsQuantity);
                 calculatedPrice = goodsQuantity * convertedPrice;
+                console.log(convertedPrice);
                 goodsPrice.text(calculatedPrice +'грн');
             } else {
                 goodsPrice.text(convertedPrice +'грн');
@@ -54,7 +55,7 @@ $(document).ready(function(){
         $('#field1 #add').on('click', function () {
             goodsQuantity = parseInt(form.find('input[type=number]').val());
             if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
-                goodsQuantity = parseInt(goodsQuantity)+1;
+                goodsQuantity = parseInt(goodsQuantity);
                 goodsQuantity = goodsQuantity >= 10 ? 10 : goodsQuantity;
                 calculatedPrice = goodsQuantity * convertedPrice;
                 goodsPrice.text(calculatedPrice +'грн');
@@ -66,9 +67,8 @@ $(document).ready(function(){
         $('#field1 #sub').on('click', function () {
             goodsQuantity = parseInt(form.find('input[type=number]').val());
             if (goodsQuantity != null && goodsQuantity > 0 && goodsQuantity !== undefined && goodsQuantity != "") {
-                goodsQuantity = parseInt(goodsQuantity)-1;
+                goodsQuantity = parseInt(goodsQuantity);
                 goodsQuantity = goodsQuantity <= 1 ? 1 : goodsQuantity;
-                console.log(goodsQuantity);
                 calculatedPrice = goodsQuantity * convertedPrice;
                 goodsPrice.text(calculatedPrice +'грн');
             } else {
@@ -78,7 +78,6 @@ $(document).ready(function(){
     };
 
     buttonBuy.on('click',function (e) {
-        console.log(fixedRateAtDate);
         form.find('input[type=number]').val(1);
         goodsName.text($(this).data('goods-name'));
         goodsImage.attr('src', $(this).data('goods-image'));

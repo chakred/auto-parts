@@ -67,6 +67,21 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row d-flex align-items-center justify-content-center h-100" style="text-align: center">
+                    <div class="col-12">
+                        <div class="error-message" style="display: none">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Произошла ошибка</span>
+                            <p>Просим Вас заказать товар по телефону</p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="success-message" style="display: none">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Заявка успешно отправлена</span>
+                        </div>
+                    </div>
+                </div>
                 <form method="POST" action="{{ route('store-order') }}" enctype="multipart/form-data" id="form-order-goods">
                 <table class="table">
                     <thead>

@@ -7,6 +7,7 @@
                     <img src="{{env('APP_URL').'/storage/upload'.$mark->img_path}}">
                 </div>
                 <p>{{$mark->name_mark}}</p>
+                <p>- запчасти к моделям</p>
             </div>
         </div>
     </div>

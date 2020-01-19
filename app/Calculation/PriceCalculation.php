@@ -16,8 +16,6 @@ class PriceCalculation
         $currentCurrency = new CurrentCurrency();
         if (isset($goods)) {
             foreach ($goods as $good) {
-                $good->fixedRateAtDate = $currentCurrency->rate($good->currency)->rate;
-
                 if (isset($good->profit) && $good->profit != null) {
                     $good->convertedPrice = $this->includeProfit($good);
                 } else {
@@ -31,11 +29,16 @@ class PriceCalculation
                     case 'EUR':
                         $currency = $currentCurrency->rate($good->currency);
                         $good->convertedPrice = round($good->convertedPrice*$currency->rate);
+                        $good->fixedRateAtDate = $currentCurrency->rate($good->currency)->rate;
                         break;
                     case 'USD':
                         $currency = $currentCurrency->rate($good->currency);
                         $good->convertedPrice = round($good->convertedPrice*$currency->rate);
+                        $good->fixedRateAtDate = $currentCurrency->rate($good->currency)->rate;
                         break;
+                    case 'UAH':
+                        $good->fixedRateAtDate = 1;
+                    break;
                 }
             }
             return $goods;
@@ -69,7 +72,6 @@ class PriceCalculation
     public function calculateSingle($relatedGoods)
     {
         $currentCurrency = new CurrentCurrency();
-        $relatedGoods->fixedRateAtDate = $currentCurrency->rate($relatedGoods->currency)->rate;
 
         if (isset($relatedGoods->profit) && $relatedGoods->profit != null) {
             $percentOfProfit = $relatedGoods->cost/100*$relatedGoods->profit;
@@ -86,10 +88,15 @@ class PriceCalculation
             case 'EUR':
                 $currency = $currentCurrency->rate($relatedGoods->currency);
                 $relatedGoods->convertedPrice = round($relatedGoods->convertedPrice*$currency->rate);
+                $relatedGoods->fixedRateAtDate = $currentCurrency->rate($relatedGoods->currency)->rate;
                 break;
             case 'USD':
                 $currency = $currentCurrency->rate($relatedGoods->currency);
                 $relatedGoods->convertedPrice = round($relatedGoods->convertedPrice*$currency->rate);
+                $relatedGoods->fixedRateAtDate = $currentCurrency->rate($relatedGoods->currency)->rate;
+                break;
+            case 'UAH':
+                $relatedGoods->fixedRateAtDate = 1;
                 break;
         }
 

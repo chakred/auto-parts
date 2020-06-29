@@ -47,6 +47,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Контакты</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Корзина</a>
+                </li>
             </ul>
         </div>
     </div>

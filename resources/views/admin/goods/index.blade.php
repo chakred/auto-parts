@@ -14,6 +14,7 @@
                     <input type="text" name="searchKey" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <input class="btn btn-primary" type="submit" value="Поиск"></input>
+                        <a href="{{route('goods')}}" class="btn btn-success" title="Вернутся к полному списку"><i class="fab fa-accessible-icon"></i></a>
                     </div>
                 </div>
                 {{ Form::close() }}

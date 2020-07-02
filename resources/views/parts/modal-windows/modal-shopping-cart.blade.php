@@ -25,6 +25,7 @@
                         </div>
                     </div>
                 </div>
+                @if (count(Cart::content()) > 0)
                 <form method="POST" action="{{ route('store-order') }}" enctype="multipart/form-data" id="form-order-goods">
                     <table class="table">
                         <thead>
@@ -35,10 +36,11 @@
                             <th scope="col">ТМ</th>
                             <th scope="col">Цена</th>
                             <th scope="col">Количество</th>
+                            <th scope="col">Удалить</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach(Cart::content() as $row)
+                        @foreach (Cart::content() as $row)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
                             <td>
@@ -50,13 +52,16 @@
                             </td>
                             <td id="transferred-goods-name">{{$row->name}}</td>
                             <td id="transferred-goods-mark">{{$row->options->tradeMark}}</td>
-                            <td id="transferred-goods-price">{{$row->price}} грн.</td>
-                            <td>
+                            <td width="10%" id="transferred-goods-price">{{$row->price}} грн.</td>
+                            <td width="25%">
                                 <div id="field1">
-                                    <button type="button" id="sub" class="sub">-</button>
-                                    <input type="number" id="quantity" value="1" min="1" max="100" name ="quantity" style="text-align: center;"/>
-                                    <button type="button" id="add" class="add">+</button>
+                                    <button type="button" id="sub" class="sub btn btn-success mb-3">-</button>
+                                    <input type="number" id="quantity" class="btn mb-3" value="1" min="1" max="100" name ="quantity" style="text-align: center;"/>
+                                    <button type="button" id="add" class="add btn btn-success mb-3">+</button>
                                 </div>
+                            </td>
+                            <td>
+                                <button type="button" data-row-id="{{$row->rowId}}" class="btn btn-danger remove_row" data-dismiss="modal"><i class="fa fa-times" style="font-size: 14px" aria-hidden="true"></i></button>
                             </td>
                         </tr>
                         @endforeach
@@ -75,11 +80,16 @@
                     <p>В скорем времени будет доступна онлайн покупка через Приват24</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                 <button type="submit" class="btn btn-success">Заказать</button>
                 {{ csrf_field() }}
-                </form>
             </div>
+            </form>
+            @else
+                <div>
+                    <p align="center"><strong>Ваша корзина пуста!</strong></p>
+                </div>
+            @endif
         </div>
     </div>
 </div>

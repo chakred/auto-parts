@@ -66,6 +66,7 @@ Route::get('further-sub-categories/{subCategory}/{model}', 'Web\FurtherSubCatego
 Route::get('products/{subCategory}/{furtherSubCategory?}/{model}', 'Web\GoodsController@index')->name('goods-site');
 Route::get('product/{subCategory}/{model}/{id}', 'Web\GoodsSingleController@index')->name('goods-single-site');
 Route::post('product/add-to-cart', 'Web\GoodsCartController@addToCart')->name('add-to-cart');
+Route::post('product/remove-from-cart', 'Web\GoodsCartController@removeFromCart')->name('remove-from-cart');
 //Store order
 Route::post('products/order', 'Web\OrderController@store')->name('store-order');
 Route::any('/search','Web\GoodsController@search')->name('search-for-goods');

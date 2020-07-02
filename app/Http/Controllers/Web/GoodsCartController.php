@@ -27,9 +27,12 @@ class GoodsCartController extends Controller
                 'tradeMark' => $request->tradeMark
             ]
         ]);
-
-
         return back();
+    }
+
+    public function removeFromCart(Request $request)
+    {
+        Cart::remove($request->rowId);
     }
 
 }

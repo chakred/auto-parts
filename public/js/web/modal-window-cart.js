@@ -1,18 +1,22 @@
 $(document).ready(function(){
-   var cat = $('.update-image'),
-    categoryModal = $('#categoryModal'),
-    categoryForm = $('#categoryForm'),
-    categoryUpdateRoute = $('#categoryForm').attr('action'),
-    cagegoryName,
-    categoryImage,
-    categoryId;
+   let removeRow = $('.remove_row')
 
-   cat.on('click', function (event) {
-       cagegoryName = $(this).data('cat-name'),
-       categoryImage = $(this).data('cat-img'),
-       categoryId = $(this).data('cat-id');
-       categoryModal.find('#categoryModalLongTitle').text(cagegoryName);
-       categoryModal.find('.cat-image').attr('src', categoryImage);
-       categoryForm.attr('action', categoryUpdateRoute+'/'+categoryId);
-   });
+    removeRow.on('click', function (e) {
+        e.preventDefault();
+        let rowId = $(this).data('row-id');
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/product/remove-from-cart",
+            type: "POST",
+            data: {
+                rowId : rowId,
+
+            },
+            dataType: "html"
+        });
+
+    })
 })

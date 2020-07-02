@@ -17,6 +17,19 @@
             <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#buyProductModal">
                 Купить
             </button>
+
+
+            {{ Form::open(array('route' => 'add-to-cart')) }}
+            {{ Form::hidden('id', $relatedGoods->id) }}
+            {{ Form::hidden('image', $relatedGoods->img_path) }}
+            {{ Form::hidden('name', $relatedGoods->name_good) }}
+            {{ Form::hidden('quantity', '1') }}
+            {{ Form::hidden('tradeMark', $relatedGoods->mark_good) }}
+            {{ Form::hidden('price', $relatedGoods->convertedPrice) }}
+            {{ Form::submit('Добавить в корзину', array('class' => 'btn btn-secondary mb-3')) }}
+            {{ Form::close() }}
+
+
             <p class="card-text">{{$relatedGoods->desc_good}}</p>
             <p class="card-text">Производитель - {{$relatedGoods->mark_good}}</p>
             <p class="card-text">Страна производства - {{$relatedGoods->country}}</p>

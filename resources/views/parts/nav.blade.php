@@ -48,7 +48,9 @@
                     <a class="nav-link" href="#">Контакты</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Корзина</a>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#shoppingCartModal">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> Корзина
+                    </button>
                 </li>
             </ul>
         </div>

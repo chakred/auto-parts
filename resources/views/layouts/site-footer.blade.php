@@ -16,6 +16,7 @@
     </div>
     <!-- /.container -->
 </footer>
+@include('parts.modal-windows.modal-shopping-cart')
 <!-- Optional JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

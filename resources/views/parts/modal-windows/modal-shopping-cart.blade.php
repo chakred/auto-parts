@@ -3,12 +3,13 @@
 
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="shoppingCartLongTitle">Заказ товара</h5>
+                <h5 class="modal-title" id="shoppingCartLongTitle">Корзина</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+
                 <div class="row d-flex align-items-center justify-content-center h-100" style="text-align: center">
                     <div class="col-12">
                         <div class="error-message" style="display: none">
@@ -37,14 +38,19 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach(Cart::content() as $row)
                         <tr>
-                            <th scope="row">1</th>
+                            <th scope="row">{{$loop->iteration}}</th>
                             <td>
+                                @if(!$row->options->imgPath)
                                 <img id="transferred-goods-image" width="100" src="http://dummyimage.com/100x100/ffffff/545454&text=No+image" />
+                                    @else
+                                <img id="transferred-goods-image" width="100" src="{{env('APP_URL').'/storage/upload'.$row->options->imgPath}}" />
+                                @endif
                             </td>
-                            <td id="transferred-goods-name"></td>
-                            <td id="transferred-goods-mark"></td>
-                            <td id="transferred-goods-price"></td>
+                            <td id="transferred-goods-name">{{$row->name}}</td>
+                            <td id="transferred-goods-mark">{{$row->options->tradeMark}}</td>
+                            <td id="transferred-goods-price">{{$row->price}} грн.</td>
                             <td>
                                 <div id="field1">
                                     <button type="button" id="sub" class="sub">-</button>
@@ -53,6 +59,7 @@
                                 </div>
                             </td>
                         </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <div class="form-group col-md-4">
